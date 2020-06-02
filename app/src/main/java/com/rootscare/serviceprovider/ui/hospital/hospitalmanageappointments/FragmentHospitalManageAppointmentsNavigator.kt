@@ -1,0 +1,4 @@
+package com.rootscare.serviceprovider.ui.hospital.hospitalmanageappointments
+
+interface FragmentHospitalManageAppointmentsNavigator {
+}

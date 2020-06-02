@@ -1,0 +1,4 @@
+package com.rootscare.serviceprovider.ui.physiotherapy.physiotheraphymanageprofile
+
+interface FragmentPhysiotheraphyManageProfileNavigator {
+}

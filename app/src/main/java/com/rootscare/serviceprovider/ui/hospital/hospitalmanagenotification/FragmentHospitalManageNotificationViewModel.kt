@@ -1,0 +1,7 @@
+package com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification
+
+import com.rootscare.serviceprovider.ui.base.BaseViewModel
+import com.rootscare.serviceprovider.ui.hospital.hospitalmanagedoctor.FragmenthospitalManageDoctorNavigator
+
+class FragmentHospitalManageNotificationViewModel : BaseViewModel<FragmentHospitalManageNotificationNavigator>(){
+}

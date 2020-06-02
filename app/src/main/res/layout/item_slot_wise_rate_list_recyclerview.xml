@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:weightSum="2">
+        <com.rootscare.customview.MyTextView
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:text="10:00 AM"
+            android:gravity="center"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/txt_color"
+            />
+        <com.rootscare.customview.MyTextView
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="$300"
+            android:background="@drawable/edit_comm_bg"
+            android:gravity="center"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/txt_color"
+            />
+
+
+
+    </LinearLayout>
+</layout>

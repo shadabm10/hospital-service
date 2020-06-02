@@ -1,0 +1,7 @@
+package com.rootscare.serviceprovider.ui.hospital.hospitaluploadpathologyreport.subfragment
+
+import com.rootscare.serviceprovider.ui.base.BaseViewModel
+import com.rootscare.serviceprovider.ui.hospital.hospitaluploadpathologyreport.FragmentHospitalUploadPathologyReportNavigator
+
+class FragmentPathReportDocumentUploadViewModel : BaseViewModel<FragmentPathReportDocumentUploadNavigator>() {
+}

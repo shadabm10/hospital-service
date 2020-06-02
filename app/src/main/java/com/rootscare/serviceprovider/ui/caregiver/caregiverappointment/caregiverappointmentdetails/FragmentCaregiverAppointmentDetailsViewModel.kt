@@ -1,0 +1,7 @@
+package com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.caregiverappointmentdetails
+
+import com.rootscare.serviceprovider.ui.base.BaseViewModel
+import com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.FragmentCaregiverMyAppointmentNavigator
+
+class FragmentCaregiverAppointmentDetailsViewModel: BaseViewModel<FragmentCaregiverAppointmentDetailsNavigator>() {
+}

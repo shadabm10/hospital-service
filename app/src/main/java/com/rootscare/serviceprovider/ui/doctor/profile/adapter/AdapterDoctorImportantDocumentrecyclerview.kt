@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.rootscare.data.model.api.response.doctor.profileresponse.QualificationDataItem
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemDoctorImportantDocumentRecyclerviewBinding
 import com.rootscare.serviceprovider.databinding.ItemNursesImportantDocumentListRecyclerviewBinding
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.adapter.AdapterNursesUploadDocument
+import kotlinx.android.synthetic.main.item_doctor_important_document_recyclerview.view.*
 
-class AdapterDoctorImportantDocumentrecyclerview   ( internal var context: Context) : RecyclerView.Adapter<AdapterDoctorImportantDocumentrecyclerview.ViewHolder>() {
+class AdapterDoctorImportantDocumentrecyclerview   (val qualificationDataList: ArrayList<QualificationDataItem?>?,internal var context: Context) : RecyclerView.Adapter<AdapterDoctorImportantDocumentrecyclerview.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
     companion object {
         val TAG: String = AdapterDoctorImportantDocumentrecyclerview::class.java.simpleName
@@ -31,7 +33,7 @@ class AdapterDoctorImportantDocumentrecyclerview   ( internal var context: Conte
 
     override fun getItemCount(): Int {
 //        return trainerList!!.size
-        return 3
+        return qualificationDataList?.size!!
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -47,29 +49,14 @@ class AdapterDoctorImportantDocumentrecyclerview   ( internal var context: Conte
 //                recyclerViewItemClickWithView?.onItemClick(1)
 //            })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
-//                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
-//            })
-
-//            itemView.root?.img_bid?.setOnClickListener {
-//                run {
-//                    recyclerViewItemClick?.onClick(itemView.root?.img_bid,local_position)
-//                    //serviceListItem?.get(local_position)?.requestid?.let { it1 -> recyclerViewItemClick.onClick(itemView.root?.img_bid,it1) }
-//                }
-//            }
 //
-//            itemView.root?.img_details?.setOnClickListener {
-//                run {
-//                    recyclerViewItemClick?.onClick(itemView.root?.img_details,local_position)
-//                    // serviceListItem?.get(local_position)?.requestid?.let { it1 -> recyclerViewItemClick.onClick(itemView.root?.img_details,it1) }
-//                }
-//            }
-
-
         }
 
         fun onBind(pos: Int) {
             Log.d(TAG, " true")
             local_position = pos
+
+            itemView?.txt_description?.setText(qualificationDataList?.get(pos)?.qualification)
 
 //            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name
 //            itemView?.rootView?.txt_teacher_qualification?.text= "Qualification : "+" "+trainerList?.get(pos)?.qualification

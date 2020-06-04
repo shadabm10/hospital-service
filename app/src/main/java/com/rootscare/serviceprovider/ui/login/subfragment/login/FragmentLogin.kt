@@ -20,12 +20,15 @@ import com.rootscare.serviceprovider.ui.hospital.HospitalHomeActivity
 import com.rootscare.serviceprovider.ui.labtechnician.home.LabTechnicianHomeActivity
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.physiotherapy.home.PhysiotherapyHomeActivity
+import com.whiteelephant.monthpicker.MonthPickerDialog
 import java.util.regex.Pattern
+
 
 class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>(), FragmentLoginNavigator{
     private var fragmentLoginBinding: FragmentLoginBinding? = null
     private var fragmentLoginViewModel: FragmentLoginViewModel? = null
     private var isLoginRemeberCheck=false
+
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
@@ -63,6 +66,8 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
                 fragmentLoginViewModel?.appSharedPref?.isloginremember="false"
             }
         }
+
+
         var dropdownlist= ArrayList<String?>()
         dropdownlist.add("Doctor")
         dropdownlist.add("Nurses")

@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:usesCleartextTraffic">
+        tools:replace="android:usesCleartextTraffic,android:icon">
         <activity
             android:name=".ui.physiotherapy.home.PhysiotherapyHomeActivity"
             android:launchMode="singleTask"

@@ -11,4 +11,6 @@
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
+    <string name="read_more"><u>Read More</u></string>
+    <string name="read_less"><u>Read Less</u></string>
 </resources>

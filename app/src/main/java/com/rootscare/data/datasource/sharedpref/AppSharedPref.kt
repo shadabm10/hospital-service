@@ -33,6 +33,8 @@ class AppSharedPref(context: Context, prefFileName: String) {
         private val PREF_KEY_LOGIN_MODEL_DATA = "PREF_KEY_LOGIN_MODEL_DATA"
         private val PREF_KEY_LOGIN_USER_TYPE = "PREF_KEY_LOGIN_USER_TYPE"
         private val PREF_KEY_IS_LOGIN_REMEMBER = "PREF_KEY_IS_LOGIN_REMEMBER"
+        private val PREF_KEY_IS_LOGIN_USERID = "PREF_KEY_IS_LOGIN_USERID"
+
 
     }
     init {
@@ -58,6 +60,14 @@ class AppSharedPref(context: Context, prefFileName: String) {
 
     fun deleteLoginUserType() {
         mPrefs.edit().remove(PREF_KEY_LOGIN_USER_TYPE).apply()
+    }
+
+    var loginUserId: String?
+        get() = mPrefs.getString(PREF_KEY_IS_LOGIN_USERID, null)
+        set(loginUserId) = mPrefs.edit().putString(PREF_KEY_IS_LOGIN_USERID, loginUserId).apply()
+
+    fun deleteLoginUserId() {
+        mPrefs.edit().remove(PREF_KEY_IS_LOGIN_USERID).apply()
     }
 
     //Login Remember

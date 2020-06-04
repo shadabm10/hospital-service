@@ -25,6 +25,7 @@ class FragmentLoginViewModel : BaseViewModel<FragmentLoginNavigator>() {
                         val loginresposeJson = gson.toJson(response)
                         appSharedPref?.loginmodeldata=loginresposeJson
                         appSharedPref?.loginUserType=response?.result?.userType
+                        appSharedPref?.loginUserId=response?.result?.userId
 
 
                         //To get the data

@@ -861,6 +861,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
                 homeViewModel?.appSharedPref?.deleteLoginModelData()
                 homeViewModel?.appSharedPref?.deleteIsLogINRemember()
                 homeViewModel?.appSharedPref?.deleteLoginUserType()
+                homeViewModel?.appSharedPref?.deleteLoginUserId()
                 startActivity(LoginActivity.newIntent(this@HomeActivity))
                 finishAffinity()
 

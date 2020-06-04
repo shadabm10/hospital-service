@@ -126,37 +126,6 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
 
         fragmentRegistrationBinding?.txtRegDob?.setOnClickListener(View.OnClickListener {
             // TODO Auto-generated method stub
-            /*new DatePickerDialog(ActivityProfileUpdate.this, date, myCalendar
-                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();*/
-
-//            MyDatePickerDialog(object : DialogCallback{
-//                override fun onConfirm(s: String) {
-//
-//                        try {
-//                            dob_for_data_submition = DateTimeUtils.TimeStampConverter("dd/MM/yyyy", s, "yyyy-MM-dd")
-//                            fragmentAdmissionFormBinding?.txtDob?.setText(DateTimeUtils.TimeStampConverter("dd/MM/yyyy", s, "dd MMM yyyy"))
-//                        } catch (e: ParseException) {
-//                            e.printStackTrace()
-//                        }
-//
-//                    }
-//
-//
-//            },this!!.activity!!).show()
-//
-//            //                Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-//            //                final CustomDatePickerDialog pickerDialog = new CustomDatePickerDialog(ActivityProfileUpdate.this,
-//            //                        myDateListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-//            //
-//            //                int month = cal.get(Calendar.MONTH);
-//            //                int day = cal.get(Calendar.DAY_OF_MONTH);
-//            //                int year = cal.get(Calendar.YEAR);
-//            //               // year = year - AppData.MINIMUM_AGE_FOR_SIGNUP;  // Minimum date in calendar is 18 years ago from today
-//            //                cal.set(year, month, day);
-//            //
-//            //                pickerDialog.setMinDate(cal.getTimeInMillis());
-//            //                pickerDialog.show();
 
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)

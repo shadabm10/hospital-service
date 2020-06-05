@@ -1,8 +1,8 @@
 package com.rootscare.serviceprovider.ui.base
 
+import com.rootscare.model.RegistrationModel
 
 
 object AppData {
-//    var registrationRequest : RegistrationRequest?=null
-//    var remoteMessage: RemoteMessage? = null
+    var registrationModelData : RegistrationModel?=null
 }

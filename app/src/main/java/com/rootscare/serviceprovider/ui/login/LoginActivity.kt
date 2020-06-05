@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.rootscare.adapter.MyAdapter
+import com.rootscare.model.RegistrationModel
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityLoginBinding
 import com.rootscare.serviceprovider.databinding.ActivitySplashBinding
+import com.rootscare.serviceprovider.ui.base.AppData
 import com.rootscare.serviceprovider.ui.base.BaseActivity
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.splash.SplashActivityNavigator
@@ -46,9 +48,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
         super.onCreate(savedInstanceState)
         loginActivityViewModel!!.navigator = this
         ativityLoginBinding = viewDataBinding
+
         mAdapter = MyAdapter(getSupportFragmentManager());
 //        mPager = findViewById(R.id.viewpager);
         ativityLoginBinding?.viewPager?.setAdapter(mAdapter)
+        AppData.registrationModelData=RegistrationModel()
     }
 
 
@@ -63,11 +67,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
 //            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
 //            Handler().postDelayed({
 //                 }, 1000)
-
             super.onBackPressed()
 
         }else{
-            this!!.setCurrentItem(0, true)
+            if (ativityLoginBinding?.viewPager?.getCurrentItem() == 1) {
+                this!!.setCurrentItem(0, true)
+            }else if(ativityLoginBinding?.viewPager?.getCurrentItem() == 2){
+                this!!.setCurrentItem(1, true)
+            }else if(ativityLoginBinding?.viewPager?.getCurrentItem() == 3){
+                this!!.setCurrentItem(2, true)
+            }else{
+                this!!.setCurrentItem(0, true)
+            }
+
         }
     }
 }

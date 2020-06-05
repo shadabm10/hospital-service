@@ -171,9 +171,9 @@ class FragmentDoctorProfile: BaseFragment<FragmentDoctorProfileBinding, Fragment
                     .apply(options)
                     .into(fragmentDoctorProfileBinding?.imgDoctorProfile!!)
 
-                if(getDoctorProfileResponse?.result?.reviewRating!=null && getDoctorProfileResponse?.result?.reviewRating.size>0){
-                    fragmentDoctorProfileBinding?.tvReviews?.setText(getDoctorProfileResponse?.result?.reviewRating?.size.toString()+" "+"reviews")
-                    fragmentDoctorProfileBinding?.ratingBarteacherFeedback?.rating=getDoctorProfileResponse?.result?.reviewRating?.size.toFloat()
+                if(getDoctorProfileResponse?.result?.avgRating!=null && !getDoctorProfileResponse?.result?.avgRating.equals("")){
+                    fragmentDoctorProfileBinding?.tvReviews?.setText(getDoctorProfileResponse?.result?.avgRating+" "+"reviews")
+                    fragmentDoctorProfileBinding?.ratingBarteacherFeedback?.rating=getDoctorProfileResponse?.result?.avgRating.toFloat()
                 }
 
                 if(getDoctorProfileResponse?.result?.qualification!=null && !getDoctorProfileResponse?.result?.qualification.equals("")){

@@ -93,6 +93,7 @@
                         <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/txt_forgot_password"
                             android:layout_alignParentEnd="true"
                             android:textColor="@color/text_hint_color"
                             android:textSize="@dimen/_13sdp"

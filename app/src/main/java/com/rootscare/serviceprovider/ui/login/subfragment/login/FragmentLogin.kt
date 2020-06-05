@@ -18,6 +18,7 @@ import com.rootscare.serviceprovider.ui.caregiver.home.CaregiverHomeActivity
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.hospital.HospitalHomeActivity
 import com.rootscare.serviceprovider.ui.labtechnician.home.LabTechnicianHomeActivity
+import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.physiotherapy.home.PhysiotherapyHomeActivity
 import com.whiteelephant.monthpicker.MonthPickerDialog
@@ -67,6 +68,10 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
             }
         }
 
+
+        fragmentLoginBinding?.txtForgotPassword?.setOnClickListener(View.OnClickListener {
+            (activity as LoginActivity?)!!.setCurrentItem(4, true)
+        })
 
         var dropdownlist= ArrayList<String?>()
         dropdownlist.add("Doctor")

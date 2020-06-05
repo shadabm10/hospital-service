@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+    </data>
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/common_bg"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_select_hospital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/search_for_common_bg"
+            app:cardCornerRadius="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:elevation="@dimen/_10sdp"
+            >
+
+            <com.rootscare.customview.MyTextView
+                android:id="@+id/txt_upcoming_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/search_for_common_bg"
+                android:drawableEnd="@drawable/new_down_arrow"
+                android:hint="Select date"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textSize="@dimen/_10ssp" />
+        </androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/card_select_hospital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/recyclerView_rootscare_doctor_myappointment"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/_12ssp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/no_data"
+            android:layout_margin="@dimen/_3sdp"
+            android:id="@+id/tv_no_date"/>
+    </RelativeLayout>
+</layout>

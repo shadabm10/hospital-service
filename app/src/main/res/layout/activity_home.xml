@@ -88,7 +88,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/side_profile"
+                        android:src="@drawable/profile_no_image"
                         app:civ_border_width="2dp" />
 
                     <LinearLayout
@@ -102,7 +102,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Test User"
                             android:textColor="@color/background_white"
                             android:textSize="@dimen/_14sdp" />
 
@@ -111,7 +110,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="test@gmail.com"
                             android:textColor="@color/background_white"
                             android:textSize="@dimen/_12sdp" />
 

@@ -19,11 +19,11 @@ class FragmentDoctorProfileViewModel : BaseViewModel<FragmentDoctorProfileNaviga
                     navigator.successGetDoctorProfileResponse(response)
                     /* Saving access token after singup or login */
                     if (response.result!= null){
-                        appSharedPref?.deleteLoginModelData()
-                        val gson = Gson()
-                        val loginresposeJson = gson.toJson(response)
-                        appSharedPref?.loginmodeldata=loginresposeJson
-                        appSharedPref?.loginUserType=response?.result?.userType
+                      //  appSharedPref?.deleteLoginModelData()
+//                        val gson = Gson()
+//                        val loginresposeJson = gson.toJson(response)
+//                        appSharedPref?.loginmodeldata=loginresposeJson
+//                        appSharedPref?.loginUserType=response?.result?.userType
 
 
                         //To get the data

@@ -51,7 +51,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
     var certificatefileFile: File? = null
     var monthOfDob: String=""
     var dayOfDob: String=""
-    var choosenYear = 1990
+    var choosenYear = 1980
     override val bindingVariable: Int
         get() =BR.viewModel
     override val layoutId: Int
@@ -118,7 +118,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
             }, choosenYear, 0);
 
             builder.showYearOnly()
-                .setYearRange(1990, 2090)
+                .setYearRange(1980, 2090)
                 .build()
                 .show();
         })

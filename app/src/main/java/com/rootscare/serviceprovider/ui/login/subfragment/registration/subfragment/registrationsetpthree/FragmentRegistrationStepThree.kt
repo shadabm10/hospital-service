@@ -6,8 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.dialog.CommonDialog
+import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
+import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
+import com.rootscare.data.model.api.response.deaprtmentlist.ResultItem
 import com.rootscare.data.model.api.response.registrationresponse.RegistrationResponse
 import com.rootscare.interfaces.DialogClickCallback
+import com.rootscare.interfaces.DropDownDialogCallBack
+import com.rootscare.interfaces.OnDepartmentDropDownListItemClickListener
+import com.rootscare.interfaces.onDepartItemClick
 import com.rootscare.model.RegistrationModel
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
@@ -28,6 +34,9 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     FragmentRegistrationStepThreeNavigator {
     private var fragmentRegistrationStepthreeBinding: FragmentRegistrationStepthreeBinding? = null
     private var fragmentRegistrationStepThreeViewModel: FragmentRegistrationStepThreeViewModel? = null
+    var departmentList: ArrayList<ResultItem?>?=null
+    var departmentId=""
+    var departTitle=""
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
@@ -54,23 +63,82 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentRegistrationStepthreeBinding = viewDataBinding
+
         fragmentRegistrationStepthreeBinding?.btnRooscareServiceproviderRegistrationSubmit?.setOnClickListener(
             View.OnClickListener {
-                if(checkValidationForRegStepThree()){
-                    AppData?.registrationModelData?.description=fragmentRegistrationStepthreeBinding?.edtRegDescription?.text?.toString()
-                    AppData?.registrationModelData?.experience=fragmentRegistrationStepthreeBinding?.edtRegExperience?.text?.toString()
-                    AppData?.registrationModelData?.availableTime=fragmentRegistrationStepthreeBinding?.edtRootscareRegistrationAvailableTime?.text?.toString()
-                    AppData?.registrationModelData?.fees=fragmentRegistrationStepthreeBinding?.edtRegFees?.text?.toString()
-                    AppData?.registrationModelData?.department=fragmentRegistrationStepthreeBinding?.edtRegDepartment?.text?.toString()
-                    if(isNetworkConnected){
-                        baseActivity?.showLoading()
-                        registrationApiCall()
-                    }else{
-                        Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
+
+                CommonDialog.showDialog(this!!.activity!!,object : DialogClickCallback{
+                    override fun onConfirm() {
+                        if(checkValidationForRegStepThree()){
+                            AppData?.registrationModelData?.description=fragmentRegistrationStepthreeBinding?.edtRegDescription?.text?.toString()
+                            AppData?.registrationModelData?.experience=fragmentRegistrationStepthreeBinding?.edtRegExperience?.text?.toString()
+                            AppData?.registrationModelData?.availableTime=fragmentRegistrationStepthreeBinding?.edtRootscareRegistrationAvailableTime?.text?.toString()
+                            AppData?.registrationModelData?.fees=fragmentRegistrationStepthreeBinding?.edtRegFees?.text?.toString()
+                            AppData?.registrationModelData?.department=fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text?.toString()
+                            if(isNetworkConnected){
+                                baseActivity?.showLoading()
+                                registrationApiCall()
+                            }else{
+                                Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
                     }
 
-                }
+                    override fun onDismiss() {
+                    }
+
+                },"Confirmation", "Are you sure to register?")
+
             })
+        if(isNetworkConnected){
+            baseActivity?.showLoading()
+            fragmentRegistrationStepThreeViewModel?.apidepartmentlist()
+
+        }else{
+            Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+
+
+        fragmentRegistrationStepthreeBinding?.txtRegDepartment?.setOnClickListener(View.OnClickListener {
+            CommonDialog.showDialogForDeaprtmentDropDownList(this!!.activity!!,departmentList,"Select Department",object:
+                OnDepartmentDropDownListItemClickListener {
+                override fun onConfirm(departmentList: ArrayList<ResultItem?>?) {
+                    departTitle=""
+                    departmentId=""
+                    var p=0
+                    for (i in 0 until departmentList?.size!!) {
+                        if (departmentList?.get(i)?.isChecked.equals("true")){
+                            if (p==0){
+                                departTitle= departmentList?.get(i)?.title!!
+                                departmentId= departmentList?.get(i)?.id!!
+                                p++
+
+//                                Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
+//                                Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
+                            }else{
+                                departTitle=departTitle+","+departmentList?.get(i)?.title
+                            departmentId=departmentId+","+departmentList?.get(i)?.id
+
+//                                Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
+//                                Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
+                            }
+                        }
+                    }
+
+                    Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
+                    Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
+
+
+                    fragmentRegistrationStepthreeBinding?.txtRegDepartment?.setText(departTitle)
+                }
+
+
+            })
+        })
     }
 
     private fun checkValidationForRegStepThree(): Boolean {
@@ -94,8 +162,8 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
         }
-        if (fragmentRegistrationStepthreeBinding?.edtRegDepartment?.text?.toString().equals("") ) {
-            Toast.makeText(activity, "Please enter your department!", Toast.LENGTH_SHORT).show()
+        if (fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text?.toString().equals("") ) {
+            Toast.makeText(activity, "Please select your department!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
         }
@@ -105,9 +173,10 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     override fun successRegistrationResponse(registrationResponse: RegistrationResponse?) {
         baseActivity?.hideLoading()
         if(registrationResponse?.code.equals("200")){
-            Toast.makeText(activity, registrationResponse?.message, Toast.LENGTH_SHORT).show()
+         //   Toast.makeText(activity, registrationResponse?.message, Toast.LENGTH_SHORT).show()
 
-            CommonDialog.showDialog(this!!.activity!!,object : DialogClickCallback{
+            CommonDialog.showDialogForSuccess(this!!.activity!!,
+                registrationResponse?.message!!,object : DialogClickCallback{
                 override fun onConfirm() {
                     AppData.registrationModelData= RegistrationModel()
                     (activity as LoginActivity?)!!.setCurrentItem(0, true)
@@ -116,11 +185,23 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
                 override fun onDismiss() {
                 }
 
-            },"Registration", registrationResponse?.message!!)
+            })
+
+
 
 
         }else{
             Toast.makeText(activity, registrationResponse?.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun successDepartmentListResponse(departmentListResponse: DepartmentListResponse?) {
+        baseActivity?.hideLoading()
+        if (departmentListResponse?.code.equals("200")){
+            if(departmentListResponse?.result!=null && departmentListResponse?.result.size>0){
+                departmentList=ArrayList<ResultItem?>()
+                departmentList=departmentListResponse?.result
+            }
         }
     }
 
@@ -163,7 +244,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
         val experience = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.experience)
         val available_time = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.availableTime)
         val fees = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.fees)
-        val department = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.department)
+        val department = RequestBody.create(MediaType.parse("multipart/form-data"), departmentId)
 
         fragmentRegistrationStepThreeViewModel?.apieditpatientprofilepersonal(user_type,first_name,last_name,email,
             mobile_number,dob,gender,password,confirm_password,imageMultipartBody,

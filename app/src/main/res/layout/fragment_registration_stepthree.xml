@@ -90,13 +90,14 @@
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
                         android:background="@drawable/login_edit_bg"/>
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edt_reg_department"
+                        android:id="@+id/txt_reg_department"
                         android:hint="Department"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:drawableEnd="@drawable/down_arrow_white"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:padding="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp"

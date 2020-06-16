@@ -3,6 +3,8 @@ package com.dialog
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -10,9 +12,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.interfaces.OnClickWithTwoButton
 import com.rootscare.adapter.AdapterCommonDropdown
-import com.rootscare.interfaces.DialogClickCallback
-import com.rootscare.interfaces.DropDownDialogCallBack
-import com.rootscare.interfaces.OnDropDownListItemClickListener
+import com.rootscare.adapter.AdapterDropdownDepartment
+import com.rootscare.customview.MyCustomButton
+import com.rootscare.data.model.api.response.deaprtmentlist.ResultItem
+import com.rootscare.interfaces.*
 import com.rootscare.serviceprovider.R
 
 @SuppressLint("StaticFieldLeak")
@@ -215,6 +218,99 @@ object CommonDialog {
             dialogClickCallback.onDismiss()
             dialog.dismiss()
         }
+        confirm.setOnClickListener {
+            dialogClickCallback.onConfirm()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    //Show Dialog For DepartmentDropdown
+
+    fun showDialogForDeaprtmentDropDownList(context: Context,departmentList: ArrayList<ResultItem?>?,title: String,dialogClickCallback: OnDepartmentDropDownListItemClickListener) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.dialog_department_dropdown)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(false)
+        val btn_dropdown_ok=dialog.findViewById<MyCustomButton>(R.id.btn_dropdown_ok)
+        val btn_dropdown_cancel=dialog.findViewById<MyCustomButton>(R.id.btn_dropdown_cancel)
+        val recyclerView_department_dropdown_list = dialog.findViewById<RecyclerView>(R.id.recyclerView_department_dropdown_list)
+        val tv_title=dialog.findViewById<TextView>(R.id.txt_departmentheader_title)
+        tv_title?.setText(title)
+        var getDepartmentString=""
+        var getDepartmentIdString=""
+        var selectDepartmentList: ArrayList<ResultItem?>?=null
+        val gridLayoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+        recyclerView_department_dropdown_list.layoutManager = gridLayoutManager
+        recyclerView_department_dropdown_list.setHasFixedSize(true)
+        val dropdownListAdapter = AdapterDropdownDepartment(departmentList,context!!)
+        recyclerView_department_dropdown_list.adapter = dropdownListAdapter
+        dropdownListAdapter?.recyclerViewItemClick= object : OnDepartmentDropDownListItemClickListener {
+            override fun onConfirm(departmentList: ArrayList<ResultItem?>?) {
+                selectDepartmentList= ArrayList<ResultItem?>()
+                selectDepartmentList=departmentList
+//                getDepartmentString=""
+//                getDepartmentIdString=""
+//                for (i in 0 until departmentList?.size!!) {
+//                    if (departmentList?.get(i)?.isChecked.equals("true")){
+//                        if (i==0){
+//                            getDepartmentString=departmentList?.get(i)?.title+","
+//                            getDepartmentIdString=departmentList?.get(i)?.id+","
+//                        }else{
+//                            getDepartmentString=getDepartmentString+departmentList?.get(i)?.title
+//                            getDepartmentIdString=getDepartmentIdString+departmentList?.get(i)?.id
+//                        }
+//                    }
+//
+//
+//                }
+//                departmentArrayList=departmentList
+//                dialogClickCallback.onConfirm(text,id)
+//                dialog.dismiss()
+//                getDepartmentString=text
+//                getDepartmentIdString=id
+            }
+//            override fun onConfirm(text: String) {
+//                dialogClickCallback.onConfirm(text)
+//                dialog.dismiss()
+//            }
+        }
+
+
+
+        btn_dropdown_cancel?.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+
+        btn_dropdown_ok?.setOnClickListener(View.OnClickListener {
+//            dialogClickCallback.onConfirm(getDepartmentString,getDepartmentIdString)
+            dialogClickCallback.onConfirm(selectDepartmentList)
+                dialog.dismiss()
+        })
+        dialog.show()
+    }
+
+
+    fun showDialogForSuccess(context: Context, title: String,dialogClickCallback: DialogClickCallback) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.dialog_success)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+
+        val confirm = dialog.findViewById<Button>(R.id.btn_positive)
+        val txt_msg= dialog.findViewById<TextView>(R.id.txt_msg)
+        txt_msg.setText(title)
+//        val tv_title=dialog.findViewById<TextView>(R.id.tv_title)
+//        if (title.equals("")){
+//            tv_title?.setText("Thank You for filling up admission form. You will shortly be informed about the further process. You will only be able to login to app once your admission is confirmed.")
+//        }else{
+//            tv_title?.setText(title)
+//        }
+
+//        cancel.setOnClickListener {
+//            dialogClickCallback.onDismiss()
+//            dialog.dismiss()
+//        }
         confirm.setOnClickListener {
             dialogClickCallback.onConfirm()
             dialog.dismiss()

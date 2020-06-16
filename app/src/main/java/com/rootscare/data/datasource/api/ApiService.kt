@@ -11,6 +11,7 @@ import com.rootscare.data.model.api.request.doctor.appointment.updateappointment
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordchangerequest.ForgotPasswordChangeRequest
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordemailrequest.ForgotPasswordSendEmailRequest
 import com.rootscare.data.model.api.request.loginrequest.LoginRequest
+import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
 import com.rootscare.data.model.api.response.doctor.appointment.requestappointment.getrequestappointment.GetDoctorRequestAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.DoctorUpcomingAppointmentResponse
@@ -92,6 +93,9 @@ interface ApiService {
 
     @POST("api-update-doctor-appointment-request")
     fun apiupdatedoctorappointmentrequest(@Body updateAppointmentRequestBody: UpdateAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
+
+    @POST("api-department-list")
+    fun apidepartmentlist(): Single<DepartmentListResponse>
 
 
 

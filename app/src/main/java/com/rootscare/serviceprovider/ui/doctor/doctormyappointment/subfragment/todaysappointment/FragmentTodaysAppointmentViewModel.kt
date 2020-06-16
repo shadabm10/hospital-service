@@ -6,7 +6,6 @@ import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointme
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
 
 class FragmentTodaysAppointmentViewModel  : BaseViewModel<FragmentTodaysAppointmentNavigator>() {
-
     fun apidoctortodayappointmentlist(getDoctorUpcommingAppointmentRequest: GetDoctorUpcommingAppointmentRequest) {
 //        val body = RequestBody.create(MediaType.parse("application/json"), "")
         val disposable = apiServiceWithGsonFactory.apidoctortodayappointmentlist(getDoctorUpcommingAppointmentRequest)
@@ -47,4 +46,5 @@ class FragmentTodaysAppointmentViewModel  : BaseViewModel<FragmentTodaysAppointm
 
         compositeDisposable.add(disposable)
     }
+
 }

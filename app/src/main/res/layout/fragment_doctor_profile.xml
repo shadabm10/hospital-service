@@ -350,7 +350,7 @@
                             <com.rootscare.customview.MyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/_10sdp"
+                                android:padding="@dimen/_5sdp"
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_gravity="center"
                                 android:textSize="@dimen/_12ssp"
@@ -371,7 +371,7 @@
                             <com.rootscare.customview.MyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textSize="@dimen/_16ssp"
+                                android:textSize="@dimen/_10ssp"
                                 android:layout_centerInParent="true"
                                 android:visibility="gone"
                                 android:gravity="center"
@@ -486,7 +486,7 @@
                                 <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:textSize="@dimen/_16ssp"
+                                    android:textSize="@dimen/_10ssp"
                                     android:layout_centerInParent="true"
                                     android:visibility="gone"
                                     android:gravity="center"
@@ -505,6 +505,7 @@
                                android:id="@+id/tv_reviewrating_readmore"
                                android:textSize="@dimen/_12ssp"
                                android:textStyle="bold"
+                               android:visibility="gone"
                                android:layout_marginEnd="@dimen/_10sdp"
                                android:layout_marginBottom="@dimen/_10sdp"
                                android:layout_alignParentEnd="true"

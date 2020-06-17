@@ -175,8 +175,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
         if(registrationResponse?.code.equals("200")){
          //   Toast.makeText(activity, registrationResponse?.message, Toast.LENGTH_SHORT).show()
 
-            CommonDialog.showDialogForSuccess(this!!.activity!!,
-                registrationResponse?.message!!,object : DialogClickCallback{
+            CommonDialog.showDialogForSingleButton(activity!!,object : DialogClickCallback{
                 override fun onConfirm() {
                     AppData.registrationModelData= RegistrationModel()
                     (activity as LoginActivity?)!!.setCurrentItem(0, true)
@@ -185,10 +184,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
                 override fun onDismiss() {
                 }
 
-            })
-
-
-
+            },"Registration", registrationResponse?.message!!)
 
         }else{
             Toast.makeText(activity, registrationResponse?.message, Toast.LENGTH_SHORT).show()

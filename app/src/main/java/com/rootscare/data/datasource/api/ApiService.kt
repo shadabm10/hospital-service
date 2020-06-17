@@ -12,6 +12,7 @@ import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordchanger
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordemailrequest.ForgotPasswordSendEmailRequest
 import com.rootscare.data.model.api.request.loginrequest.LoginRequest
 import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
+import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResponsePastAppointment
 import com.rootscare.data.model.api.response.doctor.appointment.requestappointment.getrequestappointment.GetDoctorRequestAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.DoctorUpcomingAppointmentResponse
@@ -97,6 +98,8 @@ interface ApiService {
     @POST("api-department-list")
     fun apidepartmentlist(): Single<DepartmentListResponse>
 
+    @POST("api-doctor-past-appointment-list")
+    fun apidoctorappointmentPastList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ResponsePastAppointment>
 
 
 }

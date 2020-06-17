@@ -36,6 +36,7 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointment
+import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.pastappointment.FragmentPastAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment.FragmentRequestedAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.FragmentTodaysAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment.FragmentUpcommingAppointment
@@ -673,6 +674,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         else if (fragment is FragmentRequestedAppointment) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Request Appointment"
+            tootbar_profile?.visibility=View.VISIBLE
+            tootbar_notification?.visibility=View.VISIBLE
+            tootbar_logout?.visibility=View.GONE
+            toolbar_back?.visibility=View.VISIBLE
+            toolbar_menu?.visibility=View.GONE
+            toolbar_back?.setOnClickListener(View.OnClickListener {
+                onBackPressed()
+            })
+            tootbar_profile?.setOnClickListener(View.OnClickListener {
+                checkFragmentInBackstackAndOpen(FragmentDoctorProfile.newInstance())
+            })
+            tootbar_notification?.setOnClickListener(View.OnClickListener {
+                checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
+            })
+            tootbar_logout?.setOnClickListener(View.OnClickListener {
+                logout()
+            })
+            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
+        }
+        else if(fragment is FragmentPastAppointment){
+            tootbar_text.text = "Past Appointment"
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE

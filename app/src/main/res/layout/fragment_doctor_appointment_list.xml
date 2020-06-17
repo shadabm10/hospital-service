@@ -7,6 +7,7 @@
         <import type="android.view.View" />
 
     </data>
+
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -17,51 +18,130 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_50sdp"
             android:orientation="vertical">
-            <com.rootscare.customview.MyCustomButton
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:id="@+id/btn_doctor_upcomming_appointment"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:background="@drawable/booking_new_bg"
-                android:drawableEnd="@drawable/white_arrow_circle"
-                android:drawablePadding="@dimen/_10sdp"
-                android:padding="@dimen/_5sdp"
-                android:text="Upcoming Appointment"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
-            <com.rootscare.customview.MyCustomButton
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/booking_new_bg">
+
+                <com.rootscare.customview.MyTextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:background="@drawable/booking_new_bg"
+                    android:text="Upcoming Appointment"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/white_arrow_circle"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:id="@+id/btn_doctor_todays_appointment"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:background="@drawable/booking_new_bg"
-                android:drawableEnd="@drawable/white_arrow_circle"
-                android:drawablePadding="@dimen/_10sdp"
-                android:padding="@dimen/_5sdp"
-                android:text="Todays Appointment"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
-            <com.rootscare.customview.MyCustomButton
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/booking_new_bg">
+
+                <com.rootscare.customview.MyTextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:background="@drawable/booking_new_bg"
+                    android:text="Todays Appointment"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/white_arrow_circle"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:id="@+id/btn_doctor_requested_appointment"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:background="@drawable/booking_new_bg"
-                android:drawableEnd="@drawable/white_arrow_circle"
-                android:drawablePadding="@dimen/_10sdp"
-                android:padding="@dimen/_5sdp"
-                android:text="Request Appointment"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/booking_new_bg">
+
+                <com.rootscare.customview.MyTextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:background="@drawable/booking_new_bg"
+                    android:text="Request Appointment"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/white_arrow_circle"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/btn_doctor_past_appointment"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/booking_new_bg">
+
+                <com.rootscare.customview.MyTextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:background="@drawable/booking_new_bg"
+                    android:text="Past Appointment"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/white_arrow_circle"/>
+
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </RelativeLayout>

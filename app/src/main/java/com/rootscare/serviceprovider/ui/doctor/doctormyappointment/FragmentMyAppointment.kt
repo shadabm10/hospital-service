@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +14,7 @@ import com.rootscare.serviceprovider.databinding.FragmentDoctorProfileBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.adapter.AddapterDoctorMyAppointmentListRecyclerview
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentDoctorAppointmentDetails
+import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.pastappointment.FragmentPastAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment.FragmentRequestedAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.FragmentTodaysAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment.FragmentUpcommingAppointment
@@ -68,6 +70,10 @@ class FragmentMyAppointment: BaseFragment<FragmentDoctorAppointmentListBinding, 
         fragmentDoctorMyAppointmentBinding?.btnDoctorRequestedAppointment?.setOnClickListener(View.OnClickListener {
             (activity as HomeActivity).checkFragmentInBackstackAndOpen(
                 FragmentRequestedAppointment.newInstance())
+        })
+        fragmentDoctorMyAppointmentBinding?.btnDoctorPastAppointment?.setOnClickListener(View.OnClickListener {
+            (activity as HomeActivity).checkFragmentInBackstackAndOpen(
+                FragmentPastAppointment.newInstance())
         })
     }
 //    // Set up recycler view for service listing if available

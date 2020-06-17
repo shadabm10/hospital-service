@@ -40,6 +40,19 @@ object CommonDialog {
         alertDialogBuilder.show()
     }
 
+    fun showDialogForSingleButton(activity: Context, dialogClickCallback: DialogClickCallback, dialog_title: String,
+                   dialog_message: String) {
+        val alertDialogBuilder = AlertDialog.Builder(activity)
+        alertDialogBuilder.setTitle(dialog_title)
+        alertDialogBuilder.setMessage(dialog_message)
+        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setPositiveButton(R.string.ok) { dialogInterface, i ->
+            dialogClickCallback.onConfirm()
+            dialogInterface.dismiss()
+        }
+        alertDialogBuilder.show()
+    }
+
 
     // Add appointment to calendar after successful appointment creation
 //    fun showDialogForAskingAddress(context: Context, title: String,dialogClickCallback: DialogClickCallback) {

@@ -221,7 +221,6 @@
                                     android:id="@+id/radioYesOrNo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:checkedButton="@id/radioBtnMale"
                                     android:orientation="horizontal">
 
                                     <RadioButton
@@ -412,7 +411,7 @@
                                     android:layout_height="wrap_content"
                                     android:hint="Fees"
                                     android:lines="1"
-                                    android:inputType="number"
+                                    android:inputType="numberDecimal"
                                     android:background="@null"
                                     android:id="@+id/ediitextFees"
                                     android:textColor="@color/txt_color"
@@ -436,7 +435,8 @@
                                     android:layout_height="wrap_content"
                                     android:hint="Department"
                                     android:drawableEnd="@drawable/new_down_arrow"
-                                    android:lines="1"
+                                    android:maxLines="2"
+                                    android:minLines="1"
                                     android:background="@null"
                                     android:id="@+id/textViewDepartment"
                                     android:gravity="center_vertical"
@@ -492,7 +492,7 @@
 
 
                             <com.rootscare.customview.MyCustomButton
-                                android:id="@+id/btn_rootscare_booking_doctor"
+                                android:id="@+id/btn_submit"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_gravity="center"

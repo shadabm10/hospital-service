@@ -1,9 +1,6 @@
 package com.rootscare.data.datasource.api
 
 
-
-
-
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.filterappointmentrequest.FilterAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
@@ -51,25 +48,27 @@ interface ApiService {
 
     @Multipart
     @POST("api-service-provider-registration")
-    fun apiserviceproviderregistration(@Part("user_type") user_type: RequestBody,
-                                      @Part("first_name") first_name: RequestBody,
-                                      @Part("last_name") last_name: RequestBody,
-                                      @Part("email") email: RequestBody,
-                                       @Part("mobile_number") mobile_number: RequestBody,
-                                       @Part("dob") dob: RequestBody,
-                                       @Part("gender") gender: RequestBody,
-                                       @Part("password") password: RequestBody,
-                                       @Part("confirm_password") confirm_password: RequestBody,
-                                      @Part image: MultipartBody.Part,
-                                       @Part certificate: MultipartBody.Part,
-                                       @Part("qualification") qualification: RequestBody,
-                                       @Part("passing_year") passing_year: RequestBody,
-                                       @Part("institute") institute: RequestBody,
-                                       @Part("description") description: RequestBody,
-                                       @Part("experience") experience: RequestBody,
-                                       @Part("available_time") available_time: RequestBody,
-                                       @Part("fees") fees: RequestBody,
-                                       @Part("department") department: RequestBody): Single<RegistrationResponse>
+    fun apiserviceproviderregistration(
+        @Part("user_type") user_type: RequestBody,
+        @Part("first_name") first_name: RequestBody,
+        @Part("last_name") last_name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("mobile_number") mobile_number: RequestBody,
+        @Part("dob") dob: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("confirm_password") confirm_password: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part certificate: MultipartBody.Part,
+        @Part("qualification") qualification: RequestBody,
+        @Part("passing_year") passing_year: RequestBody,
+        @Part("institute") institute: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("experience") experience: RequestBody,
+        @Part("available_time") available_time: RequestBody,
+        @Part("fees") fees: RequestBody,
+        @Part("department") department: RequestBody
+    ): Single<RegistrationResponse>
 
     //Forgot Password Api Call
     @POST("api-forgot-password-email")
@@ -102,4 +101,87 @@ interface ApiService {
     fun apidoctorappointmentPastList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ResponsePastAppointment>
 
 
+    @Multipart
+    @POST("api-sp-doctor-edit-profile")
+    fun apiHitUpdateProfileWithImageAndCertificate(
+        @Part("user_id") user_id: RequestBody,
+        @Part("first_name") first_name: RequestBody,
+        @Part("last_name") last_name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("mobile_number") mobile_number: RequestBody,
+        @Part("dob") dob: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("qualification") qualification: RequestBody,
+        @Part("passing_year") passing_year: RequestBody,
+        @Part("institute") institute: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("experience") experience: RequestBody,
+        @Part("available_time") available_time: RequestBody,
+        @Part("fees") fees: RequestBody,
+        @Part("department") department: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part certificate: MultipartBody.Part
+    ): Single<RegistrationResponse>
+
+    @Multipart
+    @POST("api-sp-doctor-edit-profile")
+    fun apiHitUpdateProfileWithImageOnly(
+        @Part("user_id") user_id: RequestBody,
+        @Part("first_name") first_name: RequestBody,
+        @Part("last_name") last_name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("mobile_number") mobile_number: RequestBody,
+        @Part("dob") dob: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("qualification") qualification: RequestBody,
+        @Part("passing_year") passing_year: RequestBody,
+        @Part("institute") institute: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("experience") experience: RequestBody,
+        @Part("available_time") available_time: RequestBody,
+        @Part("fees") fees: RequestBody,
+        @Part("department") department: RequestBody,
+        @Part image: MultipartBody.Part
+    ): Single<RegistrationResponse>
+
+    @Multipart
+    @POST("api-sp-doctor-edit-profile")
+    fun apiHitUpdateProfileWithCertificateOnly(
+        @Part("user_id") user_id: RequestBody,
+        @Part("first_name") first_name: RequestBody,
+        @Part("last_name") last_name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("mobile_number") mobile_number: RequestBody,
+        @Part("dob") dob: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("qualification") qualification: RequestBody,
+        @Part("passing_year") passing_year: RequestBody,
+        @Part("institute") institute: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("experience") experience: RequestBody,
+        @Part("available_time") available_time: RequestBody,
+        @Part("fees") fees: RequestBody,
+        @Part("department") department: RequestBody,
+        @Part certificate: MultipartBody.Part
+    ): Single<RegistrationResponse>
+
+    @Multipart
+    @POST("api-sp-doctor-edit-profile")
+    fun apiHitUpdateProfileWithOutMultipart(
+        @Part("user_id") user_id: RequestBody,
+        @Part("first_name") first_name: RequestBody,
+        @Part("last_name") last_name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("mobile_number") mobile_number: RequestBody,
+        @Part("dob") dob: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("qualification") qualification: RequestBody,
+        @Part("passing_year") passing_year: RequestBody,
+        @Part("institute") institute: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("experience") experience: RequestBody,
+        @Part("available_time") available_time: RequestBody,
+        @Part("fees") fees: RequestBody,
+        @Part("department") department: RequestBody
+    ): Single<RegistrationResponse>
 }

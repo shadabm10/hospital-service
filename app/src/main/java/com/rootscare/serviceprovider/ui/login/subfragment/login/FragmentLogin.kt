@@ -168,24 +168,24 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
                 if(loginResponse?.result?.userType.equals("doctor")){
                     startActivity(activity?.let { HomeActivity.newIntent(it) })
                     activity?.finish()
-                }else if(loginResponse?.result?.userType.equals("Nurses")){
+                }else if(loginResponse?.result?.userType.equals("nurse")){
                     startActivity(activity?.let { NursrsHomeActivity.newIntent(it) })
                     activity?.finish()
-                }else if(loginResponse?.result?.userType.equals("Caregiver")){
+                }else if(loginResponse?.result?.userType.equals("caregiver")){
                     startActivity(activity?.let { CaregiverHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
-                else if(loginResponse?.result?.userType.equals("Babysitter")){
+                else if(loginResponse?.result?.userType.equals("babysitter")){
                     startActivity(activity?.let { CaregiverHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
 
-                else if(loginResponse?.result?.userType.equals("Hospital")){
+                else if(loginResponse?.result?.userType.equals("physiotherapy")){
                     startActivity(activity?.let { HospitalHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
 
-                else if(loginResponse?.result?.userType.equals("Lab Technician")){
+                else if(loginResponse?.result?.userType.equals("lab-technician")){
                     startActivity(activity?.let { LabTechnicianHomeActivity.newIntent(it) })
                     activity?.finish()
                 }

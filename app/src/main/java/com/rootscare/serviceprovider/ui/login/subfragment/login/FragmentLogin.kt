@@ -75,12 +75,12 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
 
         var dropdownlist= ArrayList<String?>()
         dropdownlist.add("Doctor")
-        dropdownlist.add("Nurses")
+        dropdownlist.add("Nurse")
         dropdownlist.add("Caregiver")
         dropdownlist.add("Hospital")
         dropdownlist.add("Babysitter")
         dropdownlist.add("Physiotherapy")
-        dropdownlist.add("Lab Technician")
+        dropdownlist.add("Lab-Technician")
         fragmentLoginBinding?.txtRootscareLoginUserType?.setOnClickListener(View.OnClickListener {
             CommonDialog.showDialogForDropDownList(this!!.activity!!,"Select User Type",dropdownlist,object:
                 DropDownDialogCallBack{
@@ -180,7 +180,7 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
                     activity?.finish()
                 }
 
-                else if(loginResponse?.result?.userType?.toLowerCase().equals("physiotherapy")){
+                else if(loginResponse?.result?.userType?.toLowerCase().equals("hospital")){
                     startActivity(activity?.let { HospitalHomeActivity.newIntent(it) })
                     activity?.finish()
                 }

@@ -31,9 +31,8 @@
 
                     <ImageView
                         android:id="@+id/img_doctor_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/doctor_profile_photo" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"  />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -45,7 +44,8 @@
                         <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Dr. Maya Grey"
+                            android:text=""
+                            android:id="@+id/textViewDocNameTilte"
                             android:textColor="@color/txt_color"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
@@ -54,7 +54,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_3sdp"
-                            android:text="maya@gmail.com"
+                            android:text=""
+                            android:id="@+id/textViewDocEmailTilte"
                             android:textColor="@color/txt_color"
                             android:textSize="@dimen/_10ssp"
                             android:textStyle="bold" />

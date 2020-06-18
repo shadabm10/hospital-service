@@ -2,6 +2,7 @@ package com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile
 
 import android.util.Log
 import com.google.gson.Gson
+import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
 import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfileNavigator
 import io.reactivex.disposables.Disposable
@@ -17,6 +18,28 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
                 if (response != null) {
                     Log.d("check_response", ": " + Gson().toJson(response))
                     navigator.successDepartmentListResponse(response)
+                } else {
+                    Log.d("check_response", ": null response")
+                }
+            }, { throwable ->
+                run {
+                    navigator.errorInApi(throwable)
+                    Log.d("check_response_error", ": " + throwable.message)
+                }
+            })
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun apidoctorprofile(commonUserIdRequest: CommonUserIdRequest) {
+        val disposable = apiServiceWithGsonFactory.apidoctorprofile(commonUserIdRequest)
+            .subscribeOn(_scheduler_io)
+            .observeOn(_scheduler_ui)
+            .subscribe({ response ->
+                if (response != null) {
+                    // Store last login time
+                    Log.d("check_response", ": " + Gson().toJson(response))
+                    navigator.successGetDoctorProfileResponse(response)
                 } else {
                     Log.d("check_response", ": null response")
                 }

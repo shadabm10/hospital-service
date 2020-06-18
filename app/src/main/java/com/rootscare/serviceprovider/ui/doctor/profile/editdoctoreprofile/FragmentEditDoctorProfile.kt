@@ -19,11 +19,14 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.dialog.CommonDialog
 import com.myfilepickesexample.FileUtil
+import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
 import com.rootscare.data.model.api.response.deaprtmentlist.ResultItem
+import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
 import com.rootscare.data.model.api.response.registrationresponse.RegistrationResponse
 import com.rootscare.interfaces.OnDepartmentDropDownListItemClickListener
 import com.rootscare.serviceprovider.BR
@@ -34,6 +37,7 @@ import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
 import com.rootscare.serviceprovider.ui.login.subfragment.registration.subfragment.registrationstetwo.FragmentRegistrationStepTwo
 import com.whiteelephant.monthpicker.MonthPickerDialog
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_doctor_edit_profile.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -51,7 +55,7 @@ class FragmentEditDoctorProfile :
     private val GALLERY = 1
     private val CAMERA = 2
 
-    private var departmentList: ArrayList<ResultItem?>? = null
+    private var departmentList: ArrayList<ResultItem?>? = ArrayList()
     private var departmentId = ""
     private var departTitle = ""
     private var choosenYear = 1980
@@ -241,7 +245,21 @@ class FragmentEditDoctorProfile :
             Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT)
                 .show()
         }
+        fetchDOCUserDetails()
+
     }
+
+    private fun fetchDOCUserDetails(){
+        if (isNetworkConnected) {
+            baseActivity?.showLoading()
+            var commonUserIdRequest = CommonUserIdRequest()
+            commonUserIdRequest.id = fragmentEditDoctorProfileViewModel?.appSharedPref?.loginUserId
+            fragmentEditDoctorProfileViewModel!!.apidoctorprofile(commonUserIdRequest)
+        } else {
+            Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     override fun successDepartmentListResponse(departmentListResponse: DepartmentListResponse?) {
         baseActivity?.hideLoading()
@@ -255,13 +273,145 @@ class FragmentEditDoctorProfile :
 
     override fun onSuccessEditProfile(response: RegistrationResponse) {
         baseActivity?.hideLoading()
+        fetchDOCUserDetails()
+    }
+
+    override fun successGetDoctorProfileResponse(getDoctorProfileResponse: GetDoctorProfileResponse?) {
+        baseActivity?.hideLoading()
+        if (getDoctorProfileResponse?.code.equals("200")) {
+            if (getDoctorProfileResponse?.result != null) {
+                with(fragmentDoctorEditProfileBinding!!){
+                    if(getDoctorProfileResponse.result.firstName!=null && !getDoctorProfileResponse.result.firstName.equals("")){
+                        ediitextFirstName.setText(getDoctorProfileResponse.result.firstName)
+                    }else{
+                        ediitextFirstName.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.lastName!=null && !getDoctorProfileResponse.result.lastName.equals("")){
+                        ediitextLastName.setText(getDoctorProfileResponse.result.lastName)
+                    }else{
+                        ediitextLastName.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.firstName!=null && !getDoctorProfileResponse.result.firstName.equals("") && getDoctorProfileResponse.result.lastName!=null && !getDoctorProfileResponse.result.lastName.equals("")){
+                        textViewDocNameTilte.setText(getDoctorProfileResponse.result.firstName+" "+getDoctorProfileResponse.result.lastName)
+                    }else{
+                        textViewDocNameTilte.setText("")
+                    }
+
+                    if(getDoctorProfileResponse.result.email!=null && !getDoctorProfileResponse.result.email.equals("")){
+                        ediitextEmail.setText(getDoctorProfileResponse.result.email)
+                        textViewDocEmailTilte.setText(getDoctorProfileResponse.result.email)
+                    }else{
+                        ediitextEmail.setText("")
+                        textViewDocEmailTilte.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.image!=null && !getDoctorProfileResponse.result.image.equals("")){
+                        val options: RequestOptions =
+                            RequestOptions()
+                                .centerCrop()
+                                .apply(RequestOptions.circleCropTransform())
+                                .placeholder(R.drawable.profile_no_image)
+                                .priority(Priority.HIGH)
+                        Glide
+                            .with(activity!!)
+                            .load(getString(R.string.api_base) + "uploads/images/" + getDoctorProfileResponse.result.image)
+                            .apply(options)
+                            .into(imgDoctorProfile)
+                    }
+                    if(getDoctorProfileResponse.result.dob!=null && !getDoctorProfileResponse.result.dob.equals("")){
+                        textViewDOB.setText(getDoctorProfileResponse.result.dob)
+                    }else{
+                        textViewDOB.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.phoneNumber!=null && !getDoctorProfileResponse.result.phoneNumber.equals("")){
+                        ediitextMobileNumber.setText(getDoctorProfileResponse.result.phoneNumber)
+                    }else{
+                        ediitextMobileNumber.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.gender!=null && !getDoctorProfileResponse.result.gender.equals("")){
+                        if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("male")){
+                            radioYesOrNo.check(R.id.radioBtnMale)
+                            selectedGender = "Male"
+                        }else if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("female")){
+                            radioYesOrNo.check(R.id.radioBtnFemale)
+                            selectedGender = "Female"
+                        }else{
+                            radioYesOrNo.check(R.id.radioBtnOther)
+                            selectedGender = "Other"
+                        }
+                    }
+                    if(getDoctorProfileResponse.result.qualification!=null && !getDoctorProfileResponse.result.qualification.equals("")){
+                        ediitextQualification.setText(getDoctorProfileResponse.result.qualification)
+                    }else{
+                        ediitextQualification.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.passingYear!=null && !getDoctorProfileResponse.result.passingYear.equals("")){
+                        textViewPassingYear.setText(getDoctorProfileResponse.result.passingYear)
+                    }else{
+                        textViewPassingYear.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.institute!=null && !getDoctorProfileResponse.result.institute.equals("")){
+                        ediitextInstitute.setText(getDoctorProfileResponse.result.institute)
+                    }else{
+                        ediitextInstitute.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.description!=null && !getDoctorProfileResponse.result.description.equals("")){
+                        ediitextDescription.setText(getDoctorProfileResponse.result.description)
+                    }else{
+                        ediitextDescription.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.experience!=null && !getDoctorProfileResponse.result.experience.equals("")){
+                        ediitextExperience.setText(getDoctorProfileResponse.result.experience)
+                    }else{
+                        ediitextExperience.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.availableTime!=null && !getDoctorProfileResponse.result.availableTime.equals("")){
+                        ediitexAvailableTime.setText(getDoctorProfileResponse.result.availableTime)
+                    }else{
+                        ediitexAvailableTime.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.fees!=null && !getDoctorProfileResponse.result.fees.equals("")){
+                        ediitextFees.setText(getDoctorProfileResponse.result.fees)
+                    }else{
+                        ediitextFees.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.department!=null && getDoctorProfileResponse.result.department.size>0){
+                        textViewDepartment.setText("")
+                        departTitle = ""
+                        departmentId = ""
+                        for (i in 0 until getDoctorProfileResponse.result.department.size){
+                            if (i==0){
+                                departTitle += getDoctorProfileResponse.result.department[i]?.title!!
+                                departmentId += getDoctorProfileResponse.result.department[i]?.id!!
+                            }else{
+                                departTitle += ","+getDoctorProfileResponse.result.department[i]?.title!!
+                                departmentId += ","+getDoctorProfileResponse.result.department[i]?.id!!
+                            }
+                            textViewDepartment.setText(departTitle)
+                            for (j in 0 until departmentList?.size!!){
+                                if (getDoctorProfileResponse.result.department[i]?.id.equals(departmentList!![j]?.id)){
+                                    departmentList!![j]?.isChecked = "true"
+                                }
+                            }
+                        }
+                    }else{
+                        textViewDepartment.setText("")
+                    }
+                    if(getDoctorProfileResponse.result.qualificationCertificate!=null && !getDoctorProfileResponse.result.qualificationCertificate.equals("")){
+                        textViewCertificate.setText(getDoctorProfileResponse.result.qualificationCertificate)
+                    }else{
+                        textViewCertificate.setText("")
+                    }
+                }
+
+            }
+        }
     }
 
     override fun errorInApi(throwable: Throwable?) {
         baseActivity?.hideLoading()
         if (throwable?.message != null) {
             Log.d(FragmentLogin.TAG, "--ERROR-Throwable:-- ${throwable.message}")
-            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -309,11 +459,11 @@ class FragmentEditDoctorProfile :
                     bitmapToFile(bitmap)
                     Glide.with(activity!!).load(bitmap).apply(RequestOptions.circleCropTransform())
                         .into(fragmentDoctorEditProfileBinding!!.imgDoctorProfile)
-                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Toast.makeText(activity, "Failed!", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(activity, "Failed!", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -326,7 +476,7 @@ class FragmentEditDoctorProfile :
             bitmapToFile(thumbnail)
             Glide.with(activity!!).load(thumbnail).apply(RequestOptions.circleCropTransform())
                 .into(fragmentDoctorEditProfileBinding!!.imgDoctorProfile)
-            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 
         } else if (requestCode == PICKFILE_RESULT_CODE) {

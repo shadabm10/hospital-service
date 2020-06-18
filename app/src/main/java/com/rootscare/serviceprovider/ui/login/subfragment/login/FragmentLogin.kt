@@ -165,32 +165,32 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
 //            startActivity(activity?.let { HomeActivity.newIntent(it) })
 //            activity?.finish()
             if(loginResponse?.result!=null){
-                if(loginResponse?.result?.userType.equals("doctor")){
+                if(loginResponse?.result?.userType?.toLowerCase().equals("doctor")){
                     startActivity(activity?.let { HomeActivity.newIntent(it) })
                     activity?.finish()
-                }else if(loginResponse?.result?.userType.equals("nurse")){
+                }else if(loginResponse?.result?.userType?.toLowerCase().equals("nurse")){
                     startActivity(activity?.let { NursrsHomeActivity.newIntent(it) })
                     activity?.finish()
-                }else if(loginResponse?.result?.userType.equals("caregiver")){
+                }else if(loginResponse?.result?.userType?.toLowerCase().equals("caregiver")){
                     startActivity(activity?.let { CaregiverHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
-                else if(loginResponse?.result?.userType.equals("babysitter")){
+                else if(loginResponse?.result?.userType?.toLowerCase().equals("babysitter")){
                     startActivity(activity?.let { CaregiverHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
 
-                else if(loginResponse?.result?.userType.equals("physiotherapy")){
+                else if(loginResponse?.result?.userType?.toLowerCase().equals("physiotherapy")){
                     startActivity(activity?.let { HospitalHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
 
-                else if(loginResponse?.result?.userType.equals("lab-technician")){
+                else if(loginResponse?.result?.userType?.toLowerCase().equals("lab-technician")){
                     startActivity(activity?.let { LabTechnicianHomeActivity.newIntent(it) })
                     activity?.finish()
                 }
 
-                else if(loginResponse?.result?.userType.equals("Physiotherapy")){
+                else if(loginResponse?.result?.userType?.toLowerCase().equals("Physiotherapy")){
                     startActivity(activity?.let { PhysiotherapyHomeActivity.newIntent(it) })
                     activity?.finish()
                 }

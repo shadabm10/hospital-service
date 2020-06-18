@@ -2,8 +2,11 @@ package com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
+import com.rootscare.data.model.api.response.doctor.review.ReviewResponse
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorProfileBinding
@@ -16,8 +19,12 @@ import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfileView
 import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 
-class FragmentReviewAndRating: BaseFragment<FragmentReviewAndRatingBinding, FragmentReviewAndRatingViewModel>(),
+class FragmentReviewAndRating : BaseFragment<FragmentReviewAndRatingBinding, FragmentReviewAndRatingViewModel>(),
     FragmentReviewAndRatingNavigator {
+
+
+    private var contactListAdapter: AdapterReviewAndRatingRecyclerview? = null
+
     private var fragmentReviewAndRatingBinding: FragmentReviewAndRatingBinding? = null
     private var fragmentReviewAndRatingViewModel: FragmentReviewAndRatingViewModel? = null
     override val bindingVariable: Int
@@ -27,7 +34,8 @@ class FragmentReviewAndRating: BaseFragment<FragmentReviewAndRatingBinding, Frag
     override val viewModel: FragmentReviewAndRatingViewModel
         get() {
             fragmentReviewAndRatingViewModel = ViewModelProviders.of(this).get(
-                FragmentReviewAndRatingViewModel::class.java!!)
+                FragmentReviewAndRatingViewModel::class.java
+            )
             return fragmentReviewAndRatingViewModel as FragmentReviewAndRatingViewModel
         }
 
@@ -53,19 +61,28 @@ class FragmentReviewAndRating: BaseFragment<FragmentReviewAndRatingBinding, Frag
 //                FragmentEditDoctorProfile.newInstance())
 //        })
         setUpViewReviewAndRatinglistingRecyclerview()
+        if (isNetworkConnected) {
+            baseActivity?.showLoading()
+            var getDoctorUpcommingAppointmentRequest = GetDoctorUpcommingAppointmentRequest()
+            getDoctorUpcommingAppointmentRequest.userId =
+                fragmentReviewAndRatingViewModel?.appSharedPref?.loginUserId
+            fragmentReviewAndRatingViewModel!!.getReviewFromApi(
+                getDoctorUpcommingAppointmentRequest
+            )
+        } else {
+            Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     // Set up recycler view for service listing if available
     private fun setUpViewReviewAndRatinglistingRecyclerview() {
-//        trainerList: ArrayList<TrainerListItem?>?
         assert(fragmentReviewAndRatingBinding!!.recyclerViewRootscareReviewandrating != null)
         val recyclerView = fragmentReviewAndRatingBinding!!.recyclerViewRootscareReviewandrating
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.setHasFixedSize(true)
-//        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
-        val contactListAdapter = AdapterReviewAndRatingRecyclerview(context!!)
+        contactListAdapter = AdapterReviewAndRatingRecyclerview(context!!)
         recyclerView.adapter = contactListAdapter
 //        contactListAdapter?.recyclerViewItemClickWithView= object : OnItemClikWithIdListener {
 //            override fun onItemClick(id: Int) {
@@ -76,5 +93,19 @@ class FragmentReviewAndRating: BaseFragment<FragmentReviewAndRatingBinding, Frag
 //        }
 
 
+    }
+
+    override fun onSuccessReview(response: ReviewResponse) {
+        baseActivity?.hideLoading()
+        if (response.code.equals("200")) {
+            if (response.result != null && response.result.size > 0) {
+                contactListAdapter?.result = response.result
+                contactListAdapter?.notifyDataSetChanged()
+            }
+        }
+    }
+
+    override fun onThrowable(throwable: Throwable) {
+        baseActivity?.hideLoading()
     }
 }

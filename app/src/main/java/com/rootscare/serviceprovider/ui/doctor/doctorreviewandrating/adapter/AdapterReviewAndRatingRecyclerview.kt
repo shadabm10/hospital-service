@@ -1,16 +1,22 @@
 package com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
+import com.rootscare.data.model.api.response.doctor.review.ResultItem
 
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemReviewAndRatingRecyclerviewBinding
+import java.util.*
 
 class AdapterReviewAndRatingRecyclerview  ( internal var context: Context) : RecyclerView.Adapter<AdapterReviewAndRatingRecyclerview.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
@@ -21,6 +27,7 @@ class AdapterReviewAndRatingRecyclerview  ( internal var context: Context) : Rec
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
     internal lateinit var recyclerViewItemClickWithView: OnItemClikWithIdListener
+    var result: LinkedList<ResultItem> = LinkedList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val singleItemDashboardListingBinding = DataBindingUtil.inflate<ItemReviewAndRatingRecyclerviewBinding>(
@@ -31,7 +38,7 @@ class AdapterReviewAndRatingRecyclerview  ( internal var context: Context) : Rec
 
     override fun getItemCount(): Int {
 //        return trainerList!!.size
-        return 10
+        return result.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,7 +46,7 @@ class AdapterReviewAndRatingRecyclerview  ( internal var context: Context) : Rec
     }
 
 
-    inner class ViewHolder(itemView: ItemReviewAndRatingRecyclerviewBinding) : RecyclerView.ViewHolder(itemView.root) {
+    inner class ViewHolder(var itemVie: ItemReviewAndRatingRecyclerviewBinding) : RecyclerView.ViewHolder(itemVie.root) {
 
         private var local_position:Int = 0
         init {
@@ -71,19 +78,33 @@ class AdapterReviewAndRatingRecyclerview  ( internal var context: Context) : Rec
             Log.d(TAG, " true")
             local_position = pos
 
-//            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name
-//            itemView?.rootView?.txt_teacher_qualification?.text= "Qualification : "+" "+trainerList?.get(pos)?.qualification
-//            if(trainerList?.get(pos)?.avgRating!=null && !trainerList?.get(pos)?.avgRating.equals("")){
-//                itemView?.rootView?.ratingBarteacher?.rating= trainerList?.get(pos)?.avgRating?.toFloat()!!
-//            }
+            with(itemVie){
 
+                if (result[local_position].rating!=null && !TextUtils.isEmpty(result[local_position].rating?.trim())){
+                    ratingBarteacherFeedback.rating = result[local_position].rating?.toFloat()!!
+                }
 
+                if (result[local_position].image!=null && !TextUtils.isEmpty(result[local_position].image?.trim())){
+                    val options: RequestOptions =
+                        RequestOptions()
+                            .centerCrop()
+                            .apply(RequestOptions.circleCropTransform())
+                            .placeholder(R.drawable.profile_no_image)
+                            .priority(Priority.HIGH)
+                    Glide
+                        .with(context)
+                        .load(context.getString(R.string.api_base) + "uploads/images/" + result[local_position].image)
+                        .apply(options)
+                        .into(imgReviewProfilePhoto)
+                }
 
-
-
-//            itemView?.rootView?.txt_rating_count?.text="("+contactListItem?.get(pos)?.contactRating+")"
-//            (contactListItem?.get(pos)?.contactRating)?.toFloat()?.let { itemView?.rootView?.ratingBar?.setRating(it) }
-////            itemView?.rootView?.ratingBar?.rating=1.5f
+                if (result[local_position].reviewBy!=null && !TextUtils.isEmpty(result[local_position].reviewBy?.trim())){
+                    tvTitle.text = result[local_position].reviewBy
+                }
+                if (result[local_position].review!=null && !TextUtils.isEmpty(result[local_position].review?.trim())){
+                    tvReviewDescription.text = result[local_position].review
+                }
+            }
 
 
         }

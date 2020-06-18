@@ -183,17 +183,19 @@
 
                                     <ImageView
                                         android:id="@+id/img_location"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/_10sdp"
-                                        android:padding="@dimen/_5sdp"
-                                        android:visibility="invisible"
-                                        android:src="@drawable/location_icon" />
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:padding="@dimen/_1sdp"
+                                        android:layout_alignBottom="@+id/ll_content"
+                                        android:layout_alignTop="@+id/ll_content"
+                                        android:src="@drawable/question" />
 
                                     <LinearLayout
                                         android:id="@+id/ll_content"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_3sdp"
+                                        android:layout_marginEnd="@dimen/_3sdp"
                                         android:layout_toEndOf="@+id/img_location"
                                         android:orientation="vertical">
 
@@ -201,7 +203,6 @@
                                             android:id="@+id/tv_doctor_address"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="@dimen/_10ssp"
                                             android:padding="@dimen/_5sdp"
                                             android:textColor="@color/txt_color"
                                             android:textSize="@dimen/_11ssp" />

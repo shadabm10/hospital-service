@@ -191,7 +191,7 @@ class FragmentDoctorProfile: BaseFragment<FragmentDoctorProfileBinding, Fragment
                     fragmentDoctorProfileBinding?.tvDoctorAddress?.append("\nDescription: "+getDoctorProfileResponse?.result?.description)
                 }
                 if (getDoctorProfileResponse?.result?.experience!=null && !getDoctorProfileResponse?.result?.experience.equals("")){
-                    fragmentDoctorProfileBinding?.tvDoctorAddress?.append("\nExperience: "+getDoctorProfileResponse?.result?.experience +" Years")
+                    fragmentDoctorProfileBinding?.tvDoctorAddress?.append("\n\nExperience: "+getDoctorProfileResponse?.result?.experience +" Years")
                 }
                 if (getDoctorProfileResponse?.result?.fees!=null && !getDoctorProfileResponse?.result?.fees.equals("")){
                     fragmentDoctorProfileBinding?.tvDoctorFees?.setText("SAR"+" "+getDoctorProfileResponse?.result?.fees)

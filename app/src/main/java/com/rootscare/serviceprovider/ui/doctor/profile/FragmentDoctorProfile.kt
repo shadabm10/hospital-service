@@ -187,6 +187,12 @@ class FragmentDoctorProfile: BaseFragment<FragmentDoctorProfileBinding, Fragment
                 }else{
                     fragmentDoctorProfileBinding?.tvDoctorAddress?.setText("")
                 }
+                if (getDoctorProfileResponse?.result?.description!=null && !getDoctorProfileResponse?.result?.description.equals("")){
+                    fragmentDoctorProfileBinding?.tvDoctorAddress?.append("\nDescription: "+getDoctorProfileResponse?.result?.description)
+                }
+                if (getDoctorProfileResponse?.result?.experience!=null && !getDoctorProfileResponse?.result?.experience.equals("")){
+                    fragmentDoctorProfileBinding?.tvDoctorAddress?.append("\nExperience: "+getDoctorProfileResponse?.result?.experience +" Years")
+                }
                 if (getDoctorProfileResponse?.result?.fees!=null && !getDoctorProfileResponse?.result?.fees.equals("")){
                     fragmentDoctorProfileBinding?.tvDoctorFees?.setText("SAR"+" "+getDoctorProfileResponse?.result?.fees)
                 }else{

@@ -119,11 +119,11 @@ interface ApiService {
         @Part("available_time") available_time: RequestBody,
         @Part("fees") fees: RequestBody,
         @Part("department") department: RequestBody,
-        @Part image: MultipartBody.Part,
-        @Part certificate: MultipartBody.Part
+        @Part image: MultipartBody.Part?=null,
+        @Part certificate: MultipartBody.Part?=null
     ): Single<RegistrationResponse>
 
-    @Multipart
+    /*@Multipart
     @POST("api-sp-doctor-edit-profile")
     fun apiHitUpdateProfileWithImageOnly(
         @Part("user_id") user_id: RequestBody,
@@ -183,5 +183,5 @@ interface ApiService {
         @Part("available_time") available_time: RequestBody,
         @Part("fees") fees: RequestBody,
         @Part("department") department: RequestBody
-    ): Single<RegistrationResponse>
+    ): Single<RegistrationResponse>*/
 }

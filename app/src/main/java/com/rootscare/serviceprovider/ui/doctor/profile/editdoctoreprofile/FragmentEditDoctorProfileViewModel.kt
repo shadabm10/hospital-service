@@ -113,7 +113,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
         compositeDisposable.add(disposable!!)
     }
 
-    fun apiHitForUdateProfileWithProfileImageOnly(
+    /*fun apiHitForUdateProfileWithProfileImageOnly(
         user_id: RequestBody,
         first_name: RequestBody,
         last_name: RequestBody,
@@ -133,7 +133,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
     ) {
         var disposable: Disposable? = null
         if (image != null) {
-            disposable = apiServiceWithGsonFactory.apiHitUpdateProfileWithImageOnly(
+            disposable = apiServiceWithGsonFactory.apiHitUpdateProfileWithImageAndCertificate(
                 user_id,
                 first_name,
                 last_name,
@@ -149,7 +149,8 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
                 available_time,
                 fees,
                 department,
-                image
+                image,
+                null
             )
                 .subscribeOn(_scheduler_io)
                 .observeOn(_scheduler_ui)
@@ -190,7 +191,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
     ) {
         var disposable: Disposable? = null
         if (certificate != null) {
-            disposable = apiServiceWithGsonFactory.apiHitUpdateProfileWithCertificateOnly(
+            disposable = apiServiceWithGsonFactory.apiHitUpdateProfileWithImageAndCertificate(
                 user_id,
                 first_name,
                 last_name,
@@ -206,6 +207,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
                 available_time,
                 fees,
                 department,
+                null,
                 certificate
             )
                 .subscribeOn(_scheduler_io)
@@ -245,7 +247,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
         department: RequestBody
     ) {
         var disposable: Disposable? = null
-        disposable = apiServiceWithGsonFactory.apiHitUpdateProfileWithOutMultipart(
+        disposable = apiServiceWithGsonFactory.apiHitUpdateProfileWithImageAndCertificate(
             user_id,
             first_name,
             last_name,
@@ -260,7 +262,9 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
             experience,
             available_time,
             fees,
-            department
+            department,
+            null,
+            null
         )
             .subscribeOn(_scheduler_io)
             .observeOn(_scheduler_ui)
@@ -279,5 +283,5 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
             })
 
         compositeDisposable.add(disposable!!)
-    }
+    }*/
 }

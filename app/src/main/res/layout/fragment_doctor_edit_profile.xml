@@ -241,14 +241,14 @@
                                         android:textColor="@color/txt_color"
                                         android:textSize="@dimen/_10ssp" />
 
-                                    <RadioButton
+                                    <!--<RadioButton
                                         android:id="@+id/radioBtnOther"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="@dimen/_10sdp"
                                         android:text="Other"
                                         android:textColor="@color/txt_color"
-                                        android:textSize="@dimen/_10ssp" />
+                                        android:textSize="@dimen/_10ssp" />-->
                                 </RadioGroup>
 
                                 <View

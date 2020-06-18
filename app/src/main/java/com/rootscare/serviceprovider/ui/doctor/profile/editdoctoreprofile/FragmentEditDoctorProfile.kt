@@ -223,9 +223,9 @@ class FragmentEditDoctorProfile :
                     if (checkedId == R.id.radioBtnFemale) {
                         selectedGender = "Female"
                     }
-                    if (checkedId == R.id.radioBtnOther) {
+                    /*if (checkedId == R.id.radioBtnOther) {
                         selectedGender = "Other"
-                    }
+                    }*/
                 }
             })
             radioYesOrNo.radioBtnMale.isChecked = true
@@ -334,10 +334,10 @@ class FragmentEditDoctorProfile :
                         }else if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("female")){
                             radioYesOrNo.check(R.id.radioBtnFemale)
                             selectedGender = "Female"
-                        }else{
+                        }/*else{
                             radioYesOrNo.check(R.id.radioBtnOther)
                             selectedGender = "Other"
-                        }
+                        }*/
                     }
                     if(getDoctorProfileResponse.result.qualification!=null && !getDoctorProfileResponse.result.qualification.equals("")){
                         ediitextQualification.setText(getDoctorProfileResponse.result.qualification)
@@ -668,11 +668,14 @@ class FragmentEditDoctorProfile :
 
 
                 if (imageFile == null && certificatefileFile != null) {
+                    var imageMultipartBody: MultipartBody.Part? = null
+                    val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
+                    imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
                     var certificateMultipartBody: MultipartBody.Part? = null
                     val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), certificatefileFile!!)
                     certificateMultipartBody = MultipartBody.Part.createFormData("certificate", certificatefileFile?.name, certificate)
 
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithCertificateImageOnly(
+                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
                         first_name,
                         last_name,
@@ -688,14 +691,18 @@ class FragmentEditDoctorProfile :
                         availableTime,
                         fees,
                         department,
+                        imageMultipartBody,
                         certificateMultipartBody!!
                     )
                 } else if (imageFile != null && certificatefileFile == null) {
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
+                    var certificateMultipartBody: MultipartBody.Part? = null
+                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
+                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", "", certificate)
 
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileImageOnly(
+                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
                         first_name,
                         last_name,
@@ -711,7 +718,8 @@ class FragmentEditDoctorProfile :
                         availableTime,
                         fees,
                         department,
-                        imageMultipartBody
+                        imageMultipartBody,
+                        certificateMultipartBody
                     )
                 } else if (imageFile != null && certificatefileFile != null) {
                     var imageMultipartBody: MultipartBody.Part? = null
@@ -741,7 +749,13 @@ class FragmentEditDoctorProfile :
                         certificateMultipartBody!!
                     )
                 } else if (imageFile == null && certificatefileFile == null) {
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithOutMultipartData(
+                    var imageMultipartBody: MultipartBody.Part? = null
+                    val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
+                    imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
+                    var certificateMultipartBody: MultipartBody.Part? = null
+                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
+                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", "", certificate)
+                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
                         first_name,
                         last_name,
@@ -756,7 +770,9 @@ class FragmentEditDoctorProfile :
                         experience,
                         availableTime,
                         fees,
-                        department
+                        department,
+                        imageMultipartBody,
+                        certificateMultipartBody
                     )
                 }
             }

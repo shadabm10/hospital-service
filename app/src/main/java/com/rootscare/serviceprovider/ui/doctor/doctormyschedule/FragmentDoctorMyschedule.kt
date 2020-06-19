@@ -14,21 +14,14 @@ import com.rootscare.data.model.api.request.doctor.myscheduleaddhospital.AddHosp
 import com.rootscare.data.model.api.response.CommonResponse
 import com.rootscare.data.model.api.response.doctor.myschedule.hospitallist.MyScheduleHospitalResponse
 import com.rootscare.data.model.api.response.doctor.myschedule.hospitallist.ResultItem
-import com.rootscare.interfaces.DialogClickCallback
 import com.rootscare.interfaces.DialogClickCallbackWithFields
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorMyScheduleBinding
-import com.rootscare.serviceprovider.databinding.FragmentReviewAndRatingBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.adapter.AddapterDoctorMyAppointmentListRecyclerview
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentDoctorAppointmentDetails
 import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.adapter.AdapterDoctorMyScheduleRecyclerView
 import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.FragmentdoctorManageSchedule
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRating
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRatingNavigator
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRatingViewModel
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import java.util.*
 
@@ -116,9 +109,9 @@ class FragmentDoctorMyschedule : BaseFragment<FragmentDoctorMyScheduleBinding, F
         contactListAdapter = AdapterDoctorMyScheduleRecyclerView(context!!)
         recyclerView.adapter = contactListAdapter
         contactListAdapter?.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
-            override fun onItemClick(id: Int) {
+            override fun onItemClick(position: Int) {
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentdoctorManageSchedule.newInstance()
+                    FragmentdoctorManageSchedule.newInstance(contactListAdapter?.result!![position])
                 )
             }
 

@@ -48,7 +48,7 @@ class AdapterDoctorMyScheduleRecyclerView(internal var context: Context) :
 
         init {
             itemView.root.txtViewSchedule?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView.onItemClick(1)
+                recyclerViewItemClickWithView.onItemClick(local_position)
             })
 
         }

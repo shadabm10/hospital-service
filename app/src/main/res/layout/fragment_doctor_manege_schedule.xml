@@ -28,7 +28,7 @@
                     <com.rootscare.customview.MyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="BMRC Hospital"
+                        android:id="@+id/tvHospitalTitle"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:textColor="@color/txt_color"
                         android:textSize="@dimen/_14ssp"

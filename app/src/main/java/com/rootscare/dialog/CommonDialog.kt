@@ -114,7 +114,7 @@ object CommonDialog {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_dropdown)
         dialog.setCancelable(true)
-        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCanceledOnTouchOutside(true)
         val recyclerView_dropdown_list = dialog.findViewById<RecyclerView>(R.id.recyclerView_dropdown_list)
         val tv_title=dialog.findViewById<TextView>(R.id.txt_header_title)
         tv_title?.setText(title)

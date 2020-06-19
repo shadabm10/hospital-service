@@ -1,6 +1,7 @@
 package com.rootscare.data.model.api.response.doctor.myschedule.hospitallist
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 data class MyScheduleHospitalResponse(
@@ -16,7 +17,7 @@ data class MyScheduleHospitalResponse(
 
 	@field:SerializedName("status")
 	val status: Boolean? = null
-)
+):Serializable
 
 data class ResultItem(
 
@@ -31,4 +32,4 @@ data class ResultItem(
 
 	@field:SerializedName("id")
 	val id: String? = null
-)
+):Serializable

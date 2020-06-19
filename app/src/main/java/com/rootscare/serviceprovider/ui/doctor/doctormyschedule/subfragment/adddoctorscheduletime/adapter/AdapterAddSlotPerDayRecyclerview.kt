@@ -1,5 +1,6 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.adddoctorscheduletime.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextUtils
@@ -10,14 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.model.AddDoctorSlotTimeItmModel
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemAddScheduleRecyclerviewBinding
+import com.sihatku.commondialog.timepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.item_add_schedule_recyclerview.view.*
 
-class AdapterAddSlotPerDayRecyclerview ( internal var context: Context) : RecyclerView.Adapter<AdapterAddSlotPerDayRecyclerview.ViewHolder>() {
+class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity) : RecyclerView.Adapter<AdapterAddSlotPerDayRecyclerview.ViewHolder>() {
 
     companion object {
         val TAG: String = AdapterAddSlotPerDayRecyclerview::class.java.simpleName
@@ -26,7 +29,7 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: Context) : Recycl
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
 
-    constructor(context: Context, productlistItem: ArrayList<AddDoctorSlotTimeItmModel?>?) : this(context) {
+    constructor(context: FragmentActivity, productlistItem: ArrayList<AddDoctorSlotTimeItmModel?>?) : this(context) {
         this.productlistItem = productlistItem
     }
 
@@ -93,7 +96,25 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: Context) : Recycl
                 override fun afterTextChanged(editable: Editable) {}
             })
 
-            itemView?.rootView?.edt_add_schedule_starttime?.addTextChangedListener(
+            itemView.rootView?.edt_add_schedule_starttime?.setOnClickListener {
+                TimePickerDialog(context, object : TimePickerDialog.CallbackAfterDateTimeSelect {
+                    override fun selectDateTime(dateTime: String) {
+                        productlistItem!![local_position]?.stat_time = dateTime
+                        notifyItemChanged(local_position)
+                    }
+                }).show(context.supportFragmentManager)
+            }
+
+            itemView.rootView?.edt_add_schedule_endtime?.setOnClickListener {
+                TimePickerDialog(context, object : TimePickerDialog.CallbackAfterDateTimeSelect {
+                    override fun selectDateTime(dateTime: String) {
+                        productlistItem!![local_position]?.end_time = dateTime
+                        notifyItemChanged(local_position)
+                    }
+                }).show(context.supportFragmentManager)
+            }
+
+            /*itemView?.rootView?.edt_add_schedule_starttime?.addTextChangedListener(
                 object : TextWatcher {
                     override fun beforeTextChanged(
                         charSequence: CharSequence,
@@ -137,7 +158,7 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: Context) : Recycl
                     }
 
                     override fun afterTextChanged(editable: Editable) {}
-                })
+                })*/
 
             if (productlistItem?.get(pos)?.slot != null) {
                 itemView?.rootView?.edt_add_schedule_slot?.setText(

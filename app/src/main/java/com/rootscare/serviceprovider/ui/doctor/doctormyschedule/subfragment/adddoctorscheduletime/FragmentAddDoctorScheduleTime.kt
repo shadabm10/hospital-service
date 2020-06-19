@@ -83,7 +83,7 @@ class FragmentAddDoctorScheduleTime: BaseFragment<FragmentAddDoctorSlotAndTimeBi
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
 //        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        adapterAddSlotPerDayRecyclerview = AdapterAddSlotPerDayRecyclerview(context!!)
+        adapterAddSlotPerDayRecyclerview = AdapterAddSlotPerDayRecyclerview(activity!!)
         recyclerView.adapter = adapterAddSlotPerDayRecyclerview
         adapterAddSlotPerDayRecyclerview?.addField(AddDoctorSlotTimeItmModel("","",""))
 

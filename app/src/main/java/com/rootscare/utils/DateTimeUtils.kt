@@ -71,4 +71,20 @@ object DateTimeUtils {
         Log.d(TAG, "getFormattedDate: " + dateFormat.format(result))
         return dateFormat.format(result)
     }
+
+    fun getDateByGivenString(dateValue: String?, pattern: String?): Date? {
+//        String dtStart = "2010-10-15T09:27:37Z";
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        val format = SimpleDateFormat(pattern, Locale.getDefault())
+        var date: Date? = null
+        if (dateValue!=null) {
+            try {
+                date = format.parse(dateValue)
+                println(date)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+        }
+        return date
+    }
 }

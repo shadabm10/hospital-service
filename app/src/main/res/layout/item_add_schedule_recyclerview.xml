@@ -20,7 +20,7 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
 
-                <EditText
+                <com.rootscare.customview.MyEditTextView
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/edt_add_schedule_slot"
@@ -32,7 +32,7 @@
                     android:textColorHint="@color/txt_color"
                     android:gravity="center"
                     android:background="@drawable/edit_comm_bg"/>
-                <EditText
+                <com.rootscare.customview.MyTextView
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/edt_add_schedule_starttime"
@@ -45,7 +45,7 @@
                     android:textColorHint="@color/txt_color"
                     android:gravity="center"
                     android:background="@drawable/edit_comm_bg"/>
-                <EditText
+                <com.rootscare.customview.MyTextView
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/edt_add_schedule_endtime"

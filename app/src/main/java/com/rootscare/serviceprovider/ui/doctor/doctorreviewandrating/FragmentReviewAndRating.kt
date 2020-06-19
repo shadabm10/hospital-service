@@ -99,9 +99,17 @@ class FragmentReviewAndRating : BaseFragment<FragmentReviewAndRatingBinding, Fra
         baseActivity?.hideLoading()
         if (response.code.equals("200")) {
             if (response.result != null && response.result.size > 0) {
+                fragmentReviewAndRatingBinding?.recyclerViewRootscareReviewandrating?.visibility = View.VISIBLE
+                fragmentReviewAndRatingBinding?.tvNoDate?.visibility = View.GONE
                 contactListAdapter?.result = response.result
                 contactListAdapter?.notifyDataSetChanged()
+            }else{
+                fragmentReviewAndRatingBinding?.recyclerViewRootscareReviewandrating?.visibility = View.INVISIBLE
+                fragmentReviewAndRatingBinding?.tvNoDate?.visibility = View.VISIBLE
             }
+        }else{
+            fragmentReviewAndRatingBinding?.recyclerViewRootscareReviewandrating?.visibility = View.INVISIBLE
+            fragmentReviewAndRatingBinding?.tvNoDate?.visibility = View.VISIBLE
         }
     }
 

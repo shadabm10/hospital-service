@@ -13,6 +13,7 @@ import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.
 import com.rootscare.data.model.api.response.doctor.appointment.requestappointment.getrequestappointment.GetDoctorRequestAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.DoctorUpcomingAppointmentResponse
+import com.rootscare.data.model.api.response.doctor.payment.PaymentResponse
 import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
 import com.rootscare.data.model.api.response.doctor.review.ReviewResponse
 import com.rootscare.data.model.api.response.forgotpasswordresponse.forgotpasswordchangepassword.ForgotPasswordChangePasswordResponse
@@ -127,4 +128,7 @@ interface ApiService {
 
     @POST("api-doctor-review")
     fun getDoctorReview(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ReviewResponse>
+
+    @POST("api-patient-payment-history")
+    fun getPaymentHistory(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
 }

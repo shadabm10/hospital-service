@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.rootscare.data.model.api.response.doctor.review.ResultItem
 
@@ -95,6 +96,7 @@ class AdapterReviewAndRatingRecyclerview  ( internal var context: Context) : Rec
                         .with(context)
                         .load(context.getString(R.string.api_base) + "uploads/images/" + result[local_position].image)
                         .apply(options)
+                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(imgReviewProfilePhoto)
                 }
 

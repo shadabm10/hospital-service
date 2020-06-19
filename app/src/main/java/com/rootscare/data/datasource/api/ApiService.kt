@@ -132,7 +132,7 @@ interface ApiService {
     @POST("api-doctor-review")
     fun getDoctorReview(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ReviewResponse>
 
-    @POST("api-patient-payment-history")
+    @POST("api-doctor-payment-history")
     fun getPaymentHistory(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
 
     @POST("api-doctor-hospital-clinic")

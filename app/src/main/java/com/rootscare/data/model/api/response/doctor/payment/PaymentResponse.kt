@@ -20,36 +20,18 @@ data class PaymentResponse(
 
 data class ResultItem(
 
-	@field:SerializedName("transaction_id")
-	val transactionId: String? = null,
-
 	@field:SerializedName("date")
 	val date: String? = null,
 
-	@field:SerializedName("payment_type")
+	@field:SerializedName("paymentType")
 	val paymentType: String? = null,
 
-	@field:SerializedName("amount")
+	@field:SerializedName("price")
 	val amount: String? = null,
 
-	@field:SerializedName("user_id")
-	val userId: String? = null,
-
-	@field:SerializedName("subtotal")
-	val subtotal: String? = null,
-
-	@field:SerializedName("payment_status")
+	@field:SerializedName("paymentStatus")
 	val paymentStatus: String? = null,
 
-	@field:SerializedName("vat")
-	val vat: String? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null,
-
 	@field:SerializedName("order_id")
-	val orderId: String? = null,
-
-	@field:SerializedName("order_type")
-	val orderType: String? = null
+	val orderId: String? = null
 )

@@ -3,6 +3,7 @@ package com.dialog
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -131,11 +132,11 @@ object CommonDialog {
         dialog.show()
     }
 
-    fun showDialogForAddHospitalOrClinic(context: Context,dialogClickCallback: DialogClickCallback) {
+    fun showDialogForAddHospitalOrClinic(context: Context,dialogClickCallback: DialogClickCallbackWithFields) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_add_hospita_or_clinic)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
 
         val cancel = dialog.findViewById<TextView>(R.id.btn_negative)
         val confirm = dialog.findViewById<TextView>(R.id.btn_positive)
@@ -150,9 +151,24 @@ object CommonDialog {
             dialogClickCallback.onDismiss()
             dialog.dismiss()
         }
+
+        var hospitaName = dialog.findViewById<TextView>(R.id.etHospitalName)
+        var address = dialog.findViewById<TextView>(R.id.etAddress)
+
         confirm.setOnClickListener {
-            dialogClickCallback.onConfirm()
-            dialog.dismiss()
+            if (!TextUtils.isEmpty(hospitaName.text.trim()) && !TextUtils.isEmpty(address.text.trim())) {
+                dialogClickCallback.onConfirm(hospitalName = hospitaName.text.toString().trim(), address = address.text.toString().trim())
+                dialog.dismiss()
+            }else{
+                if (TextUtils.isEmpty(hospitaName.text.trim())) {
+                    hospitaName.error = context.getString(R.string.can_not_be_blank)
+                    hospitaName.requestFocus()
+                }
+                if (TextUtils.isEmpty(address.text.trim())) {
+                    address.error = context.getString(R.string.can_not_be_blank)
+                    address.requestFocus()
+                }
+            }
         }
         dialog.show()
     }

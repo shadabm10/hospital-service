@@ -13,4 +13,5 @@
     <string name="ok">Ok</string>
     <string name="read_more"><u>Read More</u></string>
     <string name="read_less"><u>Read Less</u></string>
+    <string name="can_not_be_blank">Can not be blank</string>
 </resources>

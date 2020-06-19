@@ -5,14 +5,17 @@ import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequ
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.filterappointmentrequest.FilterAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.updateappointmentrequest.UpdateAppointmentRequest
+import com.rootscare.data.model.api.request.doctor.myscheduleaddhospital.AddHospitalRequest
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordchangerequest.ForgotPasswordChangeRequest
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordemailrequest.ForgotPasswordSendEmailRequest
 import com.rootscare.data.model.api.request.loginrequest.LoginRequest
+import com.rootscare.data.model.api.response.CommonResponse
 import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
 import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResponsePastAppointment
 import com.rootscare.data.model.api.response.doctor.appointment.requestappointment.getrequestappointment.GetDoctorRequestAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.DoctorUpcomingAppointmentResponse
+import com.rootscare.data.model.api.response.doctor.myschedule.hospitallist.MyScheduleHospitalResponse
 import com.rootscare.data.model.api.response.doctor.payment.PaymentResponse
 import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
 import com.rootscare.data.model.api.response.doctor.review.ReviewResponse
@@ -131,4 +134,10 @@ interface ApiService {
 
     @POST("api-patient-payment-history")
     fun getPaymentHistory(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
+
+    @POST("api-doctor-hospital-clinic")
+    fun getMyScheduleHospitalList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<MyScheduleHospitalResponse>
+
+    @POST("api-insert-doctor-private-clinic")
+    fun addHospitalMyschedule(@Body getDoctorUpcommingAppointmentRequestBody: AddHospitalRequest): Single<CommonResponse>
 }

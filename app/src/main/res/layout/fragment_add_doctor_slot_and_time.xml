@@ -30,9 +30,9 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvHospitalTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="BMRC Hospital"
                         android:textColor="@color/txt_color"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
@@ -46,8 +46,10 @@
                             android:id="@+id/txt_select_day"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
+                            android:layout_centerVertical="true"
                             android:background="@drawable/rounded_white_btn"
                             android:drawableEnd="@drawable/new_down_arrow"
+                            android:gravity="center_vertical"
                             android:hint="Select Day"
                             android:padding="@dimen/_10sdp"
                             android:textSize="@dimen/_10ssp" />
@@ -64,20 +66,43 @@
                         android:background="@color/transparent"
                         android:scrollbars="vertical" />
 
-                    <Button
-                        android:id="@+id/btn_add_more_slot_and_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_gravity="end"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:background="@drawable/rounded_blue_btn"
-                        android:padding="@dimen/_10sdp"
-                        android:text="Add More Slot"
-                        android:textAllCaps="false"
-                        android:textColor="@color/background_white"
-                        android:textSize="@dimen/_12sdp" />
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_submit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:background="@drawable/rounded_blue_btn"
+                            android:text="Submit"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="false"
+                            android:textColor="@color/background_white"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <Button
+                            android:id="@+id/btn_add_more_slot_and_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/rounded_blue_btn"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:text="Add More Slot"
+                            android:textAllCaps="false"
+                            android:textColor="@color/background_white"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

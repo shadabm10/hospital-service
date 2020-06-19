@@ -20,34 +20,32 @@ import com.rootscare.serviceprovider.databinding.ItemAddScheduleRecyclerviewBind
 import com.sihatku.commondialog.timepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.item_add_schedule_recyclerview.view.*
 
-class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity) : RecyclerView.Adapter<AdapterAddSlotPerDayRecyclerview.ViewHolder>() {
+class AdapterAddSlotPerDayRecyclerview(internal var context: FragmentActivity) :
+    RecyclerView.Adapter<AdapterAddSlotPerDayRecyclerview.ViewHolder>() {
 
     companion object {
         val TAG: String = AdapterAddSlotPerDayRecyclerview::class.java.simpleName
     }
 
-    //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
-//
-
-    constructor(context: FragmentActivity, productlistItem: ArrayList<AddDoctorSlotTimeItmModel?>?) : this(context) {
-        this.productlistItem = productlistItem
+    constructor(context: FragmentActivity, productlistItem: ArrayList<AddDoctorSlotTimeItmModel>?) : this(context) {
+        this.productlistItem = productlistItem!!
     }
 
-    var abc = -1
-    var abcBools = false
-    internal lateinit var onItemClikWithIdListener: OnItemClikWithIdListener
-    var productlistItem: ArrayList<AddDoctorSlotTimeItmModel?>?  = ArrayList<AddDoctorSlotTimeItmModel?>()
+    //    var abc = -1
+//    var abcBools = false
+//    internal lateinit var onItemClikWithIdListener: OnItemClikWithIdListener
+    var productlistItem: ArrayList<AddDoctorSlotTimeItmModel> = ArrayList<AddDoctorSlotTimeItmModel>()
     lateinit var singleItemDashboardListingBinding: ItemAddScheduleRecyclerviewBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         singleItemDashboardListingBinding = DataBindingUtil.inflate<ItemAddScheduleRecyclerviewBinding>(
             LayoutInflater.from(context),
-            R.layout.item_add_schedule_recyclerview, parent, false)
+            R.layout.item_add_schedule_recyclerview, parent, false
+        )
         return ViewHolder(singleItemDashboardListingBinding)
     }
 
     override fun getItemCount(): Int {
         return productlistItem!!.size
-//        return 2
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -57,9 +55,10 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity)
 
     inner class ViewHolder(itemView: ItemAddScheduleRecyclerviewBinding) : RecyclerView.ViewHolder(itemView.root) {
 
-        private var local_position:Int = 0
+        private var local_position: Int = 0
+
         init {
-            itemView?.root?.img_remove?.setOnClickListener(View.OnClickListener {
+            itemView.root.img_remove?.setOnClickListener(View.OnClickListener {
                 removeAt(local_position)
             })
         }
@@ -68,13 +67,13 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity)
             Log.d(TAG, " true")
             local_position = pos
 
-            if(pos==0){
-                itemView?.rootView?.img_remove?.visibility= View.GONE
-            }else{
-                itemView?.rootView?.img_remove?.visibility= View.VISIBLE
+            if (pos == 0) {
+                itemView.rootView?.img_remove?.visibility = View.INVISIBLE
+            } else {
+                itemView.rootView?.img_remove?.visibility = View.VISIBLE
             }
 
-            itemView?.rootView?.edt_add_schedule_slot?.addTextChangedListener(object :
+            /*itemView?.rootView?.edt_add_schedule_slot?.addTextChangedListener(object :
                 TextWatcher {
                 override fun beforeTextChanged(
                     charSequence: CharSequence,
@@ -94,7 +93,7 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity)
                 }
 
                 override fun afterTextChanged(editable: Editable) {}
-            })
+            })*/
 
             itemView.rootView?.edt_add_schedule_starttime?.setOnClickListener {
                 TimePickerDialog(context, object : TimePickerDialog.CallbackAfterDateTimeSelect {
@@ -160,22 +159,22 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity)
                     override fun afterTextChanged(editable: Editable) {}
                 })*/
 
-            if (productlistItem?.get(pos)?.slot != null) {
+            /*if (productlistItem?.get(pos)?.slot != null) {
                 itemView?.rootView?.edt_add_schedule_slot?.setText(
                     productlistItem?.get(
                         pos
                     )?.slot
                 )
-            }
+            }*/
 
             if (productlistItem?.get(pos)?.stat_time != null) {
-                itemView?.rootView?.edt_add_schedule_starttime?.setText(
+                itemView.rootView?.edt_add_schedule_starttime?.setText(
                     productlistItem?.get(pos)?.stat_time
                 )
             }
 
             if (productlistItem?.get(pos)?.end_time != null) {
-                itemView?.rootView?.edt_add_schedule_endtime?.setText(
+                itemView.rootView?.edt_add_schedule_endtime?.setText(
                     productlistItem?.get(pos)?.end_time
                 )
             }
@@ -219,7 +218,7 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity)
 //        productlistItem?.add(productlistItem?.size!!, managerInfoItemModel)
 //        notifyItemInserted(productlistItem!!.size - 1)
 
-        productlistItem?.add(equipmentsItmModel)
+        productlistItem?.add(equipmentsItmModel!!)
         notifyDataSetChanged()
     }
 
@@ -250,7 +249,8 @@ class AdapterAddSlotPerDayRecyclerview ( internal var context: FragmentActivity)
 //                )
 //                items.add(equipmentsItmModel)
 //            }
-            var equipmentsItmModel=AddDoctorSlotTimeItmModel(productlistItem?.get(i)?.slot!!,productlistItem?.get(i)?.stat_time!!,
+            var equipmentsItmModel = AddDoctorSlotTimeItmModel(
+                productlistItem?.get(i)?.slot!!, productlistItem?.get(i)?.stat_time!!,
                 productlistItem?.get(i)?.end_time!!
             )
             items.add(equipmentsItmModel)

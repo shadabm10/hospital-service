@@ -16,4 +16,6 @@
     <string name="can_not_be_blank">Can not be blank</string>
     <string name="submit">Submit</string>
     <string name="select_time">Select Time</string>
+    <string name="please_select_day">Please select day</string>
+    <string name="please_add_time_for_all_slot">Please add time for all slot</string>
 </resources>

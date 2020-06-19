@@ -8,17 +8,20 @@
 
 
     </data>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
-        app:cardCornerRadius="@dimen/_10sdp"
-        android:elevation="@dimen/_20sdp">
+        android:elevation="@dimen/_20sdp"
+        app:cardCornerRadius="@dimen/_10sdp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/_15sdp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,71 +32,80 @@
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/edit_comm_bg"
+                    android:gravity="center"
                     android:hint="Slot"
                     android:padding="@dimen/_5sdp"
+                    android:id="@+id/tvSlotName"
                     android:textColor="@color/txt_color"
-                    android:textSize="@dimen/_10ssp"
                     android:textColorHint="@color/txt_color"
-                    android:gravity="center"
-                    android:background="@drawable/edit_comm_bg"/>
+                    android:textSize="@dimen/_10ssp" />
+
                 <com.rootscare.customview.MyTextView
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:hint="Start Time"
-                    android:text="04:00 PM"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:textColor="@color/txt_color"
-                    android:textSize="@dimen/_10ssp"
-                    android:textColorHint="@color/txt_color"
+                    android:background="@drawable/edit_comm_bg"
                     android:gravity="center"
-                    android:background="@drawable/edit_comm_bg"/>
+                    android:hint="Start Time"
+                    android:padding="@dimen/_5sdp"
+                    android:text="04:00 PM"
+                    android:id="@+id/tvStartTime"
+                    android:textColor="@color/txt_color"
+                    android:textColorHint="@color/txt_color"
+                    android:textSize="@dimen/_10ssp" />
+
                 <com.rootscare.customview.MyTextView
-                android:layout_width="@dimen/dimen_0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
-                android:hint="End time"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_comm_bg"
+                    android:gravity="center"
+                    android:hint="End time"
+                    android:padding="@dimen/_5sdp"
                     android:text="07:00 PM"
-                android:padding="@dimen/_5sdp"
-                android:textColor="@color/txt_color"
-                android:textSize="@dimen/_10ssp"
-                android:textColorHint="@color/txt_color"
-                android:gravity="center"
-                android:background="@drawable/edit_comm_bg"/>
+                    android:id="@+id/tvEndTime"
+                    android:textColor="@color/txt_color"
+                    android:textColorHint="@color/txt_color"
+                    android:textSize="@dimen/_10ssp" />
 
 
             </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-              >
+                android:layout_marginTop="@dimen/_10sdp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_10dp">
-                    <com.rootscare.customview.MyCustomButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_30sdp"
-                        android:text="Remove"
-                        android:textSize="@dimen/_10ssp"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:background="@drawable/rounded_green_btn"
-                        android:layout_alignParentStart="true"/>
 
                     <com.rootscare.customview.MyCustomButton
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
-                        android:text="Cancel"
-                        android:id="@+id/btn_cancel"
-                        android:textColor="@color/white"
-                        android:background="@drawable/rounded_blue_btn"
-                        android:textSize="@dimen/_10ssp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/rounded_green_btn"
+                        android:text="Remove"
+                        android:id="@+id/btn_remove"
                         android:textAllCaps="false"
-                        android:layout_alignParentEnd="true"/>
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.rootscare.customview.MyCustomButton
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/rounded_blue_btn"
+                        android:text="Cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
 

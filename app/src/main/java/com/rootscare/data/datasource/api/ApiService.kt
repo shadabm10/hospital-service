@@ -6,6 +6,8 @@ import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointme
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.updateappointmentrequest.UpdateAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.myscheduleaddhospital.AddHospitalRequest
+import com.rootscare.data.model.api.request.doctor.myscheduleaddtimeslot.AddTimeSlotRequest
+import com.rootscare.data.model.api.request.doctor.myscheduletimeslot.GetTimeSlotMyScheduleRequest
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordchangerequest.ForgotPasswordChangeRequest
 import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordemailrequest.ForgotPasswordSendEmailRequest
 import com.rootscare.data.model.api.request.loginrequest.LoginRequest
@@ -16,6 +18,7 @@ import com.rootscare.data.model.api.response.doctor.appointment.requestappointme
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.DoctorUpcomingAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.myschedule.hospitallist.MyScheduleHospitalResponse
+import com.rootscare.data.model.api.response.doctor.myschedule.timeslotlist.MyScheduleTimeSlotResponse
 import com.rootscare.data.model.api.response.doctor.payment.PaymentResponse
 import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
 import com.rootscare.data.model.api.response.doctor.review.ReviewResponse
@@ -140,4 +143,19 @@ interface ApiService {
 
     @POST("api-insert-doctor-private-clinic")
     fun addHospitalMyschedule(@Body getDoctorUpcommingAppointmentRequestBody: AddHospitalRequest): Single<CommonResponse>
+
+
+    @POST("api-doctor-clinic-private-slot")
+    fun getAllTimeSlotMyschedule(@Body request: GetTimeSlotMyScheduleRequest): Single<MyScheduleTimeSlotResponse>
+
+    @POST("api-doctor-clinic-slot-filter")
+    fun getDaySpecificTimeSlotMyschedule(@Body request: GetTimeSlotMyScheduleRequest): Single<MyScheduleTimeSlotResponse>
+
+    @POST("api-delete-doctor-private-slot")
+    fun apiHitRemoveTimeSlotMySchedule(@Body request: GetTimeSlotMyScheduleRequest): Single<MyScheduleTimeSlotResponse>
+
+    @POST("api-insert-doctor-private-slot")
+    fun apiHitSaveTimeSlotForDoctor(@Body request: AddTimeSlotRequest): Single<CommonResponse>
+
+
 }

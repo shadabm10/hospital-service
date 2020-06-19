@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.rootscare.data.model.api.response.doctor.myschedule.timeslotlist.ResultItem
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemDoctorMyScheduleRecyclerviewBinding
@@ -14,27 +15,27 @@ import com.rootscare.serviceprovider.databinding.ItemDoctorViewScheduleListBindi
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.adapter.AddapterDoctorMyAppointmentListRecyclerview
 import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.adapter.AdapterDoctorMyScheduleRecyclerView
 import kotlinx.android.synthetic.main.item_doctor_view_schedule_list.view.*
+import java.util.*
 
-class AdapterDoctoeViewScheduleRecyclerview ( internal var context: Context) : RecyclerView.Adapter<AdapterDoctoeViewScheduleRecyclerview.ViewHolder>() {
-    //    val trainerList: ArrayList<TrainerListItem?>?,
+class AdapterDoctoeViewScheduleRecyclerview(internal var context: Context) :
+    RecyclerView.Adapter<AdapterDoctoeViewScheduleRecyclerview.ViewHolder>() {
     companion object {
         val TAG: String = AddapterDoctorMyAppointmentListRecyclerview::class.java.simpleName
     }
 
-    //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
-//
     internal lateinit var recyclerViewItemClickWithView: OnItemClikWithIdListener
+    var result: LinkedList<ResultItem> = LinkedList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val singleItemDashboardListingBinding = DataBindingUtil.inflate<ItemDoctorViewScheduleListBinding>(
             LayoutInflater.from(context),
-            R.layout.item_doctor_view_schedule_list, parent, false)
+            R.layout.item_doctor_view_schedule_list, parent, false
+        )
         return ViewHolder(singleItemDashboardListingBinding)
     }
 
     override fun getItemCount(): Int {
-//        return trainerList!!.size
-        return 10
+        return result.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,51 +45,29 @@ class AdapterDoctoeViewScheduleRecyclerview ( internal var context: Context) : R
 
     inner class ViewHolder(itemView: ItemDoctorViewScheduleListBinding) : RecyclerView.ViewHolder(itemView.root) {
 
-        private var local_position:Int = 0
+        private var local_position: Int = 0
+
         init {
-            itemView?.root?.btn_cancel?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onItemClick(1)
+            itemView.root.btn_remove?.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView.onItemClick(local_position)
             })
-//            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
-//                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
-//            })
-
-//            itemView.root?.img_bid?.setOnClickListener {
-//                run {
-//                    recyclerViewItemClick?.onClick(itemView.root?.img_bid,local_position)
-//                    //serviceListItem?.get(local_position)?.requestid?.let { it1 -> recyclerViewItemClick.onClick(itemView.root?.img_bid,it1) }
-//                }
-//            }
-//
-//            itemView.root?.img_details?.setOnClickListener {
-//                run {
-//                    recyclerViewItemClick?.onClick(itemView.root?.img_details,local_position)
-//                    // serviceListItem?.get(local_position)?.requestid?.let { it1 -> recyclerViewItemClick.onClick(itemView.root?.img_details,it1) }
-//                }
-//            }
-
 
         }
 
         fun onBind(pos: Int) {
             Log.d(TAG, " true")
             local_position = pos
-
-//            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name
-//            itemView?.rootView?.txt_teacher_qualification?.text= "Qualification : "+" "+trainerList?.get(pos)?.qualification
-//            if(trainerList?.get(pos)?.avgRating!=null && !trainerList?.get(pos)?.avgRating.equals("")){
-//                itemView?.rootView?.ratingBarteacher?.rating= trainerList?.get(pos)?.avgRating?.toFloat()!!
-//            }
-
-
-
-
-
-//            itemView?.rootView?.txt_rating_count?.text="("+contactListItem?.get(pos)?.contactRating+")"
-//            (contactListItem?.get(pos)?.contactRating)?.toFloat()?.let { itemView?.rootView?.ratingBar?.setRating(it) }
-////            itemView?.rootView?.ratingBar?.rating=1.5f
-
-
+            with(itemView) {
+                if (result[local_position].day != null) {
+                    tvSlotName.setText(result[local_position].day)
+                }
+                if (result[local_position].timeFrom != null) {
+                    tvStartTime.setText(result[local_position].timeFrom)
+                }
+                if (result[local_position].timeTo != null) {
+                    tvEndTime.setText(result[local_position].timeTo)
+                }
+            }
         }
     }
 

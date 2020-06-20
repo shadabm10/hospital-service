@@ -59,8 +59,8 @@ class AdapterRequestedAppointmentListRecyclerview (val requestedappointmentList:
         private var local_position: Int = 0
 
         init {
-            itemView?.root?.crdview_requested_appointment_list?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onItemClick(1)
+            itemView?.btnViewDetails?.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView?.onItemClick(local_position)
             })
             itemView?.root?.btn_accept?.setOnClickListener(View.OnClickListener {
                 recyclerViewItemClickWithView?.onAcceptBtnClick(requestedappointmentList?.get(local_position)?.id!!,"Accept")

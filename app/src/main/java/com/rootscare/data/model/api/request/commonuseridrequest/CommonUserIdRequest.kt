@@ -7,5 +7,8 @@ import com.google.gson.annotations.SerializedName
 data class CommonUserIdRequest(
 	@field:JsonProperty("id")
 	@field:SerializedName("id")
-	var id: String? = null
+	var id: String? = null,
+	@field:JsonProperty("service_type")
+	@field:SerializedName("service_type")
+	var service_type: String? = null
 )

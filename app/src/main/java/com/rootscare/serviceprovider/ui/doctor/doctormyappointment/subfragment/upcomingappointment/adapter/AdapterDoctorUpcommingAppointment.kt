@@ -56,8 +56,8 @@ class AdapterDoctorUpcommingAppointment (val upcomingAppointmentList: ArrayList<
         private var local_position: Int = 0
 
         init {
-            itemView?.root?.crdview_doctorappoitment_list?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onItemClick(1)
+            itemView?.root?.btnViewDetails?.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView?.onItemClick(local_position)
             })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
 //                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)

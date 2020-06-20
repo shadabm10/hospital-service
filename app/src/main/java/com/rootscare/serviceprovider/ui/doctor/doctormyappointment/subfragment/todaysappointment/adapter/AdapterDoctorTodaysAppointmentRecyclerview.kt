@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.ResultItem
+import com.rootscare.interfaces.OnClickOfDoctorAppointment
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemDoctorTodaysAppointmentrecyclerviewBinding
@@ -21,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AdapterDoctorTodaysAppointmentRecyclerview (val todaysAppointList: ArrayList<ResultItem?>?, internal var context: Context) : RecyclerView.Adapter<AdapterDoctorTodaysAppointmentRecyclerview.ViewHolder>() {
+class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList: ArrayList<ResultItem?>?, internal var context: Context) : RecyclerView.Adapter<AdapterDoctorTodaysAppointmentRecyclerview.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
     companion object {
         val TAG: String = AdapterDoctorTodaysAppointmentRecyclerview::class.java.simpleName
@@ -29,7 +31,8 @@ class AdapterDoctorTodaysAppointmentRecyclerview (val todaysAppointList: ArrayLi
 
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
-    internal lateinit var recyclerViewItemClickWithView: OnItemClikWithIdListener
+
+    internal lateinit var recyclerViewItemClickWithView2: OnClickOfDoctorAppointment
     var startTime=""
     var endTime=""
 
@@ -58,9 +61,12 @@ class AdapterDoctorTodaysAppointmentRecyclerview (val todaysAppointList: ArrayLi
         private var local_position: Int = 0
 
         init {
-            itemView?.root?.crdview_todays_appointment_list?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onItemClick(1)
+            itemView.btnViewDetails.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView2.onItemClick(local_position)
             })
+            itemView.btnCompleted.setOnClickListener {
+                recyclerViewItemClickWithView2.onAcceptBtnClick(local_position.toString(), "")
+            }
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
 //                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
 //            })
@@ -87,20 +93,20 @@ class AdapterDoctorTodaysAppointmentRecyclerview (val todaysAppointList: ArrayLi
             local_position = pos
 
             if(todaysAppointList?.get(pos)?.orderId!=null && !todaysAppointList?.get(pos)?.orderId.equals("")){
-                itemView?.rootView?.txt_todays_appointment?.setText(todaysAppointList?.get(pos)?.orderId)
+                itemView.rootView?.txt_todays_appointment?.text = todaysAppointList?.get(pos)?.orderId
             }else{
-                itemView?.rootView?.txt_todays_appointment?.setText("")
+                itemView.rootView?.txt_todays_appointment?.text = ""
             }
 
             if(todaysAppointList?.get(pos)?.patientName!=null && !todaysAppointList?.get(pos)?.patientName.equals("")){
-                itemView?.rootView?.txt_todays_patient_name?.setText(todaysAppointList?.get(pos)?.patientName)
+                itemView.rootView?.txt_todays_patient_name?.text = todaysAppointList?.get(pos)?.patientName
             }else{
-                itemView?.rootView?.txt_todays_patient_name?.setText("")
+                itemView.rootView?.txt_todays_patient_name?.text = ""
             }
             if(todaysAppointList?.get(pos)?.bookingDate!=null && !todaysAppointList?.get(pos)?.bookingDate.equals("")){
-                itemView?.rootView?.txt_todays_booking_date?.setText(formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",todaysAppointList?.get(pos)?.bookingDate))
+                itemView.rootView?.txt_todays_booking_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",todaysAppointList?.get(pos)?.bookingDate)
             }else{
-                itemView?.rootView?.txt_todays_booking_date?.setText("")
+                itemView.rootView?.txt_todays_booking_date?.text = ""
             }
             if(todaysAppointList?.get(pos)?.fromTime!=null && !todaysAppointList?.get(pos)?.fromTime.equals("")){
                 startTime= todaysAppointList?.get(pos)?.fromTime!!
@@ -114,26 +120,20 @@ class AdapterDoctorTodaysAppointmentRecyclerview (val todaysAppointList: ArrayLi
                 endTime=""
             }
 
-            itemView?.rootView?.txt_todays_time?.setText(startTime+"-"+endTime)
+            itemView.rootView?.txt_todays_time?.text = startTime+"-"+endTime
             if(todaysAppointList?.get(pos)?.appointmentDate!=null && !todaysAppointList?.get(pos)?.appointmentDate.equals("")){
-                itemView?.rootView?.txt_todays_appointment_date?.setText(formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",todaysAppointList?.get(pos)?.appointmentDate))
+                itemView.rootView?.txt_todays_appointment_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",todaysAppointList?.get(pos)?.appointmentDate)
             }else{
-                itemView?.rootView?.txt_todays_appointment_date?.setText("")
+                itemView.rootView?.txt_todays_appointment_date?.text = ""
             }
 
+            if (todaysAppointList?.get(pos)?.appointmentStatus!=null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
+                todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!){
+                itemView.btnCompleted.visibility = View.GONE
+            }else{
+                itemView.btnCompleted.visibility = View.VISIBLE
+            }
 
-
-
-//            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name
-//            itemView?.rootView?.txt_teacher_qualification?.text= "Qualification : "+" "+trainerList?.get(pos)?.qualification
-//            if(trainerList?.get(pos)?.avgRating!=null && !trainerList?.get(pos)?.avgRating.equals("")){
-//                itemView?.rootView?.ratingBarteacher?.rating= trainerList?.get(pos)?.avgRating?.toFloat()!!
-//            }
-
-
-//            itemView?.rootView?.txt_rating_count?.text="("+contactListItem?.get(pos)?.contactRating+")"
-//            (contactListItem?.get(pos)?.contactRating)?.toFloat()?.let { itemView?.rootView?.ratingBar?.setRating(it) }
-////            itemView?.rootView?.ratingBar?.rating=1.5f
 
 
         }

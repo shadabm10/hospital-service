@@ -30,7 +30,7 @@ class AdapterPastAppointmentListRecyclerview(
 
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
-    internal var recyclerViewItemClickWithView: OnItemClikWithIdListener?=null
+    internal var recyclerViewItemClickWithView: OnItemClikWithIdListener? = null
     var startTime = ""
     var endTime = ""
 
@@ -60,12 +60,10 @@ class AdapterPastAppointmentListRecyclerview(
 
         init {
 
-            itemView.root.crdview_doctorappoitment_list?.setOnClickListener(View.OnClickListener {
-                if (upcomingAppointmentList?.get(local_position)?.id?.toInt() != null && recyclerViewItemClickWithView!=null) {
+            itemView.btnViewDetails?.setOnClickListener(View.OnClickListener {
+                if (upcomingAppointmentList?.get(local_position)?.id?.toInt() != null && recyclerViewItemClickWithView != null) {
                     recyclerViewItemClickWithView?.onItemClick(
-                        upcomingAppointmentList?.get(
-                            local_position
-                        )?.id?.toInt()!!
+                        local_position
                     )
                 }
             })

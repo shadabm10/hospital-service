@@ -13,6 +13,7 @@ import com.rootscare.data.model.api.request.forgotpassword.forgotpasswordemailre
 import com.rootscare.data.model.api.request.loginrequest.LoginRequest
 import com.rootscare.data.model.api.response.CommonResponse
 import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
+import com.rootscare.data.model.api.response.doctor.appointment.appointmentdetails.AppointmentDetailsResponse
 import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResponsePastAppointment
 import com.rootscare.data.model.api.response.doctor.appointment.requestappointment.getrequestappointment.GetDoctorRequestAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
@@ -156,6 +157,13 @@ interface ApiService {
 
     @POST("api-insert-doctor-private-slot")
     fun apiHitSaveTimeSlotForDoctor(@Body request: AddTimeSlotRequest): Single<CommonResponse>
+
+    @POST("api-appointment-details")
+    fun getAppointmnetDetails(@Body request: CommonUserIdRequest): Single<AppointmentDetailsResponse>
+
+
+    @POST("api-doctor-complete-appointment-status")
+    fun apiHitForMarkAsComplete(@Body request: CommonUserIdRequest): Single<CommonResponse>
 
 
 }

@@ -81,13 +81,13 @@ class FragmentPastAppointment :
         val contactListAdapter =
             AdapterPastAppointmentListRecyclerview(requestedappointmentList, context!!)
         recyclerView.adapter = contactListAdapter
-        /*contactListAdapter.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
-            override fun onItemClick(id: Int) {
+        contactListAdapter.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
+            override fun onItemClick(position: Int) {
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentDoctorAppointmentDetails.newInstance()
+                    FragmentDoctorAppointmentDetails.newInstance(contactListAdapter.upcomingAppointmentList!![position].id!!, "doctor")
                 )
             }
-        }*/
+        }
 
     }
 

@@ -6,9 +6,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
+import com.rootscare.data.model.api.response.CommonResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.ResultItem
+import com.rootscare.interfaces.OnClickOfDoctorAppointment
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
@@ -27,6 +30,9 @@ import java.util.ArrayList
 
 class FragmentTodaysAppointment : BaseFragment<FragmentDoctorTodaysAppointmentBinding, FragmentTodaysAppointmentViewModel>(),
     FragmentTodaysAppointmentNavigator {
+
+    private var contactListAdapter:AdapterDoctorTodaysAppointmentRecyclerview?=null
+
     private var fragmentDoctorTodaysAppointmentBinding: FragmentDoctorTodaysAppointmentBinding? = null
     private var fragmentTodaysAppointmentViewModel: FragmentTodaysAppointmentViewModel? = null
     override val bindingVariable: Int
@@ -77,14 +83,22 @@ class FragmentTodaysAppointment : BaseFragment<FragmentDoctorTodaysAppointmentBi
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
-        val contactListAdapter = AdapterDoctorTodaysAppointmentRecyclerview(todaysAppointList,context!!)
+        contactListAdapter = AdapterDoctorTodaysAppointmentRecyclerview(todaysAppointList,context!!)
         recyclerView.adapter = contactListAdapter
-        contactListAdapter?.recyclerViewItemClickWithView= object : OnItemClikWithIdListener {
-            override fun onItemClick(id: Int) {
+
+        contactListAdapter?.recyclerViewItemClickWithView2= object : OnClickOfDoctorAppointment {
+            override fun onItemClick(position: Int) {
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentDoctorAppointmentDetails.newInstance())
+                    FragmentDoctorAppointmentDetails.newInstance(contactListAdapter?.todaysAppointList!![position]!!.id!!, "doctor"))
             }
 
+            override fun onAcceptBtnClick(position: String, text: String) {
+                apiHitForCompleted(contactListAdapter?.todaysAppointList!![position.toInt()]!!.id!!, position.toInt())
+            }
+
+            override fun onRejectBtnBtnClick(id: String, text: String) {
+
+            }
         }
 
     }
@@ -117,6 +131,28 @@ class FragmentTodaysAppointment : BaseFragment<FragmentDoctorTodaysAppointmentBi
         if (throwable?.message != null) {
             Log.d(FragmentLogin.TAG, "--ERROR-Throwable:-- ${throwable.message}")
             Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onSuccessMarkAsComplete(response: CommonResponse, position: Int) {
+        baseActivity?.hideLoading()
+        if (response.code.equals("200")){
+            contactListAdapter?.todaysAppointList!![position]?.appointmentStatus = "Completed"
+            contactListAdapter?.notifyItemChanged(position)
+        }
+    }
+
+    private fun apiHitForCompleted(id:String, position:Int){
+        var request = CommonUserIdRequest()
+        request.id = id
+        if (isNetworkConnected) {
+            baseActivity?.showLoading()
+            fragmentTodaysAppointmentViewModel!!.apiHitForMarkAsComplete(
+                request, position
+            )
+        } else {
+            Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

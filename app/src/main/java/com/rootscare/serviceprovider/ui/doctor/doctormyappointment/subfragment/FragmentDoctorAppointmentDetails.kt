@@ -1,33 +1,33 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
-import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.response.doctor.appointment.appointmentdetails.AppointmentDetailsResponse
-import com.rootscare.data.model.api.response.doctor.myschedule.hospitallist.ResultItem
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorAppointmentDetailsBinding
-import com.rootscare.serviceprovider.databinding.FragmentDoctorMyAppointmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctorconsulting.FragmentDoctorConsulting
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointment
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointmentNavigator
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointmentViewModel
 import com.rootscare.serviceprovider.ui.home.HomeActivity
+
 
 class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentDetailsBinding, FragmentDoctorAppointmentDetailsViewModel>(),
     FragmentDoctorAppointmentDetailsNavigator {
 
     private var appointmentId: String? = null
     private var service_type: String? = null
+
+    private var medicaPlayer: MediaPlayer? = null
 
     private var fragmentDoctorAppointmentDetailsBinding: FragmentDoctorAppointmentDetailsBinding? = null
     private var fragmentDoctorAppointmentDetailsViewModel: FragmentDoctorAppointmentDetailsViewModel? = null
@@ -130,6 +130,8 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                     if (response.result.symptomRecording != null && !TextUtils.isEmpty(response.result.symptomRecording.trim())) {
                         llRecording.visibility = View.VISIBLE
                         tempBool = true
+                        var audioUrl = getString(R.string.api_base) + "uploads/images/" + response.result.symptomRecording
+                        setUpAudiolayout(audioUrl)
                     } else {
                         llRecording.visibility = View.GONE
                         tempBool = false
@@ -142,9 +144,9 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                         tvSymptoms.visibility = View.GONE
                         tempBool = false
                     }
-                    if (!tempBool){
+                    if (!tempBool) {
                         llAboutSymptoms.visibility = View.GONE
-                    }else{
+                    } else {
                         llAboutSymptoms.visibility = View.VISIBLE
                     }
                 }
@@ -154,5 +156,72 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
 
     override fun onThrowable(throwable: Throwable) {
         baseActivity?.hideLoading()
+    }
+
+
+    private var isPlaying = false
+    private var seekposition: Int = 0
+    private var totalDuaration: Int = 0
+    private fun setUpAudiolayout(url: String) {
+        with(fragmentDoctorAppointmentDetailsBinding!!) {
+            setAudioFileToMediaPlayer(url)
+
+            imgPlay.setOnClickListener {
+                if (!isPlaying){
+                    startPlaying()
+                    val resourceId: Int? = activity?.resources?.getIdentifier(
+                        "pause",
+                        "drawable", activity?.packageName
+                    )
+                    if(resourceId!=null) {
+                        imgPlay.setImageResource(resourceId)
+                    }
+                }else{
+                    stopPlaying()
+                    val resourceId: Int? = activity?.resources?.getIdentifier(
+                        "play",
+                        "drawable", activity?.packageName
+                    )
+                    if(resourceId!=null) {
+                        imgPlay.setImageResource(resourceId)
+                    }
+                }
+            }
+
+            //seekbar change listner
+            seekBar.max = totalDuaration
+            seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    seekposition = seekBar.progress
+                    medicaPlayer?.seekTo(seekposition)
+                }
+            })
+
+        }
+    }
+
+    private fun setAudioFileToMediaPlayer(url: String) {
+        with(fragmentDoctorAppointmentDetailsBinding!!) {
+            medicaPlayer = MediaPlayer()
+            medicaPlayer?.setDataSource(url)
+            medicaPlayer?.prepare()
+            totalDuaration = medicaPlayer?.duration!!
+        }
+    }
+
+    private fun startPlaying() {
+        seekposition = medicaPlayer?.currentPosition!!
+        medicaPlayer?.start()
+    }
+
+    private fun stopPlaying(){
+        seekposition = medicaPlayer?.currentPosition!!
+        medicaPlayer?.pause()
+    }
+
+    private fun seekToForMediaPlayer() {
+        medicaPlayer?.seekTo(seekposition)
     }
 }

@@ -225,8 +225,8 @@
 
                                 <ImageView
                                     android:id="@+id/img_play"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
                                     android:src="@drawable/play" />
 
                                 <com.rootscare.customview.MyTextView
@@ -242,6 +242,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
+                                    android:id="@+id/seekBar"
                                     android:layout_toStartOf="@+id/txt_time"
                                     android:layout_toEndOf="@+id/img_play"
                                     android:src="@drawable/recording_line" />

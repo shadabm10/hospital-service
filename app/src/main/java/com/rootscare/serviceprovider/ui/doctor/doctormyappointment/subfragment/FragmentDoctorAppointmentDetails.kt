@@ -1,7 +1,9 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment
 
 import android.media.MediaPlayer
+import android.media.MediaPlayer.OnCompletionListener
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import android.widget.SeekBar
@@ -96,6 +98,7 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
         if (response.code.equals("200")) {
             if (response.result != null) {
                 with(fragmentDoctorAppointmentDetailsBinding!!) {
+                    crdviewDoctorappoitmentList.visibility = View.VISIBLE
                     if (response.result.doctorImage != null && !TextUtils.isEmpty(response.result.doctorImage.trim())) {
                         val options: RequestOptions =
                             RequestOptions()
@@ -126,28 +129,25 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                         tvAppointmentDate.text = response.result.appointmentDate
                     }
 
-                    var tempBool = false
                     if (response.result.symptomRecording != null && !TextUtils.isEmpty(response.result.symptomRecording.trim())) {
                         llRecording.visibility = View.VISIBLE
-                        tempBool = true
-                        var audioUrl = getString(R.string.api_base) + "uploads/images/" + response.result.symptomRecording
+                        val audioUrl = getString(R.string.api_base) + "uploads/images/" + response.result.symptomRecording
                         setUpAudiolayout(audioUrl)
                     } else {
                         llRecording.visibility = View.GONE
-                        tempBool = false
                     }
                     if (response.result.symptomText != null && !TextUtils.isEmpty(response.result.symptomText.trim())) {
                         tvSymptoms.visibility = View.VISIBLE
-                        tempBool = true
                         tvSymptoms.text = response.result.symptomText
                     } else {
                         tvSymptoms.visibility = View.GONE
-                        tempBool = false
                     }
-                    if (!tempBool) {
-                        llAboutSymptoms.visibility = View.GONE
-                    } else {
+                    if ((response.result.symptomRecording != null && !TextUtils.isEmpty(response.result.symptomRecording.trim())) ||
+                        (response.result.symptomText != null && !TextUtils.isEmpty(response.result.symptomText.trim()))
+                    ) {
                         llAboutSymptoms.visibility = View.VISIBLE
+                    } else {
+                        llAboutSymptoms.visibility = View.GONE
                     }
                 }
             }
@@ -167,24 +167,26 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
             setAudioFileToMediaPlayer(url)
 
             imgPlay.setOnClickListener {
-                if (!isPlaying){
+                if (!isPlaying) {
                     startPlaying()
                     val resourceId: Int? = activity?.resources?.getIdentifier(
                         "pause",
                         "drawable", activity?.packageName
                     )
-                    if(resourceId!=null) {
+                    if (resourceId != null) {
                         imgPlay.setImageResource(resourceId)
                     }
-                }else{
+                    isPlaying = true
+                } else {
                     stopPlaying()
                     val resourceId: Int? = activity?.resources?.getIdentifier(
                         "play",
                         "drawable", activity?.packageName
                     )
-                    if(resourceId!=null) {
+                    if (resourceId != null) {
                         imgPlay.setImageResource(resourceId)
                     }
+                    isPlaying = false
                 }
             }
 
@@ -199,6 +201,10 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                 }
             })
 
+            medicaPlayer?.setOnCompletionListener(OnCompletionListener {
+                resetAudioFileToMediaPlayer()
+            })
+
         }
     }
 
@@ -208,20 +214,56 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
             medicaPlayer?.setDataSource(url)
             medicaPlayer?.prepare()
             totalDuaration = medicaPlayer?.duration!!
+            val minutes: Int = totalDuaration / 1000 / 60
+            val seconds: Int = totalDuaration / 1000 % 60
+            if (minutes==0){
+                txtTime.text = "00 : $seconds"
+            }else {
+                txtTime.text = "$minutes : $seconds"
+            }
         }
     }
 
+    var handler: Handler? = null
+    var runnable: Runnable? = null
     private fun startPlaying() {
         seekposition = medicaPlayer?.currentPosition!!
         medicaPlayer?.start()
+
+        handler = Handler()
+        runnable = object : Runnable {
+            override fun run() {
+                try {
+                    seekposition = medicaPlayer?.currentPosition!!
+                    fragmentDoctorAppointmentDetailsBinding!!.seekBar.progress = seekposition
+                    handler?.postDelayed(this, 1000)
+                } catch (ed: IllegalStateException) {
+                    ed.printStackTrace()
+                }
+            }
+        }
+        handler?.postDelayed(runnable!!, 1000)
     }
 
-    private fun stopPlaying(){
+    private fun stopPlaying() {
         seekposition = medicaPlayer?.currentPosition!!
         medicaPlayer?.pause()
+        handler?.removeCallbacks(runnable!!)
     }
 
-    private fun seekToForMediaPlayer() {
-        medicaPlayer?.seekTo(seekposition)
+    private fun resetAudioFileToMediaPlayer() {
+        with(fragmentDoctorAppointmentDetailsBinding!!) {
+            val resourceId: Int? = activity?.resources?.getIdentifier(
+                "play",
+                "drawable", activity?.packageName
+            )
+            if (resourceId != null) {
+                imgPlay.setImageResource(resourceId)
+            }
+            isPlaying = false
+            stopPlaying()
+            seekposition = 0
+            seekBar.progress = seekposition
+        }
     }
 }

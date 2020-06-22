@@ -165,5 +165,15 @@ interface ApiService {
     @POST("api-doctor-complete-appointment-status")
     fun apiHitForMarkAsComplete(@Body request: CommonUserIdRequest): Single<CommonResponse>
 
+    @Multipart
+    @POST("api-doctor-insert-prescription")
+    fun uploadPrescription(
+        @Part("patient_id") patient_id: RequestBody,
+        @Part("doctor_id") doctor_id: RequestBody,
+        @Part("appointment_id") appointment_id: RequestBody,
+        @Part("prescription_number") prescription_number: RequestBody,
+        @Part prescription: MultipartBody.Part?=null
+    ): Single<CommonResponse>
+
 
 }

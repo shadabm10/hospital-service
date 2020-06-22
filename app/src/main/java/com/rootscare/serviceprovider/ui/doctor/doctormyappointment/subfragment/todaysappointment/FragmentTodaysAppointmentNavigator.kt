@@ -12,4 +12,5 @@ interface FragmentTodaysAppointmentNavigator {
         getDoctorRequestAppointmentResponse: GetDoctorRequestAppointmentResponse?,
         position: Int
     )
+    fun onSuccessUploadPrescription(response:CommonResponse)
 }

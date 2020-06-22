@@ -18,4 +18,7 @@
     <string name="select_time">Select Time</string>
     <string name="please_select_day">Please select day</string>
     <string name="please_add_time_for_all_slot">Please add time for all slot</string>
+    <string name="choose_name_for_this_file">Choose name for the file</string>
+    <string name="create_prescription_name">Enter prescription number</string>
+    <string name="transition_string">transition_name</string>
 </resources>

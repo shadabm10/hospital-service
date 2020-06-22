@@ -131,18 +131,23 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
                 itemView.rootView?.txt_todays_appointment_date?.text = ""
             }
 
-            if (todaysAppointList?.get(pos)?.appointmentStatus!=null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
-                todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!){
-                itemView.btnCompleted.visibility = View.VISIBLE
-                itemView.btnCompleted.setText("Upload prescription")
-                itemView.btnCompleted.setOnClickListener {
-                    recyclerViewItemClickWithView2.onUploadBtnClick(local_position.toString(), "")
-                }
-            }else{
-                itemView.btnCompleted.visibility = View.VISIBLE
-                itemView.btnCompleted.setText("Complete")
-                itemView.btnCompleted.setOnClickListener {
-                    recyclerViewItemClickWithView2.onAcceptBtnClick(local_position.toString(), "")
+            if (todaysAppointList?.get(pos)?.uploadPrescription!=null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.uploadPrescription?.trim())){
+//                itemView.btnCompleted.visibility = View.GONE
+            }else {
+                if (todaysAppointList?.get(pos)?.appointmentStatus != null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
+                    todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!
+                ) {
+                    itemView.btnCompleted.visibility = View.VISIBLE
+                    itemView.btnCompleted.setText("Upload\nPrescription")
+                    itemView.btnCompleted.setOnClickListener {
+                        recyclerViewItemClickWithView2.onUploadBtnClick(local_position.toString(), "")
+                    }
+                } else {
+                    itemView.btnCompleted.visibility = View.VISIBLE
+                    itemView.btnCompleted.setText("Complete")
+                    itemView.btnCompleted.setOnClickListener {
+                        recyclerViewItemClickWithView2.onAcceptBtnClick(local_position.toString(), "")
+                    }
                 }
             }
             if (todaysAppointList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.acceptanceStatus?.trim()) &&

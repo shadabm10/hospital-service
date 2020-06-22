@@ -1,6 +1,7 @@
 package com.rootscare.data.model.api.response.doctor.appointment.appointmentdetails
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class AppointmentDetailsResponse(
 
@@ -86,5 +87,18 @@ data class Result(
 	val orderId: String? = null,
 
 	@field:SerializedName("paymentStatus")
-	val paymentStatus: String? = null
+	val paymentStatus: String? = null,
+
+	@field:SerializedName("prescription")
+	val prescription: LinkedList<Prescription>? = null
+)
+
+
+data class Prescription(
+
+	@field:SerializedName("prescription_number")
+	val prescription_number: String? = null,
+
+	@field:SerializedName("e_prescription")
+	val e_prescription: String? = null
 )

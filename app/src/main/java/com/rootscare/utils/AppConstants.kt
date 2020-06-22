@@ -24,6 +24,9 @@ object AppConstants {
 
     val channelname = "Phoenix"
     val channelId = "Phoenix"
+
+
+    const val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE_AND_CAMERA = 16
 }// This utility class is not publicly instantiable
 
 

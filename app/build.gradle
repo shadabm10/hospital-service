@@ -131,6 +131,11 @@ dependencies {
 
     implementation 'com.chaos.view:pinview:1.4.3'
 
+    // Image Importer and Cropper
+    implementation project(':imagecropper')
+
+    implementation 'com.jsibbold:zoomage:1.3.1'
+
 
 }
 

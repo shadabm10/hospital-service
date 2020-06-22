@@ -14,7 +14,7 @@
         android:background="#EBF8F5"
         android:orientation="vertical">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -342,7 +342,7 @@
                             android:layout_height="@dimen/_30sdp"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:layout_marginBottom="@dimen/_50sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
                             android:background="@drawable/booking_new_bg"
                             android:drawableEnd="@drawable/white_arrow_circle"
                             android:drawablePadding="@dimen/_10sdp"
@@ -358,10 +358,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_15sdp"
+                            android:visibility="gone"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                            android:orientation="vertical" >
 
                             <com.rootscare.customview.MyTextView
                                 android:layout_width="match_parent"
@@ -371,10 +372,11 @@
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
-                            <ImageView
-                                android:id="@+id/imageViewPrescription"
+                            <androidx.recyclerview.widget.RecyclerView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:id="@+id/prescriptionRecyclerView"
+                                android:layout_marginTop="@dimen/_5sdp"/>
 
                         </LinearLayout>
 
@@ -417,7 +419,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
 </layout>

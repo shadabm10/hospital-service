@@ -10,17 +10,20 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.response.doctor.appointment.appointmentdetails.AppointmentDetailsResponse
+import com.rootscare.interfaces.OnClickOfDoctorAppointment
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorAppointmentDetailsBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctorconsulting.FragmentDoctorConsulting
 import com.rootscare.serviceprovider.ui.home.HomeActivity
+import com.rootscare.serviceprovider.ui.showimagelarger.TransaprentPopUpActivityForImageShow
 
 
 class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentDetailsBinding, FragmentDoctorAppointmentDetailsViewModel>(),
@@ -141,15 +144,24 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                         llRecording.visibility = View.VISIBLE
                         val audioUrl = getString(R.string.api_base) + "uploads/images/" + response.result.symptomRecording
                         setUpAudiolayout(audioUrl)
+                        if (response.result.symptomText != null && !TextUtils.isEmpty(response.result.symptomText.trim())) {
+                            tvSymptoms.visibility = View.VISIBLE
+                            llOrPortion.visibility = View.VISIBLE
+                            tvSymptoms.text = "Symptoms: ${response.result.symptomText}"
+                        } else {
+                            tvSymptoms.visibility = View.GONE
+                        }
                     } else {
                         llRecording.visibility = View.GONE
+                        if (response.result.symptomText != null && !TextUtils.isEmpty(response.result.symptomText.trim())) {
+                            tvSymptoms.visibility = View.VISIBLE
+                            llOrPortion.visibility = View.GONE
+                            tvSymptoms.text = "Symptoms: ${response.result.symptomText}"
+                        } else {
+                            tvSymptoms.visibility = View.GONE
+                        }
                     }
-                    if (response.result.symptomText != null && !TextUtils.isEmpty(response.result.symptomText.trim())) {
-                        tvSymptoms.visibility = View.VISIBLE
-                        tvSymptoms.text = response.result.symptomText
-                    } else {
-                        tvSymptoms.visibility = View.GONE
-                    }
+
                     if ((response.result.symptomRecording != null && !TextUtils.isEmpty(response.result.symptomRecording.trim())) ||
                         (response.result.symptomText != null && !TextUtils.isEmpty(response.result.symptomText.trim()))
                     ) {
@@ -160,6 +172,35 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
 
                     if (response.result.acceptanceStatus != null && !TextUtils.isEmpty(response.result.acceptanceStatus.trim())) {
                         tvAcceptanceStatus.text = response.result.acceptanceStatus
+                    }
+
+                    if (response.result.prescription != null && response.result.prescription.size > 0) {
+                        llPrescription.visibility = View.VISIBLE
+                        prescriptionRecyclerView.layoutManager = LinearLayoutManager(activity!!)
+                        val prescriptionList = response.result.prescription
+                        val adapter =
+                            ShowPrescriptionsImagesRecyclerviewAdapter(
+                                prescriptionList,
+                                activity!!
+                            )
+                        adapter.recyclerViewItemClickWithView2 = object : OnClickOfDoctorAppointment{
+                            override fun onItemClick(position: Int) {
+                                var imageUrl = context?.getString(R.string.api_base) + "uploads/images/" + adapter.todaysAppointList!![position].e_prescription!!
+                                 startActivity(TransaprentPopUpActivityForImageShow.newIntent(activity!!, imageUrl))
+                            }
+
+                            override fun onAcceptBtnClick(id: String, text: String) {
+
+                            }
+
+                            override fun onRejectBtnBtnClick(id: String, text: String) {
+
+                            }
+
+                        }
+                        prescriptionRecyclerView.adapter = adapter
+                    } else {
+                        llPrescription.visibility = View.GONE
                     }
 
                 }
@@ -229,9 +270,9 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
             totalDuaration = medicaPlayer?.duration!!
             val minutes: Int = totalDuaration / 1000 / 60
             val seconds: Int = totalDuaration / 1000 % 60
-            if (minutes==0){
+            if (minutes == 0) {
                 txtTime.text = "00 : $seconds"
-            }else {
+            } else {
                 txtTime.text = "$minutes : $seconds"
             }
         }

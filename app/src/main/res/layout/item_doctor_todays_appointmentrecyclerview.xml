@@ -150,7 +150,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/appiontment_bg"
                 android:visibility="visible">
@@ -166,6 +166,8 @@
                         android:layout_alignParentStart="true"
                         android:background="@drawable/rounded_green_btn"
                         android:text="Complete"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
                         android:id="@+id/btnCompleted"
                         android:textAllCaps="false"
                         android:textColor="@color/white"

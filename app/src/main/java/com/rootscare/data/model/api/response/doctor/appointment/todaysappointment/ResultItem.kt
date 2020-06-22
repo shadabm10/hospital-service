@@ -8,6 +8,9 @@ data class ResultItem(
 	@field:JsonProperty("appointment_status")
 	@field:SerializedName("appointment_status")
 	var appointmentStatus: String? = null,
+	@field:JsonProperty("patient_id")
+	@field:SerializedName("patient_id")
+	var patient_id: String? = null,
 	@field:JsonProperty("booking_date")
 	@field:SerializedName("booking_date")
 	val bookingDate: String? = null,
@@ -43,7 +46,7 @@ data class ResultItem(
 	val price: String? = null,
 	@field:JsonProperty("upload_prescription")
 	@field:SerializedName("upload_prescription")
-	val uploadPrescription: String? = null,
+	var uploadPrescription: String? = null,
 	@field:JsonProperty("clinic_address")
 	@field:SerializedName("clinic_address")
 	val clinicAddress: String? = null,

@@ -183,10 +183,11 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                                 prescriptionList,
                                 activity!!
                             )
-                        adapter.recyclerViewItemClickWithView2 = object : OnClickOfDoctorAppointment{
+                        adapter.recyclerViewItemClickWithView2 = object : OnClickOfDoctorAppointment {
                             override fun onItemClick(position: Int) {
-                                var imageUrl = context?.getString(R.string.api_base) + "uploads/images/" + adapter.todaysAppointList!![position].e_prescription!!
-                                 startActivity(TransaprentPopUpActivityForImageShow.newIntent(activity!!, imageUrl))
+                                var imageUrl =
+                                    context?.getString(R.string.api_base) + "uploads/images/" + adapter.todaysAppointList!![position].e_prescription!!
+                                startActivity(TransaprentPopUpActivityForImageShow.newIntent(activity!!, imageUrl))
                             }
 
                             override fun onAcceptBtnClick(id: String, text: String) {
@@ -270,11 +271,23 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
             totalDuaration = medicaPlayer?.duration!!
             val minutes: Int = totalDuaration / 1000 / 60
             val seconds: Int = totalDuaration / 1000 % 60
-            if (minutes == 0) {
-                txtTime.text = "00 : $seconds"
-            } else {
-                txtTime.text = "$minutes : $seconds"
+            var tempMinutes = "00"
+            var tempSeconds = "00"
+            if (minutes != 0) {
+                if (minutes >= 10) {
+                    tempMinutes = minutes.toString()
+                } else {
+                    tempMinutes = "0$minutes"
+                }
             }
+            if (seconds != 0) {
+                if (seconds >= 10) {
+                    tempSeconds = seconds.toString()
+                } else {
+                    tempSeconds = "0$seconds"
+                }
+            }
+            txtTime.text = "$tempMinutes : $tempSeconds"
         }
     }
 

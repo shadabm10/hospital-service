@@ -22,7 +22,7 @@ data class ResultItem(
 	val fromTime: String? = null,
 	@field:JsonProperty("acceptance_status")
 	@field:SerializedName("acceptance_status")
-	val acceptanceStatus: String? = null,
+	var acceptanceStatus: String? = null,
 	@field:JsonProperty("symptom_recording")
 	@field:SerializedName("symptom_recording")
 	val symptomRecording: String? = null,

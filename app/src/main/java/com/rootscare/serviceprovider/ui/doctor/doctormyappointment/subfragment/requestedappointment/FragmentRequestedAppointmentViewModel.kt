@@ -48,7 +48,10 @@ class FragmentRequestedAppointmentViewModel : BaseViewModel<FragmentRequestedApp
         compositeDisposable.add(disposable)
     }
 
-    fun apiupdatedoctorappointmentrequest(updateAppointmentRequestBody: UpdateAppointmentRequest) {
+    fun apiupdatedoctorappointmentrequest(
+        updateAppointmentRequestBody: UpdateAppointmentRequest,
+        position: Int
+    ) {
 //        val body = RequestBody.create(MediaType.parse("application/json"), "")
         val disposable = apiServiceWithGsonFactory.apiupdatedoctorappointmentrequest(updateAppointmentRequestBody)
             .subscribeOn(_scheduler_io)
@@ -57,7 +60,7 @@ class FragmentRequestedAppointmentViewModel : BaseViewModel<FragmentRequestedApp
                 if (response != null) {
                     // Store last login time
                     Log.d("check_response", ": " + Gson().toJson(response))
-                    navigator.successGetDoctorRequestAppointmentUpdateResponse(response)
+                    navigator.successGetDoctorRequestAppointmentUpdateResponse(response, position)
                     /* Saving access token after singup or login */
                     if (response.result!= null){
 

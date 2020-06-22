@@ -129,6 +129,14 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                         tvAppointmentDate.text = response.result.appointmentDate
                     }
 
+                    if (response.result.appointmentStatus != null && !TextUtils.isEmpty(response.result.appointmentStatus.trim())) {
+                        tvAppointmentStatus.text = response.result.appointmentStatus
+                    }
+                    if (response.result.acceptanceStatus != null && !TextUtils.isEmpty(response.result.acceptanceStatus.trim())) {
+                        tvAcceptanceStatus.text = response.result.acceptanceStatus
+                    }
+
+
                     if (response.result.symptomRecording != null && !TextUtils.isEmpty(response.result.symptomRecording.trim())) {
                         llRecording.visibility = View.VISIBLE
                         val audioUrl = getString(R.string.api_base) + "uploads/images/" + response.result.symptomRecording
@@ -149,6 +157,11 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
                     } else {
                         llAboutSymptoms.visibility = View.GONE
                     }
+
+                    if (response.result.acceptanceStatus != null && !TextUtils.isEmpty(response.result.acceptanceStatus.trim())) {
+                        tvAcceptanceStatus.text = response.result.acceptanceStatus
+                    }
+
                 }
             }
         }

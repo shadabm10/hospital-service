@@ -27,9 +27,9 @@
                     android:id="@+id/crdview_doctorappoitment_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
                     android:layout_margin="@dimen/_10sdp"
                     android:elevation="@dimen/_20sdp"
+                    android:visibility="invisible"
                     app:cardCornerRadius="@dimen/_10sdp">
 
                     <LinearLayout
@@ -39,21 +39,21 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/imageView"
                             android:layout_width="120dp"
                             android:layout_height="100dp"
-                            android:id="@+id/imageView"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:src="@drawable/patient_photo" />
 
                         <com.rootscare.customview.MyTextView
+                            android:id="@+id/tvDoctorName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:text="Dr. Mark Pierce"
-                            android:id="@+id/tvDoctorName"
                             android:textColor="@color/txt_color"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
@@ -163,11 +163,11 @@
                                 android:textStyle="bold" />
 
                             <com.rootscare.customview.MyTextView
+                                android:id="@+id/tvPhoneNumber"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_weight="1"
-                                android:id="@+id/tvPhoneNumber"
                                 android:textColor="@color/txt_color"
                                 android:textSize="@dimen/_11ssp" />
                         </LinearLayout>
@@ -191,11 +191,11 @@
                                 android:textStyle="bold" />
 
                             <com.rootscare.customview.MyTextView
+                                android:id="@+id/tvAppointmentDate"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_weight="1"
-                                android:id="@+id/tvAppointmentDate"
                                 android:textColor="@color/txt_color"
                                 android:textSize="@dimen/_11ssp" />
                         </LinearLayout>
@@ -206,8 +206,64 @@
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <com.rootscare.customview.MyTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Appointment Status : "
+                                android:textColor="@color/txt_color"
+                                android:textSize="@dimen/_12ssp"
+                                android:textStyle="bold" />
+
+                            <com.rootscare.customview.MyTextView
+                                android:id="@+id/tvAppointmentStatus"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:textColor="@color/txt_color"
+                                android:textSize="@dimen/_11ssp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <com.rootscare.customview.MyTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Acceptance Status "
+                                android:textColor="@color/txt_color"
+                                android:textSize="@dimen/_12ssp"
+                                android:textStyle="bold" />
+
+                            <com.rootscare.customview.MyTextView
+                                android:id="@+id/tvAcceptanceStatus"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:textColor="@color/txt_color"
+                                android:textSize="@dimen/_11ssp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/llAboutSymptoms"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:orientation="vertical"
                             android:visibility="visible">
 
                             <com.rootscare.customview.MyTextView
@@ -219,9 +275,9 @@
                                 android:textStyle="bold" />
 
                             <RelativeLayout
+                                android:id="@+id/llRecording"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/llRecording"
                                 android:layout_marginTop="@dimen/_10sdp">
 
                                 <ImageView
@@ -240,10 +296,10 @@
                                     android:textSize="@dimen/_12sdp" />
 
                                 <SeekBar
+                                    android:id="@+id/seekBar"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:id="@+id/seekBar"
                                     android:layout_toStartOf="@+id/txt_time"
                                     android:layout_toEndOf="@+id/img_play"
                                     android:src="@drawable/recording_line" />
@@ -251,13 +307,13 @@
 
 
                             <RelativeLayout
+                                android:id="@+id/llOrPortion"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:id="@+id/llOrPortion"
-                                android:visibility="gone"
                                 android:layout_marginBottom="@dimen/_5sdp"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -269,13 +325,13 @@
                             </RelativeLayout>
 
                             <com.rootscare.customview.MyTextView
+                                android:id="@+id/tvSymptoms"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:id="@+id/tvSymptoms"
-                                android:visibility="gone"
                                 android:text="Weakness and Aches in Muscles and Joints"
-                                android:textSize="@dimen/_12ssp" />
+                                android:textSize="@dimen/_12ssp"
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
@@ -292,16 +348,42 @@
                             android:drawablePadding="@dimen/_10sdp"
                             android:padding="@dimen/_5sdp"
                             android:text="Consultation"
-                            android:visibility="invisible"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_10ssp" />
+                            android:textSize="@dimen/_10ssp"
+                            android:visibility="invisible" />
+
+
+                        <LinearLayout
+                            android:id="@+id/llPrescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.rootscare.customview.MyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Prescription"
+                                android:textColor="@color/txt_color"
+                                android:textSize="@dimen/_12ssp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageViewPrescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:visibility="gone"
-                            android:background="@drawable/appiontment_bg">
+                            android:background="@drawable/appiontment_bg"
+                            android:visibility="gone">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"

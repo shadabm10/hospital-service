@@ -673,7 +673,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         }
         else if (fragment is FragmentRequestedAppointment) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Request Appointment"
+            tootbar_text.text = "New Appointment"
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE

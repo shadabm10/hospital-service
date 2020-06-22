@@ -7,11 +7,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.dialog.CommonDialog
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.filterappointmentrequest.FilterAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
+import com.rootscare.data.model.api.request.doctor.appointment.updateappointmentrequest.UpdateAppointmentRequest
+import com.rootscare.data.model.api.response.doctor.appointment.requestappointment.getrequestappointment.GetDoctorRequestAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.DoctorUpcomingAppointmentResponse
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.ResultItem
+import com.rootscare.interfaces.DialogClickCallback
+import com.rootscare.interfaces.OnClickOfDoctorAppointment2
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
@@ -26,6 +31,9 @@ import java.util.*
 
 class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointmentBinding, FragmentUpcommingAppointmentViewModel>(),
     FragmentUpcommingAppointmentNavigator {
+
+    private var contactListAdapter:AdapterDoctorUpcommingAppointment?=null
+
     private var fragmentDoctorUpcomingAppointmentBinding: FragmentDoctorUpcomingAppointmentBinding? = null
     private var fragmentUpcommingAppointmentViewModel: FragmentUpcommingAppointmentViewModel? = null
     var monthOfDob: String=""
@@ -125,12 +133,42 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
-        val contactListAdapter = AdapterDoctorUpcommingAppointment(upcomingAppointmentList,context!!)
+        contactListAdapter = AdapterDoctorUpcommingAppointment(upcomingAppointmentList,context!!)
         recyclerView.adapter = contactListAdapter
-        contactListAdapter?.recyclerViewItemClickWithView= object : OnItemClikWithIdListener {
+        contactListAdapter?.recyclerViewItemClickWithView= object : OnClickOfDoctorAppointment2 {
             override fun onItemClick(position: Int) {
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentDoctorAppointmentDetails.newInstance(contactListAdapter.upcomingAppointmentList!![position]!!.id!!, "doctor"))
+                    FragmentDoctorAppointmentDetails.newInstance(contactListAdapter?.upcomingAppointmentList!![position]!!.id!!, "doctor"))
+            }
+
+            override fun onAcceptBtnClick(id: String, text: String) {
+
+            }
+
+            override fun onUploadBtnClick(id: String, text: String) {
+
+            }
+
+            override fun onRejectBtnBtnClick(position: String, text: String) {
+                CommonDialog.showDialog(activity!!, object :
+                    DialogClickCallback {
+                    override fun onDismiss() {
+
+                    }
+
+                    override fun onConfirm() {
+                        if (isNetworkConnected) {
+                            baseActivity?.showLoading()
+                            var updateAppointmentRequest = UpdateAppointmentRequest()
+                            updateAppointmentRequest.id = contactListAdapter?.upcomingAppointmentList!![position.toInt()]?.id
+                            updateAppointmentRequest.acceptanceStatus = text
+                            fragmentUpcommingAppointmentViewModel!!.apiupdatedoctorappointmentrequest(updateAppointmentRequest, position.toInt())
+                        } else {
+                            Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }, "Confirmation", "Are you sure to reject this appointment?")
             }
 
         }
@@ -164,6 +202,24 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
         if (throwable?.message != null) {
             Log.d(FragmentLogin.TAG, "--ERROR-Throwable:-- ${throwable.message}")
             Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun successGetDoctorRequestAppointmentUpdateResponse(
+        getDoctorRequestAppointmentResponse: GetDoctorRequestAppointmentResponse?,
+        position: Int
+    ) {
+        baseActivity?.hideLoading()
+        if (getDoctorRequestAppointmentResponse?.code.equals("200")) {
+            contactListAdapter?.upcomingAppointmentList!![position]?.acceptanceStatus = "reject"
+            contactListAdapter?.notifyItemChanged(position)
+            contactListAdapter?.upcomingAppointmentList?.removeAt(position)
+            contactListAdapter?.notifyItemRemoved(position)
+            contactListAdapter?.notifyItemRangeChanged(position, contactListAdapter?.upcomingAppointmentList?.size!!)
+            if (contactListAdapter?.upcomingAppointmentList?.size == 0){
+                fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.visibility = View.VISIBLE
+                fragmentDoctorUpcomingAppointmentBinding?.recyclerViewRootscareDoctorMyappointment?.visibility = View.GONE
+            }
         }
     }
 

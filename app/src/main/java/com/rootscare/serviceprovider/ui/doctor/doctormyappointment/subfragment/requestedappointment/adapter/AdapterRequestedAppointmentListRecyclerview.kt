@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -59,15 +60,15 @@ class AdapterRequestedAppointmentListRecyclerview (val requestedappointmentList:
         private var local_position: Int = 0
 
         init {
-            itemView?.btnViewDetails?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onItemClick(local_position)
+            itemView.btnViewDetails.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView.onItemClick(local_position)
             })
-            itemView?.root?.btn_accept?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onAcceptBtnClick(requestedappointmentList?.get(local_position)?.id!!,"Accept")
+            itemView.root.btn_accept?.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView.onAcceptBtnClick(local_position.toString(),"Accept")
             })
 
-            itemView?.root?.btn_reject?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onRejectBtnBtnClick(requestedappointmentList?.get(local_position)?.id!!,"Reject")
+            itemView.btnRejecttt.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView.onRejectBtnBtnClick(local_position.toString(),"Reject")
             })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
 //                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
@@ -94,42 +95,56 @@ class AdapterRequestedAppointmentListRecyclerview (val requestedappointmentList:
             Log.d(TAG, " true")
             local_position = pos
 
-            if(requestedappointmentList?.get(pos)?.orderId!=null && !requestedappointmentList?.get(pos)?.orderId.equals("")){
-                itemView?.rootView?.txt_requested_appointment?.setText(requestedappointmentList?.get(pos)?.orderId)
+            if(requestedappointmentList?.get(pos)?.orderId!=null && !requestedappointmentList.get(pos)?.orderId.equals("")){
+                itemView.rootView?.txt_requested_appointment?.text = requestedappointmentList.get(pos)?.orderId
             }else{
-                itemView?.rootView?.txt_requested_appointment?.setText("")
+                itemView.rootView?.txt_requested_appointment?.text = ""
             }
 
-            if(requestedappointmentList?.get(pos)?.patientName!=null && !requestedappointmentList?.get(pos)?.patientName.equals("")){
-                itemView?.rootView?.txt_requested_patient_name?.setText(requestedappointmentList?.get(pos)?.patientName)
+            if(requestedappointmentList?.get(pos)?.patientName!=null && !requestedappointmentList.get(pos)?.patientName.equals("")){
+                itemView.rootView?.txt_requested_patient_name?.text = requestedappointmentList.get(pos)?.patientName
             }else{
-                itemView?.rootView?.txt_requested_patient_name?.setText("")
+                itemView.rootView?.txt_requested_patient_name?.text = ""
             }
-            if(requestedappointmentList?.get(pos)?.bookingDate!=null && !requestedappointmentList?.get(pos)?.bookingDate.equals("")){
-                itemView?.rootView?.txt_requested_booking_date?.setText(formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",requestedappointmentList?.get(pos)?.bookingDate))
+            if(requestedappointmentList?.get(pos)?.bookingDate!=null && !requestedappointmentList.get(pos)?.bookingDate.equals("")){
+                itemView.rootView?.txt_requested_booking_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",
+                    requestedappointmentList.get(pos)?.bookingDate)
             }else{
-                itemView?.rootView?.txt_requested_booking_date?.setText("")
+                itemView.rootView?.txt_requested_booking_date?.text = ""
             }
-            if(requestedappointmentList?.get(pos)?.fromTime!=null && !requestedappointmentList?.get(pos)?.fromTime.equals("")){
-                startTime= requestedappointmentList?.get(pos)?.fromTime!!
+            if(requestedappointmentList?.get(pos)?.fromTime!=null && !requestedappointmentList.get(pos)?.fromTime.equals("")){
+                startTime= requestedappointmentList.get(pos)?.fromTime!!
             }else{
                 startTime=""
             }
 
-            if(requestedappointmentList?.get(pos)?.toTime!=null && !requestedappointmentList?.get(pos)?.toTime.equals("")){
-                endTime= requestedappointmentList?.get(pos)?.toTime!!
+            if(requestedappointmentList?.get(pos)?.toTime!=null && !requestedappointmentList.get(pos)?.toTime.equals("")){
+                endTime= requestedappointmentList.get(pos)?.toTime!!
             }else{
                 endTime=""
             }
 
-            itemView?.rootView?.txt_requested_time?.setText(startTime+"-"+endTime)
-            if(requestedappointmentList?.get(pos)?.appointmentDate!=null && !requestedappointmentList?.get(pos)?.appointmentDate.equals("")){
-                itemView?.rootView?.txt_requested_appointment_date?.setText(formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",requestedappointmentList?.get(pos)?.appointmentDate))
+            itemView.rootView?.txt_requested_time?.text = startTime+"-"+endTime
+            if(requestedappointmentList?.get(pos)?.appointmentDate!=null && !requestedappointmentList.get(pos)?.appointmentDate.equals("")){
+                itemView.rootView?.txt_requested_appointment_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",
+                    requestedappointmentList.get(pos)?.appointmentDate)
             }else{
-                itemView?.rootView?.txt_requested_appointment_date?.setText("")
+                itemView.rootView?.txt_requested_appointment_date?.text = ""
             }
 
 
+            if (requestedappointmentList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(requestedappointmentList.get(pos)?.acceptanceStatus?.trim())){
+                if (requestedappointmentList.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
+                    itemView.rootView?.btn_rejecttt?.visibility = View.GONE
+                    itemView.rootView?.btn_accept?.visibility = View.GONE
+                }else if (requestedappointmentList.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("accept")!!){
+                    itemView.rootView?.btn_rejecttt?.visibility = View.GONE
+                    itemView.rootView?.btn_accept?.visibility = View.GONE
+                } else{
+                    itemView.rootView?.btn_rejecttt?.visibility = View.VISIBLE
+                    itemView.rootView?.btn_accept?.visibility = View.VISIBLE
+                }
+            }
 
 
 //            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name

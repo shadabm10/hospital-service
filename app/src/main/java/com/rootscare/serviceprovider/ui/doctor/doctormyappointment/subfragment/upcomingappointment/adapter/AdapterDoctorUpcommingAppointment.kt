@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.ResultItem
+import com.rootscare.interfaces.OnClickOfDoctorAppointment2
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemDoctorUpcomingAppointmentRecyclerviewBinding
 import kotlinx.android.synthetic.main.item_doctor_myappointment_recyclerview.view.*
 import kotlinx.android.synthetic.main.item_doctor_myappointment_recyclerview.view.crdview_doctorappoitment_list
+import kotlinx.android.synthetic.main.item_doctor_todays_appointmentrecyclerview.view.*
 import kotlinx.android.synthetic.main.item_doctor_upcoming_appointment_recyclerview.view.*
+import kotlinx.android.synthetic.main.item_doctor_upcoming_appointment_recyclerview.view.btnViewDetails
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +31,7 @@ class AdapterDoctorUpcommingAppointment (val upcomingAppointmentList: ArrayList<
 
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
-    internal lateinit var recyclerViewItemClickWithView: OnItemClikWithIdListener
+    internal lateinit var recyclerViewItemClickWithView: OnClickOfDoctorAppointment2
     var startTime=""
     var endTime=""
 
@@ -58,6 +62,9 @@ class AdapterDoctorUpcommingAppointment (val upcomingAppointmentList: ArrayList<
         init {
             itemView?.root?.btnViewDetails?.setOnClickListener(View.OnClickListener {
                 recyclerViewItemClickWithView?.onItemClick(local_position)
+            })
+            itemView.btnRejectt.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView.onRejectBtnBtnClick(local_position.toString(),"Reject")
             })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
 //                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
@@ -119,7 +126,12 @@ class AdapterDoctorUpcommingAppointment (val upcomingAppointmentList: ArrayList<
                 itemView?.rootView?.txt_upcoming_appointment_date?.setText("")
             }
 
-
+            if (upcomingAppointmentList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(upcomingAppointmentList?.get(pos)?.acceptanceStatus?.trim()) &&
+                upcomingAppointmentList?.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
+                itemView?.rootView?.btn_rejectt?.visibility = View.GONE
+            }else{
+                itemView?.rootView?.btn_rejectt?.visibility = View.VISIBLE
+            }
 
 
 //            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name

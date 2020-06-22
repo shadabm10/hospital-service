@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.ResultItem
 import com.rootscare.interfaces.OnClickOfDoctorAppointment
+import com.rootscare.interfaces.OnClickOfDoctorAppointment2
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemDoctorTodaysAppointmentrecyclerviewBinding
@@ -32,7 +33,7 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
 
-    internal lateinit var recyclerViewItemClickWithView2: OnClickOfDoctorAppointment
+    internal lateinit var recyclerViewItemClickWithView2: OnClickOfDoctorAppointment2
     var startTime=""
     var endTime=""
 
@@ -67,6 +68,9 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
             itemView.btnCompleted.setOnClickListener {
                 recyclerViewItemClickWithView2.onAcceptBtnClick(local_position.toString(), "")
             }
+            itemView.btnReject.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView2.onRejectBtnBtnClick(local_position.toString(),"Reject")
+            })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
 //                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
 //            })
@@ -129,12 +133,24 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
 
             if (todaysAppointList?.get(pos)?.appointmentStatus!=null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
                 todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!){
-                itemView.btnCompleted.visibility = View.GONE
+                itemView.btnCompleted.visibility = View.VISIBLE
+                itemView.btnCompleted.setText("Upload prescription")
+                itemView.btnCompleted.setOnClickListener {
+                    recyclerViewItemClickWithView2.onUploadBtnClick(local_position.toString(), "")
+                }
             }else{
                 itemView.btnCompleted.visibility = View.VISIBLE
+                itemView.btnCompleted.setText("Complete")
+                itemView.btnCompleted.setOnClickListener {
+                    recyclerViewItemClickWithView2.onAcceptBtnClick(local_position.toString(), "")
+                }
             }
-
-
+            if (todaysAppointList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.acceptanceStatus?.trim()) &&
+                todaysAppointList?.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
+                itemView.btn_reject.visibility = View.GONE
+            }else{
+                itemView.btn_reject.visibility = View.VISIBLE
+            }
 
         }
 

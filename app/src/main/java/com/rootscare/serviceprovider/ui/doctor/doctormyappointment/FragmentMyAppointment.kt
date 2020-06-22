@@ -36,7 +36,7 @@ class FragmentMyAppointment: BaseFragment<FragmentDoctorAppointmentListBinding, 
     override val viewModel: FragmentMyAppointmentViewModel
         get() {
             fragmentMyAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentMyAppointmentViewModel::class.java!!)
+                FragmentMyAppointmentViewModel::class.java)
             return fragmentMyAppointmentViewModel as FragmentMyAppointmentViewModel
         }
 

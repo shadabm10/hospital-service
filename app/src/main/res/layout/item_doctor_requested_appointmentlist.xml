@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:text="Reject"
-                        android:id="@+id/btn_reject"
+                        android:id="@+id/btn_rejecttt"
                         android:textColor="@color/colorPrimary"
                         android:background="@drawable/rounded_white_btn"
                         android:textSize="@dimen/_10ssp"

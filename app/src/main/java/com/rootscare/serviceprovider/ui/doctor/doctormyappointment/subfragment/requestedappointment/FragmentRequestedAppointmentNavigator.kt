@@ -4,6 +4,9 @@ import com.rootscare.data.model.api.response.doctor.appointment.requestappointme
 
 interface FragmentRequestedAppointmentNavigator {
     fun successGetDoctorRequestAppointmentResponse(getDoctorRequestAppointmentResponse: GetDoctorRequestAppointmentResponse?)
-    fun successGetDoctorRequestAppointmentUpdateResponse(getDoctorRequestAppointmentResponse: GetDoctorRequestAppointmentResponse?)
+    fun successGetDoctorRequestAppointmentUpdateResponse(
+        getDoctorRequestAppointmentResponse: GetDoctorRequestAppointmentResponse?,
+        position: Int
+    )
     fun errorGetDoctorRequestAppointmentResponse(throwable: Throwable?)
 }

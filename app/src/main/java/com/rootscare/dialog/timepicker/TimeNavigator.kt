@@ -1,4 +1,4 @@
-package com.sihatku.commondialog.timepicker
+package com.rootscare.dialog.timepicker
 
 interface TimeNavigator {
 }

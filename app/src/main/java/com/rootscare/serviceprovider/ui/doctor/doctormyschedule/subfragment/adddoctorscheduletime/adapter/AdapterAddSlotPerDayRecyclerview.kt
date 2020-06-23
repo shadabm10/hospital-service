@@ -1,23 +1,16 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.adddoctorscheduletime.adapter
 
-import android.app.Activity
-import android.content.Context
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.model.AddDoctorSlotTimeItmModel
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemAddScheduleRecyclerviewBinding
-import com.sihatku.commondialog.timepicker.TimePickerDialog
+import com.rootscare.dialog.timepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.item_add_schedule_recyclerview.view.*
 
 class AdapterAddSlotPerDayRecyclerview(internal var context: FragmentActivity) :

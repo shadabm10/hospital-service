@@ -1,4 +1,4 @@
-package com.sihatku.commondialog.timepicker
+package com.rootscare.dialog.timepicker
 
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
 

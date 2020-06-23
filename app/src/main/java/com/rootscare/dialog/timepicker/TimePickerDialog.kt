@@ -1,28 +1,18 @@
-package com.sihatku.commondialog.timepicker
+package com.rootscare.dialog.timepicker
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TimePicker
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
-import com.latikaseafood.utils.DateTimeUtils
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.DateTimePickerLayoutBinding
 import com.rootscare.serviceprovider.ui.base.BaseDialog
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSelect: CallbackAfterDateTimeSelect) :

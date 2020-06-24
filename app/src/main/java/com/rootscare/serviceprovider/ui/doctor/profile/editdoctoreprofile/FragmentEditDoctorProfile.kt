@@ -10,6 +10,7 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
@@ -56,7 +57,7 @@ class FragmentEditDoctorProfile :
     FragmentEditDoctorProfileNavigator {
 
     private val TAG = "FragmentEditDoctorProfi"
-    private var certificateListAdapter:CertificateListAdapter?=null
+    private var certificateListAdapter: CertificateListAdapter? = null
 
     private val IMAGE_DIRECTORY = "/demonuts"
     private val PICKFILE_RESULT_CODE = 4
@@ -260,7 +261,7 @@ class FragmentEditDoctorProfile :
 
     }
 
-    private fun fetchDOCUserDetails(){
+    private fun fetchDOCUserDetails() {
         if (isNetworkConnected) {
             baseActivity?.showLoading()
             var commonUserIdRequest = CommonUserIdRequest()
@@ -283,39 +284,45 @@ class FragmentEditDoctorProfile :
     }
 
     override fun onSuccessEditProfile(response: RegistrationResponse) {
-        baseActivity?.hideLoading()
-        fetchDOCUserDetails()
+//        baseActivity?.hideLoading()
+        certificateListAdapter?.qualificationDataList?.clear()
+        Handler().postDelayed({
+            fetchDOCUserDetails()
+        }, 500)
     }
 
     override fun successGetDoctorProfileResponse(getDoctorProfileResponse: GetDoctorProfileResponse?) {
         baseActivity?.hideLoading()
         if (getDoctorProfileResponse?.code.equals("200")) {
             if (getDoctorProfileResponse?.result != null) {
-                with(fragmentDoctorEditProfileBinding!!){
-                    if(getDoctorProfileResponse.result.firstName!=null && !getDoctorProfileResponse.result.firstName.equals("")){
+                with(fragmentDoctorEditProfileBinding!!) {
+                    if (getDoctorProfileResponse.result.firstName != null && !getDoctorProfileResponse.result.firstName.equals("")) {
                         ediitextFirstName.setText(getDoctorProfileResponse.result.firstName)
-                    }else{
+                    } else {
                         ediitextFirstName.setText("")
                     }
-                    if(getDoctorProfileResponse.result.lastName!=null && !getDoctorProfileResponse.result.lastName.equals("")){
+                    if (getDoctorProfileResponse.result.lastName != null && !getDoctorProfileResponse.result.lastName.equals("")) {
                         ediitextLastName.setText(getDoctorProfileResponse.result.lastName)
-                    }else{
+                    } else {
                         ediitextLastName.setText("")
                     }
-                    if(getDoctorProfileResponse.result.firstName!=null && !getDoctorProfileResponse.result.firstName.equals("") && getDoctorProfileResponse.result.lastName!=null && !getDoctorProfileResponse.result.lastName.equals("")){
-                        textViewDocNameTilte.setText(getDoctorProfileResponse.result.firstName+" "+getDoctorProfileResponse.result.lastName)
-                    }else{
+                    if (getDoctorProfileResponse.result.firstName != null && !getDoctorProfileResponse.result.firstName.equals("") && getDoctorProfileResponse.result.lastName != null && !getDoctorProfileResponse.result.lastName.equals(
+                            ""
+                        )
+                    ) {
+                        textViewDocNameTilte.setText(getDoctorProfileResponse.result.firstName + " " + getDoctorProfileResponse.result.lastName)
+                    } else {
                         textViewDocNameTilte.setText("")
                     }
 
-                    if(getDoctorProfileResponse.result.email!=null && !getDoctorProfileResponse.result.email.equals("")){
+                    if (getDoctorProfileResponse.result.email != null && !getDoctorProfileResponse.result.email.equals("")) {
                         ediitextEmail.setText(getDoctorProfileResponse.result.email)
                         textViewDocEmailTilte.setText(getDoctorProfileResponse.result.email)
-                    }else{
+                    } else {
                         ediitextEmail.setText("")
                         textViewDocEmailTilte.setText("")
                     }
-                    if(getDoctorProfileResponse.result.image!=null && !getDoctorProfileResponse.result.image.equals("")){
+                    if (getDoctorProfileResponse.result.image != null && !getDoctorProfileResponse.result.image.equals("")) {
                         val options: RequestOptions =
                             RequestOptions()
                                 .centerCrop()
@@ -328,21 +335,21 @@ class FragmentEditDoctorProfile :
                             .apply(options)
                             .into(imgDoctorProfile)
                     }
-                    if(getDoctorProfileResponse.result.dob!=null && !getDoctorProfileResponse.result.dob.equals("")){
+                    if (getDoctorProfileResponse.result.dob != null && !getDoctorProfileResponse.result.dob.equals("")) {
                         textViewDOB.setText(getDoctorProfileResponse.result.dob)
-                    }else{
+                    } else {
                         textViewDOB.setText("")
                     }
-                    if(getDoctorProfileResponse.result.phoneNumber!=null && !getDoctorProfileResponse.result.phoneNumber.equals("")){
+                    if (getDoctorProfileResponse.result.phoneNumber != null && !getDoctorProfileResponse.result.phoneNumber.equals("")) {
                         ediitextMobileNumber.setText(getDoctorProfileResponse.result.phoneNumber)
-                    }else{
+                    } else {
                         ediitextMobileNumber.setText("")
                     }
-                    if(getDoctorProfileResponse.result.gender!=null && !getDoctorProfileResponse.result.gender.equals("")){
-                        if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("male")){
+                    if (getDoctorProfileResponse.result.gender != null && !getDoctorProfileResponse.result.gender.equals("")) {
+                        if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("male")) {
                             radioYesOrNo.check(R.id.radioBtnMale)
                             selectedGender = "Male"
-                        }else if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("female")){
+                        } else if (getDoctorProfileResponse.result.gender.trim().toLowerCase().equals("female")) {
                             radioYesOrNo.check(R.id.radioBtnFemale)
                             selectedGender = "Female"
                         }/*else{
@@ -365,46 +372,46 @@ class FragmentEditDoctorProfile :
                     }else{
                         ediitextInstitute.setText("")
                     }*/
-                    if(getDoctorProfileResponse.result.description!=null && !getDoctorProfileResponse.result.description.equals("")){
+                    if (getDoctorProfileResponse.result.description != null && !getDoctorProfileResponse.result.description.equals("")) {
                         ediitextDescription.setText(getDoctorProfileResponse.result.description)
-                    }else{
+                    } else {
                         ediitextDescription.setText("")
                     }
-                    if(getDoctorProfileResponse.result.experience!=null && !getDoctorProfileResponse.result.experience.equals("")){
+                    if (getDoctorProfileResponse.result.experience != null && !getDoctorProfileResponse.result.experience.equals("")) {
                         ediitextExperience.setText(getDoctorProfileResponse.result.experience)
-                    }else{
+                    } else {
                         ediitextExperience.setText("")
                     }
-                    if(getDoctorProfileResponse.result.availableTime!=null && !getDoctorProfileResponse.result.availableTime.equals("")){
+                    if (getDoctorProfileResponse.result.availableTime != null && !getDoctorProfileResponse.result.availableTime.equals("")) {
                         ediitexAvailableTime.setText(getDoctorProfileResponse.result.availableTime)
-                    }else{
+                    } else {
                         ediitexAvailableTime.setText("")
                     }
-                    if(getDoctorProfileResponse.result.fees!=null && !getDoctorProfileResponse.result.fees.equals("")){
+                    if (getDoctorProfileResponse.result.fees != null && !getDoctorProfileResponse.result.fees.equals("")) {
                         ediitextFees.setText(getDoctorProfileResponse.result.fees)
-                    }else{
+                    } else {
                         ediitextFees.setText("")
                     }
-                    if(getDoctorProfileResponse.result.department!=null && getDoctorProfileResponse.result.department.size>0){
+                    if (getDoctorProfileResponse.result.department != null && getDoctorProfileResponse.result.department.size > 0) {
                         textViewDepartment.setText("")
                         departTitle = ""
                         departmentId = ""
-                        for (i in 0 until getDoctorProfileResponse.result.department.size){
-                            if (i==0){
+                        for (i in 0 until getDoctorProfileResponse.result.department.size) {
+                            if (i == 0) {
                                 departTitle += getDoctorProfileResponse.result.department[i]?.title!!
                                 departmentId += getDoctorProfileResponse.result.department[i]?.id!!
-                            }else{
-                                departTitle += ","+getDoctorProfileResponse.result.department[i]?.title!!
-                                departmentId += ","+getDoctorProfileResponse.result.department[i]?.id!!
+                            } else {
+                                departTitle += "," + getDoctorProfileResponse.result.department[i]?.title!!
+                                departmentId += "," + getDoctorProfileResponse.result.department[i]?.id!!
                             }
                             textViewDepartment.setText(departTitle)
-                            for (j in 0 until departmentList?.size!!){
-                                if (getDoctorProfileResponse.result.department[i]?.id.equals(departmentList!![j]?.id)){
+                            for (j in 0 until departmentList?.size!!) {
+                                if (getDoctorProfileResponse.result.department[i]?.id.equals(departmentList!![j]?.id)) {
                                     departmentList!![j]?.isChecked = "true"
                                 }
                             }
                         }
-                    }else{
+                    } else {
                         textViewDepartment.setText("")
                     }
                     /*if(getDoctorProfileResponse.result.qualificationCertificate!=null && !getDoctorProfileResponse.result.qualificationCertificate.equals("")){
@@ -413,8 +420,8 @@ class FragmentEditDoctorProfile :
                         textViewCertificate.setText("")
                     }*/
 
-                    if(getDoctorProfileResponse.result.qualificationData!=null && getDoctorProfileResponse.result.qualificationData.size>0){
-                        for (item in getDoctorProfileResponse.result.qualificationData){
+                    if (getDoctorProfileResponse.result.qualificationData != null && getDoctorProfileResponse.result.qualificationData.size > 0) {
+                        for (item in getDoctorProfileResponse.result.qualificationData) {
                             item.isOldData = true
                         }
                         certificateListAdapter?.qualificationDataList?.addAll(getDoctorProfileResponse.result.qualificationData)
@@ -664,17 +671,52 @@ class FragmentEditDoctorProfile :
                     MediaType.parse("multipart/form-data"),
                     ediitextInstitute.text?.trim().toString()
                 )*/
+                var qualificationStr = ""
+                var passingYearStr = ""
+                var instituteStr = ""
+                if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList!!.size > 0) {
+                    val tempList: ArrayList<QualificationDataItem> = ArrayList()
+                    for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
+                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData){
+                            tempList.add(certificateListAdapter?.qualificationDataList!![i])
+                        }
+                    }
+                    for (i in 0 until tempList.size) {
+                        if (i == 0 ) {
+                            qualificationStr += tempList[i].qualification!!
+                            passingYearStr += tempList[i].passingYear!!
+                            instituteStr += tempList[i].institute!!
+                        } else {
+                            qualificationStr += ",${tempList[i].qualification!!}"
+                            passingYearStr += ",${tempList[i].passingYear!!}"
+                            instituteStr += ",${tempList[i].institute!!}"
+                        }
+
+                    }
+                    /*for (i in 0 until certificateListAdapter?.qualificationDataList!!.size) {
+                        if (i == 0 ) {
+                            qualificationStr += certificateListAdapter?.qualificationDataList!![i].qualification!!
+                            passingYearStr += certificateListAdapter?.qualificationDataList!![i].passingYear!!
+                            instituteStr += certificateListAdapter?.qualificationDataList!![i].institute!!
+                        } else {
+                            qualificationStr += ",${certificateListAdapter?.qualificationDataList!![i].qualification!!}"
+                            passingYearStr += ",${certificateListAdapter?.qualificationDataList!![i].passingYear!!}"
+                            instituteStr += ",${certificateListAdapter?.qualificationDataList!![i].institute!!}"
+                        }
+
+                    }*/
+                }
                 val qualification = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
-                    ""
+                    qualificationStr
                 )
                 val passingYear = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
-                    ""
+                    passingYearStr
                 )
                 val institute = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
-                    ""
+                    instituteStr
                 )
                 val description = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
@@ -699,16 +741,42 @@ class FragmentEditDoctorProfile :
 
 
 
-                if (imageFile == null && (certificateListAdapter?.qualificationDataList!=null && certificateListAdapter?.qualificationDataList?.size!!>0)) {
+                if (imageFile == null && (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0)) {
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
                     imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
-                    val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
-                    if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!!>0) {
-                        for (item in certificateListAdapter?.qualificationDataList!!){
-                            if (item.certificateFileTemporay!=null) {
+                    val certificateMultipartBody: MutableList<MultipartBody.Part> = ArrayList()
+                    /*if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0) {
+                        for (item in certificateListAdapter?.qualificationDataList!!) {
+                            if (item.certificateFileTemporay != null) {
                                 val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
-                                certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", item.certificateFileTemporay?.name, certificate))
+                                certificateMultipartBody.add(
+                                    MultipartBody.Part.createFormData(
+                                        "certificate[]",
+                                        item.certificateFileTemporay?.name,
+                                        certificate
+                                    )
+                                )
+                            }
+                        }
+                    }*/
+                    val tempList: ArrayList<QualificationDataItem> = ArrayList()
+                    for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
+                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData){
+                            tempList.add(certificateListAdapter?.qualificationDataList!![i])
+                        }
+                    }
+                    if (tempList.size > 0) {
+                        for (item in tempList) {
+                            if (item.certificateFileTemporay != null && !item.isOldData) {
+                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
+                                certificateMultipartBody.add(
+                                    MultipartBody.Part.createFormData(
+                                        "certificate[]",
+                                        item.certificateFileTemporay?.name,
+                                        certificate
+                                    )
+                                )
                             }
                         }
                     }
@@ -739,7 +807,7 @@ class FragmentEditDoctorProfile :
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                    val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
+                    val certificateMultipartBody: MutableList<MultipartBody.Part> = ArrayList()
                     val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
                     certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", "", certificate))
 
@@ -766,15 +834,41 @@ class FragmentEditDoctorProfile :
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                    val certificateMultipartBody:ArrayList<MultipartBody.Part> = ArrayList()
-                    if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!!>0) {
-                        for (item in certificateListAdapter?.qualificationDataList!!){
-                            if (item.certificateFileTemporay!=null) {
+                    val certificateMultipartBody: ArrayList<MultipartBody.Part> = ArrayList()
+                    val tempList: ArrayList<QualificationDataItem> = ArrayList()
+                    for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
+                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData){
+                            tempList.add(certificateListAdapter?.qualificationDataList!![i])
+                        }
+                    }
+                    if (tempList.size > 0) {
+                        for (item in tempList) {
+                            if (item.certificateFileTemporay != null && !item.isOldData) {
                                 val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
-                                certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate", item.certificateFileTemporay?.name, certificate))
+                                certificateMultipartBody.add(
+                                    MultipartBody.Part.createFormData(
+                                        "certificate[]",
+                                        item.certificateFileTemporay?.name,
+                                        certificate
+                                    )
+                                )
                             }
                         }
                     }
+                    /*if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0) {
+                        for (item in certificateListAdapter?.qualificationDataList!!) {
+                            if (item.certificateFileTemporay != null) {
+                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
+                                certificateMultipartBody.add(
+                                    MultipartBody.Part.createFormData(
+                                        "certificate",
+                                        item.certificateFileTemporay?.name,
+                                        certificate
+                                    )
+                                )
+                            }
+                        }
+                    }*/
 
                     fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
@@ -799,7 +893,7 @@ class FragmentEditDoctorProfile :
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
                     imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
-                    val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
+                    val certificateMultipartBody: MutableList<MultipartBody.Part> = ArrayList()
                     val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
                     certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", "", certificate))
 
@@ -925,13 +1019,13 @@ class FragmentEditDoctorProfile :
     }
 
 
-    private fun addCertificatePortionsSetUp(){
-        with(fragmentDoctorEditProfileBinding!!){
+    private fun addCertificatePortionsSetUp() {
+        with(fragmentDoctorEditProfileBinding!!) {
             recyclerViewCertificates.layoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
             certificateListAdapter = CertificateListAdapter(activity!!)
             recyclerViewCertificates.adapter = certificateListAdapter
             var fragment = CertificateUploadFragment.newInstance()
-            fragment.listener = object : CertificateUploadFragment.PassDataCallBack{
+            fragment.listener = object : CertificateUploadFragment.PassDataCallBack {
                 override fun onPassData(data: QualificationDataItem) {
                     certificateListAdapter?.qualificationDataList?.add(data)
                     certificateListAdapter?.notifyDataSetChanged()

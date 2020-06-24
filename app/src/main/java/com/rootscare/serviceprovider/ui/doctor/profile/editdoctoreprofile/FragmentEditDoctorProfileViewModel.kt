@@ -71,7 +71,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
         fees: RequestBody,
         department: RequestBody,
         image: MultipartBody.Part? = null,
-        certificate: MultipartBody.Part? = null
+        certificate: List<MultipartBody.Part>? = null
     ) {
         var disposable: Disposable? = null
         if (image != null) {

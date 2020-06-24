@@ -1,5 +1,6 @@
 package com.rootscare.model
 
+import com.rootscare.data.model.api.response.doctor.profileresponse.QualificationDataItem
 import java.io.File
 
  class RegistrationModel(var userType: String?=null,
@@ -15,11 +16,12 @@ import java.io.File
                         var imageName: String?=null,
                         var certificateFile: File?=null,
                         var certificatename: String?=null,
-                         var qualification: String?=null,
-                        var passingYear: String?=null,
-                        var institude: String?=null,
+                         var qualification: String?="",
+                        var passingYear: String?="",
+                        var institude: String?="",
                         var description: String?=null,
                         var experience : String?=null,
                         var availableTime : String?=null,
                         var fees: String?=null,
-                         var department: String?=null)
+                         var department: String?=null,
+                         var qualificationDataList: ArrayList<QualificationDataItem>?=null)

@@ -14,7 +14,7 @@ import com.rootscare.serviceprovider.databinding.ItemNursesImportantDocumentList
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.adapter.AdapterNursesUploadDocument
 import kotlinx.android.synthetic.main.item_doctor_important_document_recyclerview.view.*
 
-class AdapterDoctorImportantDocumentrecyclerview   (val qualificationDataList: ArrayList<QualificationDataItem?>?,internal var context: Context) : RecyclerView.Adapter<AdapterDoctorImportantDocumentrecyclerview.ViewHolder>() {
+class AdapterDoctorImportantDocumentrecyclerview   (val qualificationDataList: ArrayList<QualificationDataItem>?,internal var context: Context) : RecyclerView.Adapter<AdapterDoctorImportantDocumentrecyclerview.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
     companion object {
         val TAG: String = AdapterDoctorImportantDocumentrecyclerview::class.java.simpleName

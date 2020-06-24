@@ -10,7 +10,7 @@ data class Result(
 	val date: String? = null,
 	@field:JsonProperty("qualification_data")
 	@field:SerializedName("qualification_data")
-	val qualificationData: ArrayList<QualificationDataItem?>? = null,
+	val qualificationData: ArrayList<QualificationDataItem>? = null,
 	@field:JsonProperty("fees")
 	@field:SerializedName("fees")
 	val fees: String? = null,

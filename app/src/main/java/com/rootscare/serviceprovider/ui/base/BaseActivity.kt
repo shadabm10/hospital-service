@@ -17,6 +17,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -114,6 +115,17 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         viewDataBinding!!.executePendingBindings()
     }
 
+
+    fun openDialogFragment(dialogFragment: DialogFragment){
+        val ft = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag(dialogFragment.javaClass.name)
+        if (prev != null)
+        {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+        dialogFragment.show(ft, dialogFragment.javaClass.name)
+    }
 
 }
 

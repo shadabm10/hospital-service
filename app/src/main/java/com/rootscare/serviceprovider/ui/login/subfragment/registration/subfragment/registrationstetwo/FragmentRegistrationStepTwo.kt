@@ -18,12 +18,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.myfilepickesexample.FileUtil
+import com.rootscare.data.model.api.response.doctor.profileresponse.QualificationDataItem
+import com.rootscare.dialog.certificateupload.CertificateUploadFragment
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentRegistrationBinding
 import com.rootscare.serviceprovider.databinding.FragmentRegistrationStepTwoBinding
 import com.rootscare.serviceprovider.ui.base.AppData
 import com.rootscare.serviceprovider.ui.base.BaseFragment
+import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.adapter.CertificateListAdapter
 import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.serviceprovider.ui.login.subfragment.registration.FragmentRegistration
 import com.rootscare.serviceprovider.ui.login.subfragment.registration.FragmentRegistrationNavigator
@@ -37,7 +40,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
     FragmentRegistrationStepTwoNavigator {
     private var fragmentRegistrationStepTwoBinding: FragmentRegistrationStepTwoBinding? = null
     private var fragmentRegistrationStepTwoViewModel: FragmentRegistrationStepTwoViewModel? = null
-
+    private var certificateListAdapter: CertificateListAdapter?=null
     private val GALLERY = 1
     private val CAMERA = 2
     private val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 3
@@ -80,6 +83,9 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentRegistrationStepTwoBinding = viewDataBinding
+
+        addCertificatePortionsSetUp()
+
         val list = listOf<String>(
             Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -97,20 +103,40 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         fragmentRegistrationStepTwoBinding?.btnRooscareServiceproviderRegistrationSteptwoContinue?.setOnClickListener(
             View.OnClickListener {
                 if(checkValidationForRegStepTwo()){
-                    AppData?.registrationModelData?.imageFile=imageFile
-                    AppData?.registrationModelData?.imageName=fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text?.toString()
-                    AppData?.registrationModelData?.certificateFile=certificatefileFile
-                    AppData?.registrationModelData?.certificatename=fragmentRegistrationStepTwoBinding?.txtCertificate?.text?.toString()
+                    AppData.registrationModelData?.imageFile=imageFile
+                    AppData.registrationModelData?.imageName=fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text?.toString()
+                    AppData.registrationModelData?.certificateFile=certificatefileFile
+                    AppData.registrationModelData?.qualificationDataList=certificateListAdapter?.qualificationDataList!!
+                    if (certificateListAdapter?.qualificationDataList!=null && certificateListAdapter?.qualificationDataList!!.size>0){
+                        var qualification = ""
+                        var passingYear = ""
+                        var institute = ""
+                        for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!){
+                            if (i==0){
+                                qualification += certificateListAdapter?.qualificationDataList!![i].qualification!!
+                                passingYear += certificateListAdapter?.qualificationDataList!![i].passingYear!!
+                                institute += certificateListAdapter?.qualificationDataList!![i].institute!!
+                            }else{
+                                qualification += ",${certificateListAdapter?.qualificationDataList!![i].qualification!!}"
+                                passingYear += ",${certificateListAdapter?.qualificationDataList!![i].passingYear!!}"
+                                institute += ",${certificateListAdapter?.qualificationDataList!![i].institute!!}"
+                            }
+                        }
+                        AppData.registrationModelData?.qualification = qualification
+                        AppData.registrationModelData?.passingYear = passingYear
+                        AppData.registrationModelData?.institude = institute
+                    }
+                    /*AppData?.registrationModelData?.certificatename=fragmentRegistrationStepTwoBinding?.txtCertificate?.text?.toString()
                     AppData?.registrationModelData?.qualification=fragmentRegistrationStepTwoBinding?.edtRegHighestQualification?.text?.toString()
                     AppData?.registrationModelData?.passingYear=fragmentRegistrationStepTwoBinding?.txtRegPassingYear?.text?.toString()
-                    AppData?.registrationModelData?.institude=fragmentRegistrationStepTwoBinding?.edtRegInstitute?.text?.toString()
+                    AppData?.registrationModelData?.institude=fragmentRegistrationStepTwoBinding?.edtRegInstitute?.text?.toString()*/
                     (activity as LoginActivity?)!!.setCurrentItem(3, true)
                 }
 
             })
 
         //Select Passing Year
-        fragmentRegistrationStepTwoBinding?.txtRegPassingYear?.setOnClickListener(View.OnClickListener {
+        /*fragmentRegistrationStepTwoBinding?.txtRegPassingYear?.setOnClickListener(View.OnClickListener {
             val builder = MonthPickerDialog.Builder(activity, MonthPickerDialog.OnDateSetListener { selectedMonth, selectedYear ->
 
                 fragmentRegistrationStepTwoBinding?.txtRegPassingYear?.setText(selectedYear.toString())
@@ -121,7 +147,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
                 .setYearRange(1980, 2090)
                 .build()
                 .show();
-        })
+        })*/
 
         //Image Selection Button Click
         fragmentRegistrationStepTwoBinding?.llRegImageSelect?.setOnClickListener(View.OnClickListener {
@@ -129,15 +155,15 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         })
 
         //File Selection Button Click
-        fragmentRegistrationStepTwoBinding?.llRegCertificateUpload?.setOnClickListener(View.OnClickListener {
-            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-            chooseFile.type = "*/*"
-            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-            startActivityForResult(
-                chooseFile,
-                PICKFILE_RESULT_CODE
-            )
-        })
+//        fragmentRegistrationStepTwoBinding?.llRegCertificateUpload?.setOnClickListener(View.OnClickListener {
+//            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+//            chooseFile.type = "*/*"
+//            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+//            startActivityForResult(
+//                chooseFile,
+//                PICKFILE_RESULT_CODE
+//            )
+//        })
     }
     //IMAGE SELECTION AND GET IMAGE PATH
 
@@ -186,7 +212,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
                     fragmentRegistrationStepTwoBinding?.txtImageSelectName?.setText(getFileName(this!!.activity!!,
                         contentURI!!
                     ))
-                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 //                    fragmentAddPatientForDoctorBookingBinding?.imgRootscarePatientProfileImage?.setImageBitmap(bitmap)
 
@@ -208,7 +234,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
 //                fragmentRegistrationBinding?.txtImageSelectName?.setText(getFileName(this!!.activity!!,
 //                    contentURI!!
 //                ))
-            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 
         }else if(requestCode==PICKFILE_RESULT_CODE){
@@ -223,9 +249,9 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
                         "file",
                         "File...:::: uti - " + file.path + " file -" + file + " : " + file.exists()
                     )
-                    fragmentRegistrationStepTwoBinding?.txtCertificate?.setText(
-                        getFileName(this!!.activity!!, fileUri!!)
-                    )
+//                    fragmentRegistrationStepTwoBinding?.txtCertificate?.setText(
+//                        getFileName(this!!.activity!!, fileUri!!)
+//                    )
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -357,7 +383,11 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
         }
-        if (fragmentRegistrationStepTwoBinding?.txtCertificate?.text?.toString().equals("") ) {
+        if (certificateListAdapter?.qualificationDataList?.size!=null && certificateListAdapter?.qualificationDataList?.size==0){
+            Toast.makeText(activity!!, "Please add atleast one certificate", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        /*if (fragmentRegistrationStepTwoBinding?.txtCertificate?.text?.toString().equals("") ) {
             Toast.makeText(activity, "Please select your highest education certificate!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
@@ -378,8 +408,30 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
             Toast.makeText(activity, "Please select your institute name!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
-        }
+        }*/
 
         return true
+    }
+
+
+
+    private fun addCertificatePortionsSetUp(){
+        with(fragmentRegistrationStepTwoBinding!!){
+            recyclerViewCertificates.layoutManager =
+                androidx.recyclerview.widget.GridLayoutManager(activity, 1, androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false)
+            certificateListAdapter = CertificateListAdapter(activity!!)
+            recyclerViewCertificates.adapter = certificateListAdapter
+            var fragment = CertificateUploadFragment.newInstance()
+            fragment.listener = object : CertificateUploadFragment.PassDataCallBack{
+                override fun onPassData(data: QualificationDataItem) {
+                    certificateListAdapter?.qualificationDataList?.add(data)
+                    certificateListAdapter?.notifyDataSetChanged()
+                }
+
+            }
+            imageViewaddCertificate.setOnClickListener {
+                baseActivity?.openDialogFragment(fragment)
+            }
+        }
     }
 }

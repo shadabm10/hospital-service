@@ -14,15 +14,15 @@ class FragmentRegistrationStepThreeViewModel : BaseViewModel<FragmentRegistratio
     fun apieditpatientprofilepersonal(user_type: RequestBody, first_name: RequestBody, last_name: RequestBody, email: RequestBody, mobile_number: RequestBody,dob: RequestBody,
                                       gender: RequestBody,password: RequestBody,
                                       confirm_password: RequestBody,image: MultipartBody.Part? = null,
-                                      certificate: MultipartBody.Part? = null,qualification: RequestBody,passing_year: RequestBody,institute: RequestBody,
+                                      certificate: List<MultipartBody.Part>? = null,qualification: RequestBody,passing_year: RequestBody,institute: RequestBody,
                                       description: RequestBody,experience: RequestBody,available_time: RequestBody,fees: RequestBody,department: RequestBody) {
 //        userId: RequestBody,first_name: RequestBody,last_name: RequestBody,id_number: RequestBody,status: RequestBody,image: MultipartBody.Part? = null
 //        val body = RequestBody.create(MediaType.parse("application/json"), "")
         var disposable: Disposable? = null
         if (image != null) {
             disposable = apiServiceWithGsonFactory.apiserviceproviderregistration(user_type,first_name,last_name,email,
-                mobile_number,dob,gender,password,confirm_password,image,
-                certificate!!,qualification,passing_year,institute,description,experience,available_time,fees,department)
+                mobile_number,dob,gender,password,confirm_password,qualification,passing_year,institute,description,experience,available_time,
+                fees,department, certificate!!,image)
                 .subscribeOn(_scheduler_io)
                 .observeOn(_scheduler_ui)
                 .subscribe({ response ->

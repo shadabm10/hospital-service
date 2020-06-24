@@ -67,8 +67,6 @@ interface ApiService {
         @Part("gender") gender: RequestBody,
         @Part("password") password: RequestBody,
         @Part("confirm_password") confirm_password: RequestBody,
-        @Part image: MultipartBody.Part,
-        @Part certificate: MultipartBody.Part,
         @Part("qualification") qualification: RequestBody,
         @Part("passing_year") passing_year: RequestBody,
         @Part("institute") institute: RequestBody,
@@ -76,7 +74,9 @@ interface ApiService {
         @Part("experience") experience: RequestBody,
         @Part("available_time") available_time: RequestBody,
         @Part("fees") fees: RequestBody,
-        @Part("department") department: RequestBody
+        @Part("department") department: RequestBody,
+        @Part certificate: List<MultipartBody.Part>,
+        @Part image: MultipartBody.Part
     ): Single<RegistrationResponse>
 
     //Forgot Password Api Call
@@ -129,7 +129,7 @@ interface ApiService {
         @Part("fees") fees: RequestBody,
         @Part("department") department: RequestBody,
         @Part image: MultipartBody.Part?=null,
-        @Part certificate: MultipartBody.Part?=null
+        @Part certificate: List<MultipartBody.Part>?=null
     ): Single<RegistrationResponse>
 
 

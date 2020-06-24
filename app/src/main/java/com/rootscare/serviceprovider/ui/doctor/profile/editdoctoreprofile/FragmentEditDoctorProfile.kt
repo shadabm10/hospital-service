@@ -18,6 +18,8 @@ import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
@@ -27,13 +29,16 @@ import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequ
 import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
 import com.rootscare.data.model.api.response.deaprtmentlist.ResultItem
 import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
+import com.rootscare.data.model.api.response.doctor.profileresponse.QualificationDataItem
 import com.rootscare.data.model.api.response.registrationresponse.RegistrationResponse
+import com.rootscare.dialog.certificateupload.CertificateUploadFragment
 import com.rootscare.interfaces.OnDepartmentDropDownListItemClickListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorEditProfileBinding
 import com.rootscare.serviceprovider.ui.base.AppData
 import com.rootscare.serviceprovider.ui.base.BaseFragment
+import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.adapter.CertificateListAdapter
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
 import com.rootscare.serviceprovider.ui.login.subfragment.registration.subfragment.registrationstetwo.FragmentRegistrationStepTwo
 import com.whiteelephant.monthpicker.MonthPickerDialog
@@ -49,6 +54,9 @@ import kotlin.collections.ArrayList
 class FragmentEditDoctorProfile :
     BaseFragment<FragmentDoctorEditProfileBinding, FragmentEditDoctorProfileViewModel>(),
     FragmentEditDoctorProfileNavigator {
+
+    private val TAG = "FragmentEditDoctorProfi"
+    private var certificateListAdapter:CertificateListAdapter?=null
 
     private val IMAGE_DIRECTORY = "/demonuts"
     private val PICKFILE_RESULT_CODE = 4
@@ -105,6 +113,10 @@ class FragmentEditDoctorProfile :
 
 
         with(fragmentDoctorEditProfileBinding!!) {
+
+            addCertificatePortionsSetUp()
+
+
             textViewDepartment.setOnClickListener(View.OnClickListener {
                 CommonDialog.showDialogForDeaprtmentDropDownList(
                     activity!!,
@@ -146,11 +158,10 @@ class FragmentEditDoctorProfile :
                     })
             })
 
-            textViewPassingYear.setOnClickListener(View.OnClickListener {
+            /*textViewPassingYear.setOnClickListener(View.OnClickListener {
                 val builder = MonthPickerDialog.Builder(
                     activity,
                     MonthPickerDialog.OnDateSetListener { selectedMonth, selectedYear ->
-//                        yearOfPassingToSubmit = selectedYear.toString()
                         textViewPassingYear.setText(selectedYear.toString())
                     },
                     choosenYear,
@@ -160,7 +171,7 @@ class FragmentEditDoctorProfile :
                     .setYearRange(1980, 2090)
                     .build()
                     .show();
-            })
+            })*/
 
 
             textViewDOB.setOnClickListener(View.OnClickListener {
@@ -200,15 +211,15 @@ class FragmentEditDoctorProfile :
 
 
             //File Selection Button Click
-            textViewCertificate.setOnClickListener(View.OnClickListener {
-                var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-                chooseFile.type = "*/*"
-                chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-                startActivityForResult(
-                    chooseFile,
-                    PICKFILE_RESULT_CODE
-                )
-            })
+//            textViewCertificate.setOnClickListener(View.OnClickListener {
+//                var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+//                chooseFile.type = "*/*"
+//                chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+//                startActivityForResult(
+//                    chooseFile,
+//                    PICKFILE_RESULT_CODE
+//                )
+//            })
 
             //Image Selection Button Click
             imgDoctorProfile.setOnClickListener(View.OnClickListener {
@@ -339,7 +350,7 @@ class FragmentEditDoctorProfile :
                             selectedGender = "Other"
                         }*/
                     }
-                    if(getDoctorProfileResponse.result.qualification!=null && !getDoctorProfileResponse.result.qualification.equals("")){
+                    /*if(getDoctorProfileResponse.result.qualification!=null && !getDoctorProfileResponse.result.qualification.equals("")){
                         ediitextQualification.setText(getDoctorProfileResponse.result.qualification)
                     }else{
                         ediitextQualification.setText("")
@@ -353,7 +364,7 @@ class FragmentEditDoctorProfile :
                         ediitextInstitute.setText(getDoctorProfileResponse.result.institute)
                     }else{
                         ediitextInstitute.setText("")
-                    }
+                    }*/
                     if(getDoctorProfileResponse.result.description!=null && !getDoctorProfileResponse.result.description.equals("")){
                         ediitextDescription.setText(getDoctorProfileResponse.result.description)
                     }else{
@@ -396,11 +407,20 @@ class FragmentEditDoctorProfile :
                     }else{
                         textViewDepartment.setText("")
                     }
-                    if(getDoctorProfileResponse.result.qualificationCertificate!=null && !getDoctorProfileResponse.result.qualificationCertificate.equals("")){
+                    /*if(getDoctorProfileResponse.result.qualificationCertificate!=null && !getDoctorProfileResponse.result.qualificationCertificate.equals("")){
                         textViewCertificate.setText(getDoctorProfileResponse.result.qualificationCertificate)
                     }else{
                         textViewCertificate.setText("")
+                    }*/
+
+                    if(getDoctorProfileResponse.result.qualificationData!=null && getDoctorProfileResponse.result.qualificationData.size>0){
+                        for (item in getDoctorProfileResponse.result.qualificationData){
+                            item.isOldData = true
+                        }
+                        certificateListAdapter?.qualificationDataList?.addAll(getDoctorProfileResponse.result.qualificationData)
+                        certificateListAdapter?.notifyDataSetChanged()
                     }
+
                 }
 
             }
@@ -491,9 +511,9 @@ class FragmentEditDoctorProfile :
                         "file",
                         "File...:::: uti - " + file.path + " file -" + file + " : " + file.exists()
                     )
-                    fragmentDoctorEditProfileBinding?.textViewCertificate?.setText(
+                    /*fragmentDoctorEditProfileBinding?.textViewCertificate?.setText(
                         getFileName(this!!.activity!!, fileUri!!)
-                    )
+                    )*/
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -632,7 +652,7 @@ class FragmentEditDoctorProfile :
                     MediaType.parse("multipart/form-data"),
                     selectedGender
                 )
-                val qualification = RequestBody.create(
+                /*val qualification = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
                     ediitextQualification.text?.trim().toString()
                 )
@@ -643,6 +663,18 @@ class FragmentEditDoctorProfile :
                 val institute = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
                     ediitextInstitute.text?.trim().toString()
+                )*/
+                val qualification = RequestBody.create(
+                    MediaType.parse("multipart/form-data"),
+                    ""
+                )
+                val passingYear = RequestBody.create(
+                    MediaType.parse("multipart/form-data"),
+                    ""
+                )
+                val institute = RequestBody.create(
+                    MediaType.parse("multipart/form-data"),
+                    ""
                 )
                 val description = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
@@ -667,13 +699,22 @@ class FragmentEditDoctorProfile :
 
 
 
-                if (imageFile == null && certificatefileFile != null) {
+                if (imageFile == null && (certificateListAdapter?.qualificationDataList!=null && certificateListAdapter?.qualificationDataList?.size!!>0)) {
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
                     imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
-                    var certificateMultipartBody: MultipartBody.Part? = null
+                    val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
+                    if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!!>0) {
+                        for (item in certificateListAdapter?.qualificationDataList!!){
+                            if (item.certificateFileTemporay!=null) {
+                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
+                                certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", item.certificateFileTemporay?.name, certificate))
+                            }
+                        }
+                    }
+                    /*var certificateMultipartBody: MultipartBody.Part? = null
                     val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), certificatefileFile!!)
-                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", certificatefileFile?.name, certificate)
+                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", certificatefileFile?.name, certificate)*/
 
                     fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
@@ -692,15 +733,15 @@ class FragmentEditDoctorProfile :
                         fees,
                         department,
                         imageMultipartBody,
-                        certificateMultipartBody!!
+                        certificateMultipartBody
                     )
                 } else if (imageFile != null && certificatefileFile == null) {
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                    var certificateMultipartBody: MultipartBody.Part? = null
+                    val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
                     val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", "", certificate)
+                    certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", "", certificate))
 
                     fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
@@ -725,9 +766,15 @@ class FragmentEditDoctorProfile :
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                    var certificateMultipartBody: MultipartBody.Part? = null
-                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), certificatefileFile!!)
-                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", certificatefileFile?.name, certificate)
+                    val certificateMultipartBody:ArrayList<MultipartBody.Part> = ArrayList()
+                    if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!!>0) {
+                        for (item in certificateListAdapter?.qualificationDataList!!){
+                            if (item.certificateFileTemporay!=null) {
+                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
+                                certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate", item.certificateFileTemporay?.name, certificate))
+                            }
+                        }
+                    }
 
                     fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
@@ -746,15 +793,16 @@ class FragmentEditDoctorProfile :
                         fees,
                         department,
                         imageMultipartBody,
-                        certificateMultipartBody!!
+                        certificateMultipartBody
                     )
                 } else if (imageFile == null && certificatefileFile == null) {
                     var imageMultipartBody: MultipartBody.Part? = null
                     val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
                     imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
-                    var certificateMultipartBody: MultipartBody.Part? = null
+                    val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
                     val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", "", certificate)
+                    certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", "", certificate))
+
                     fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
                         user_id,
                         first_name,
@@ -876,4 +924,23 @@ class FragmentEditDoctorProfile :
         return true
     }
 
+
+    private fun addCertificatePortionsSetUp(){
+        with(fragmentDoctorEditProfileBinding!!){
+            recyclerViewCertificates.layoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
+            certificateListAdapter = CertificateListAdapter(activity!!)
+            recyclerViewCertificates.adapter = certificateListAdapter
+            var fragment = CertificateUploadFragment.newInstance()
+            fragment.listener = object : CertificateUploadFragment.PassDataCallBack{
+                override fun onPassData(data: QualificationDataItem) {
+                    certificateListAdapter?.qualificationDataList?.add(data)
+                    certificateListAdapter?.notifyDataSetChanged()
+                }
+
+            }
+            imageViewaddCertificate.setOnClickListener {
+                baseActivity?.openDialogFragment(fragment)
+            }
+        }
+    }
 }

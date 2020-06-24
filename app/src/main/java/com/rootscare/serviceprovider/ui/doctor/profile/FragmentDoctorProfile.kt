@@ -18,6 +18,7 @@ import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorProfileBinding
 import com.rootscare.serviceprovider.databinding.FragmentHomeBinding
+import com.rootscare.serviceprovider.ui.base.AppData
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.adapter.AdapterReviewAndRatingRecyclerview
 import com.rootscare.serviceprovider.ui.doctor.profile.adapter.AdapterDoctorImportantDocumentrecyclerview
@@ -101,7 +102,7 @@ class FragmentDoctorProfile: BaseFragment<FragmentDoctorProfileBinding, Fragment
     }
 
     // Set up recycler view for service listing if available
-    private fun setUpViewPrescriptionlistingRecyclerview(qualificationDataList: ArrayList<QualificationDataItem?>?) {
+    private fun setUpViewPrescriptionlistingRecyclerview(qualificationDataList: ArrayList<QualificationDataItem>?) {
         assert(fragmentDoctorProfileBinding!!.recyclerViewRootscareDoctorimportentDocument != null)
         val recyclerView = fragmentDoctorProfileBinding!!.recyclerViewRootscareDoctorimportentDocument
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)

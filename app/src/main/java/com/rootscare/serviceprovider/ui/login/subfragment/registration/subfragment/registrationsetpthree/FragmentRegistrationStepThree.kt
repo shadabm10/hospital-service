@@ -228,11 +228,12 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
             imageMultipartBody = MultipartBody.Part.createFormData("image", AppData?.registrationModelData?.imageFile?.name, image)
 //            fragmentProfileViewModel?.apieditpatientprofilepersonal(userId,first_name,last_name,id_number,status,multipartBody)
         }
-        var certificateMultipartBody:MultipartBody.Part?=null
+        /*var certificateMultipartBody:MultipartBody.Part?=null
         if (AppData?.registrationModelData?.certificateFile != null) {
             val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.certificateFile)
             certificateMultipartBody = MultipartBody.Part.createFormData("certificate", AppData?.registrationModelData?.certificateFile?.name, certificate)
-        }
+
+        }*/
         val qualification = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.qualification)
         val passing_year = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.passingYear)
         val institute = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.institude)
@@ -241,10 +242,22 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
         val available_time = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.availableTime)
         val fees = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.fees)
         val department = RequestBody.create(MediaType.parse("multipart/form-data"), departmentId)
+        val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
+        if (AppData.registrationModelData?.qualificationDataList != null && AppData.registrationModelData?.qualificationDataList?.size!!>0) {
+            var index = 0
+            for (item in AppData.registrationModelData?.qualificationDataList!!){
+                if (item.certificateFileTemporay!=null) {
+                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
+                    certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", item.certificateFileTemporay?.name, certificate))
+                    index++
+                }
+            }
+        }
+
 
         fragmentRegistrationStepThreeViewModel?.apieditpatientprofilepersonal(user_type,first_name,last_name,email,
             mobile_number,dob,gender,password,confirm_password,imageMultipartBody,
-            certificateMultipartBody!!,qualification,passing_year,institute,description,experience,available_time,fees,department)
+            certificateMultipartBody,qualification,passing_year,institute,description,experience,available_time,fees,department)
 
     }
 

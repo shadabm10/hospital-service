@@ -1,186 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import type="android.view.View" />
 
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/common_bg"
-        android:orientation="vertical" >
+        android:orientation="vertical">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_100sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:src="@drawable/logo_with_name"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageViewBack"
+                        android:padding="5dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageViewLogo"
+                        app:layout_constraintTop_toTopOf="@+id/imageViewLogo"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:src="@drawable/back_white_arrow" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageViewLogo"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:src="@drawable/logo_with_name" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <LinearLayout
+                    android:id="@+id/ll_registration_setp_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible"
-                    android:id="@+id/ll_registration_setp_one"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_20sdp">
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
                     <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                        android:id="@+id/txt_rootscare_registration_userType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_rootscare_registration_userType"
-                        android:hint="Select User Type"
-                        android:textSize="@dimen/_12sdp"
+                        android:background="@drawable/login_edit_bg"
                         android:drawableEnd="@drawable/down_arrow_white"
+                        android:hint="Select User Type"
+                        android:padding="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:padding="@dimen/_12sdp"
-                        android:background="@drawable/login_edit_bg"
-                        />
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                        android:id="@+id/edt_reg_firstname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edt_reg_firstname"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
                         android:hint="First Name"
                         android:inputType="text"
                         android:maxLength="20"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                        android:id="@+id/edt_reg_lastname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edt_reg_lastname"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
                         android:hint="Last Name"
                         android:inputType="text"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:maxLength="20"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                        android:id="@+id/edt_reg_emailaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edt_reg_emailaddress"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
                         android:hint="Email Address"
                         android:inputType="textEmailAddress"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:maxLines="1"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                        android:id="@+id/edt_reg_phonenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Mobile Number"
-                        android:id="@+id/edt_reg_phonenumber"
-                        android:inputType="phone"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
+                        android:hint="Mobile Number"
+                        android:inputType="phone"
                         android:maxLength="10"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                        android:id="@+id/txt_reg_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Date of Birth"
-                        android:id="@+id/txt_reg_dob"
-                        android:inputType="textEmailAddress"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
+                        android:hint="Date of Birth"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:orientation="vertical">
+
                         <RadioGroup
                             android:id="@+id/radioYesOrNo"
                             android:layout_width="match_parent"
-                            android:orientation="horizontal"
                             android:layout_height="wrap_content"
-                            >
+                            android:orientation="horizontal">
+
                             <RadioButton
+                                android:id="@+id/radio_btn_reg_male"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Male"
-                                android:id="@+id/radio_btn_reg_male"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/_10ssp"
-                                />
+                                android:textSize="@dimen/_10ssp" />
+
                             <RadioButton
+                                android:id="@+id/radio_btn_reg_female"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Female"
-                                android:textSize="@dimen/_10ssp"
-                                android:id="@+id/radio_btn_reg_female"
                                 android:layout_marginStart="@dimen/_10sdp"
+                                android:text="Female"
                                 android:textColor="@color/white"
-                                />
+                                android:textSize="@dimen/_10ssp" />
                         </RadioGroup>
                     </LinearLayout>
 
                     <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Password"
                         android:id="@+id/edt_reg_password"
-                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
+                        android:hint="Password"
+                        android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                        android:id="@+id/edt_reg_confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Confirm Password"
-                        android:id="@+id/edt_reg_confirm_password"
-                        android:inputType="textPassword"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/login_edit_bg"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
-                        android:background="@drawable/login_edit_bg"/>
+                        android:textSize="@dimen/_12sdp" />
+
                     <com.rootscare.customviews.neusabutton.MyNeusaBoldButton
+                        android:id="@+id/btn_rooscare_serviceprovider_registration_stepone_continue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/btn_rooscare_serviceprovider_registration_stepone_continue"
-                        android:text="Continue"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/text_hint_color"
-                        android:paddingBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@drawable/square_bg"
                         android:drawableEnd="@drawable/btn"
                         android:padding="@dimen/_10sdp"
-                        android:background="@drawable/square_bg"
-                        android:layout_marginTop="@dimen/_20sdp"/>
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Continue"
+                        android:textColor="@color/text_hint_color"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
 
 

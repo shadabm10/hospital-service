@@ -116,6 +116,10 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
             })
         })
 
+        fragmentRegistrationBinding?.imageViewBack?.setOnClickListener {
+            (activity as LoginActivity).onBackPressed()
+        }
+
         fragmentRegistrationBinding?.radioBtnRegFemale?.setOnClickListener(View.OnClickListener {
             selectedGender="Female"
         })
@@ -264,16 +268,33 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
 
     override fun onResume() {
         super.onResume()
-        fragmentRegistrationBinding?.txtRootscareRegistrationUserType?.setText(AppData?.registrationModelData?.userType)
-        fragmentRegistrationBinding?.txtRegDob?.setText(AppData?.registrationModelData?.dob)
-        if (AppData?.registrationModelData?.gender.equals("Female")){
-            selectedGender= AppData?.registrationModelData?.gender!!
-            fragmentRegistrationBinding?.radioBtnRegFemale?.isChecked=true
+        if (!AppData.boolSForRefreshLayout) {
+            fragmentRegistrationBinding?.txtRootscareRegistrationUserType?.setText(AppData?.registrationModelData?.userType)
+            fragmentRegistrationBinding?.txtRegDob?.setText(AppData?.registrationModelData?.dob)
+            if (AppData?.registrationModelData?.gender.equals("Female")){
+                selectedGender= AppData?.registrationModelData?.gender!!
+                fragmentRegistrationBinding?.radioBtnRegFemale?.isChecked=true
 
-        }else if(AppData?.registrationModelData?.gender.equals("Male")){
-            selectedGender= AppData?.registrationModelData?.gender!!
-            fragmentRegistrationBinding?.radioBtnRegMale?.isChecked=true
+            }else if(AppData?.registrationModelData?.gender.equals("Male")){
+                selectedGender= AppData?.registrationModelData?.gender!!
+                fragmentRegistrationBinding?.radioBtnRegMale?.isChecked=true
+
+                fragmentRegistrationBinding?.edtRegFirstname?.setText(AppData?.registrationModelData?.firstName)
+                fragmentRegistrationBinding?.edtRegLastname?.setText(AppData?.registrationModelData?.lastName)
+                fragmentRegistrationBinding?.edtRegEmailaddress?.setText(AppData?.registrationModelData?.emailAddress)
+                fragmentRegistrationBinding?.edtRegPhonenumber?.setText(AppData?.registrationModelData?.mobileNumber)
+                fragmentRegistrationBinding?.edtRegPassword?.setText(AppData?.registrationModelData?.password)
+                fragmentRegistrationBinding?.edtRegConfirmPassword?.setText(AppData?.registrationModelData?.confirmPassword)
+            }
+        }else{
+            fragmentRegistrationBinding?.edtRegFirstname?.setText("")
+            fragmentRegistrationBinding?.edtRegLastname?.setText("")
+            fragmentRegistrationBinding?.edtRegEmailaddress?.setText("")
+            fragmentRegistrationBinding?.edtRegPhonenumber?.setText("")
+            fragmentRegistrationBinding?.edtRegPassword?.setText("")
+            fragmentRegistrationBinding?.edtRegConfirmPassword?.setText("")
         }
+
     }
 
 

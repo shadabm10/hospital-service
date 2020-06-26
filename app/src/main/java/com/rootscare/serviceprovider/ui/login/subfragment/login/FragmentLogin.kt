@@ -218,4 +218,5 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
             Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
         }
     }
+
 }

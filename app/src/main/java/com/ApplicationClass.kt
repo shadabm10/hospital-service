@@ -35,7 +35,11 @@ class ApplicationClass: Application() {
             AppDataBase::class.java, AppConstants.DB_NAME).build()
        // appEnvironment = AppEnvironment.SANDBOX
 
-
+        /*val fabric = Fabric.Builder(this)
+            .kits(Crashlytics())
+            .debuggable(true) // Enables Crashlytics debugger
+            .build()
+        Fabric.with(fabric)*/
     }
 
 

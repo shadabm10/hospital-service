@@ -43,7 +43,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
         get() = R.layout.fragment_registration_stepthree
     override val viewModel: FragmentRegistrationStepThreeViewModel
         get() {
-            fragmentRegistrationStepThreeViewModel = ViewModelProviders.of(this).get(FragmentRegistrationStepThreeViewModel::class.java!!)
+            fragmentRegistrationStepThreeViewModel = ViewModelProviders.of(this).get(FragmentRegistrationStepThreeViewModel::class.java)
             return fragmentRegistrationStepThreeViewModel as FragmentRegistrationStepThreeViewModel
         }
 
@@ -64,17 +64,21 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
         super.onViewCreated(view, savedInstanceState)
         fragmentRegistrationStepthreeBinding = viewDataBinding
 
+        fragmentRegistrationStepthreeBinding?.imageViewBack?.setOnClickListener {
+            (activity as LoginActivity).onBackPressed()
+        }
+
         fragmentRegistrationStepthreeBinding?.btnRooscareServiceproviderRegistrationSubmit?.setOnClickListener(
             View.OnClickListener {
 
-                CommonDialog.showDialog(this!!.activity!!,object : DialogClickCallback{
+                CommonDialog.showDialog(this.activity!!,object : DialogClickCallback{
                     override fun onConfirm() {
                         if(checkValidationForRegStepThree()){
-                            AppData?.registrationModelData?.description=fragmentRegistrationStepthreeBinding?.edtRegDescription?.text?.toString()
-                            AppData?.registrationModelData?.experience=fragmentRegistrationStepthreeBinding?.edtRegExperience?.text?.toString()
-                            AppData?.registrationModelData?.availableTime=fragmentRegistrationStepthreeBinding?.edtRootscareRegistrationAvailableTime?.text?.toString()
-                            AppData?.registrationModelData?.fees=fragmentRegistrationStepthreeBinding?.edtRegFees?.text?.toString()
-                            AppData?.registrationModelData?.department=fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text?.toString()
+                            AppData.registrationModelData?.description=fragmentRegistrationStepthreeBinding?.edtRegDescription?.text?.toString()
+                            AppData.registrationModelData?.experience=fragmentRegistrationStepthreeBinding?.edtRegExperience?.text?.toString()
+                            AppData.registrationModelData?.availableTime=fragmentRegistrationStepthreeBinding?.edtRootscareRegistrationAvailableTime?.text?.toString()
+                            AppData.registrationModelData?.fees=fragmentRegistrationStepthreeBinding?.edtRegFees?.text?.toString()
+                            AppData.registrationModelData?.department=fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text?.toString()
                             if(isNetworkConnected){
                                 baseActivity?.showLoading()
                                 registrationApiCall()
@@ -92,7 +96,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
 
             })
         if(isNetworkConnected){
-            baseActivity?.showLoading()
+//            baseActivity?.showLoading()
             fragmentRegistrationStepThreeViewModel?.apidepartmentlist()
 
         }else{
@@ -104,24 +108,24 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
 
 
         fragmentRegistrationStepthreeBinding?.txtRegDepartment?.setOnClickListener(View.OnClickListener {
-            CommonDialog.showDialogForDeaprtmentDropDownList(this!!.activity!!,departmentList,"Select Department",object:
+            CommonDialog.showDialogForDeaprtmentDropDownList(this.activity!!,departmentList,"Select Department",object:
                 OnDepartmentDropDownListItemClickListener {
                 override fun onConfirm(departmentList: ArrayList<ResultItem?>?) {
                     departTitle=""
                     departmentId=""
                     var p=0
                     for (i in 0 until departmentList?.size!!) {
-                        if (departmentList?.get(i)?.isChecked.equals("true")){
+                        if (departmentList.get(i)?.isChecked.equals("true")){
                             if (p==0){
-                                departTitle= departmentList?.get(i)?.title!!
-                                departmentId= departmentList?.get(i)?.id!!
+                                departTitle= departmentList.get(i)?.title!!
+                                departmentId= departmentList.get(i)?.id!!
                                 p++
 
 //                                Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
 //                                Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
                             }else{
-                                departTitle=departTitle+","+departmentList?.get(i)?.title
-                            departmentId=departmentId+","+departmentList?.get(i)?.id
+                                departTitle=departTitle+","+ departmentList.get(i)?.title
+                            departmentId=departmentId+","+ departmentList.get(i)?.id
 
 //                                Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
 //                                Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
@@ -133,7 +137,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
                     Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
 
 
-                    fragmentRegistrationStepthreeBinding?.txtRegDepartment?.setText(departTitle)
+                    fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text = departTitle
                 }
 
 
@@ -177,7 +181,8 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
 
             CommonDialog.showDialogForSingleButton(activity!!,object : DialogClickCallback{
                 override fun onConfirm() {
-                    AppData.registrationModelData= RegistrationModel()
+                    AppData.registrationModelData = RegistrationModel()
+                    AppData.boolSForRefreshLayout = true
                     (activity as LoginActivity?)!!.setCurrentItem(0, true)
                 }
 
@@ -194,9 +199,9 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     override fun successDepartmentListResponse(departmentListResponse: DepartmentListResponse?) {
         baseActivity?.hideLoading()
         if (departmentListResponse?.code.equals("200")){
-            if(departmentListResponse?.result!=null && departmentListResponse?.result.size>0){
+            if(departmentListResponse?.result!=null && departmentListResponse.result.size>0){
                 departmentList=ArrayList<ResultItem?>()
-                departmentList=departmentListResponse?.result
+                departmentList= departmentListResponse.result
             }
         }
     }
@@ -212,20 +217,20 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     //
     private fun registrationApiCall(){
         baseActivity?.showLoading()
-        val user_type = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.userType?.toLowerCase())
-        val first_name = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.firstName)
-        val last_name = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.lastName)
-        val email = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.emailAddress)
-        val mobile_number = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.mobileNumber)
-        val dob = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.dob)
-        val gender = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.gender)
-        val password = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.password)
-        val confirm_password = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.confirmPassword)
+        val user_type = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.userType?.toLowerCase())
+        val first_name = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.firstName)
+        val last_name = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.lastName)
+        val email = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.emailAddress)
+        val mobile_number = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.mobileNumber)
+        val dob = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.dob)
+        val gender = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.gender)
+        val password = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.password)
+        val confirm_password = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.confirmPassword)
 
         var imageMultipartBody:MultipartBody.Part?=null
-        if (AppData?.registrationModelData?.imageFile != null) {
-            val image = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.imageFile)
-            imageMultipartBody = MultipartBody.Part.createFormData("image", AppData?.registrationModelData?.imageFile?.name, image)
+        if (AppData.registrationModelData?.imageFile != null) {
+            val image = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.imageFile)
+            imageMultipartBody = MultipartBody.Part.createFormData("image", AppData.registrationModelData?.imageFile?.name, image)
 //            fragmentProfileViewModel?.apieditpatientprofilepersonal(userId,first_name,last_name,id_number,status,multipartBody)
         }
         /*var certificateMultipartBody:MultipartBody.Part?=null
@@ -234,13 +239,13 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
             certificateMultipartBody = MultipartBody.Part.createFormData("certificate", AppData?.registrationModelData?.certificateFile?.name, certificate)
 
         }*/
-        val qualification = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.qualification)
-        val passing_year = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.passingYear)
-        val institute = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.institude)
-        val description = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.description)
-        val experience = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.experience)
-        val available_time = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.availableTime)
-        val fees = RequestBody.create(MediaType.parse("multipart/form-data"), AppData?.registrationModelData?.fees)
+        val qualification = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.qualification)
+        val passing_year = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.passingYear)
+        val institute = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.institude)
+        val description = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.description)
+        val experience = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.experience)
+        val available_time = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.availableTime)
+        val fees = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.fees)
         val department = RequestBody.create(MediaType.parse("multipart/form-data"), departmentId)
         val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
         if (AppData.registrationModelData?.qualificationDataList != null && AppData.registrationModelData?.qualificationDataList?.size!!>0) {
@@ -261,4 +266,14 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (AppData.boolSForRefreshLayout) {
+            fragmentRegistrationStepthreeBinding?.edtRegDescription?.setText("")
+            fragmentRegistrationStepthreeBinding?.edtRegExperience?.setText("")
+            fragmentRegistrationStepthreeBinding?.edtRootscareRegistrationAvailableTime?.setText("")
+            fragmentRegistrationStepthreeBinding?.edtRegFees?.setText("")
+            fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text = ""
+        }
+    }
 }

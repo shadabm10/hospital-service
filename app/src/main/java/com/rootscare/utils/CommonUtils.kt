@@ -53,7 +53,7 @@ object CommonUtils {
         }
         progressDialog.setContentView(R.layout.progress_dialog)
         progressDialog.isIndeterminate = true
-        progressDialog.setCancelable(false)
+        progressDialog.setCancelable(true)
         progressDialog.setCanceledOnTouchOutside(false)
         return progressDialog
     }

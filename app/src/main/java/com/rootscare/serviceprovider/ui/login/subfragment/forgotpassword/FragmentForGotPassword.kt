@@ -51,6 +51,10 @@ class FragmentForGotPassword: BaseFragment<FragmentForgotPasswordBinding, Fragme
         fragmentForgotPasswordBinding = viewDataBinding
         fragmentForgotPasswordBinding?.llEmailContent?.visibility=View.VISIBLE
 
+        fragmentForgotPasswordBinding?.imageViewBack?.setOnClickListener {
+            (activity as LoginActivity).onBackPressed()
+        }
+
         fragmentForgotPasswordBinding?.btnForgotpasswordSendMail?.setOnClickListener(View.OnClickListener {
             val emailOrPassword=fragmentForgotPasswordBinding?.edtEmail?.text?.toString()
             if(!(emailOrPassword?.isEmpty()!!)) {

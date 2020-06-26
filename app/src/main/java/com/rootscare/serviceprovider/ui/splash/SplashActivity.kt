@@ -42,6 +42,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
         splashViewModel!!.navigator = this
         activitySplashBinding = viewDataBinding
 
+//        throw RuntimeException("Test Crash") // Force a crash
 //
 
 

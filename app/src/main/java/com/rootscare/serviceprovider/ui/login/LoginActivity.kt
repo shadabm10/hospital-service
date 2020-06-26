@@ -3,22 +3,17 @@ package com.rootscare.serviceprovider.ui.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import android.view.MotionEvent
+import android.view.View
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import com.rootscare.adapter.MyAdapter
 import com.rootscare.model.RegistrationModel
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityLoginBinding
-import com.rootscare.serviceprovider.databinding.ActivitySplashBinding
 import com.rootscare.serviceprovider.ui.base.AppData
 import com.rootscare.serviceprovider.ui.base.BaseActivity
-import com.rootscare.serviceprovider.ui.home.HomeActivity
-import com.rootscare.serviceprovider.ui.splash.SplashActivityNavigator
-import com.rootscare.serviceprovider.ui.splash.SplashActivityViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>(),
     LoginActivityNavigator {
@@ -41,6 +36,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
         fun newIntent(activity: Activity): Intent {
             return Intent(activity, LoginActivity::class.java)
         }
+
         private var fragment_open_container: Int? = null
     }
 
@@ -52,14 +48,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
         mAdapter = MyAdapter(getSupportFragmentManager());
 //        mPager = findViewById(R.id.viewpager);
         ativityLoginBinding?.viewPager?.setAdapter(mAdapter)
-        AppData.registrationModelData=RegistrationModel()
+        AppData.registrationModelData = RegistrationModel()
+        setUpViewPager()
     }
-
 
 
     fun setCurrentItem(item: Int, smoothScroll: Boolean) {
         ativityLoginBinding?.viewPager?.setCurrentItem(item, smoothScroll)
     }
+
 
     override fun onBackPressed() {
 
@@ -69,17 +66,39 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
 //                 }, 1000)
             super.onBackPressed()
 
-        }else{
+        } else {
             if (ativityLoginBinding?.viewPager?.getCurrentItem() == 1) {
                 this!!.setCurrentItem(0, true)
-            }else if(ativityLoginBinding?.viewPager?.getCurrentItem() == 2){
+            } else if (ativityLoginBinding?.viewPager?.getCurrentItem() == 2) {
                 this!!.setCurrentItem(1, true)
-            }else if(ativityLoginBinding?.viewPager?.getCurrentItem() == 3){
+            } else if (ativityLoginBinding?.viewPager?.getCurrentItem() == 3) {
                 this!!.setCurrentItem(2, true)
-            }else{
+            } else {
                 this!!.setCurrentItem(0, true)
             }
 
+        }
+    }
+
+    private fun setUpViewPager() {
+        with(ativityLoginBinding!!) {
+            viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+                    if (position == 0) {
+                        viewPager.setPagingEnabled(true)
+                    } else {
+                        viewPager.setPagingEnabled(false)
+                    }
+                }
+            })
         }
     }
 }

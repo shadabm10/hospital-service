@@ -32,7 +32,6 @@ import com.rootscare.serviceprovider.ui.login.subfragment.registration.FragmentR
 import com.rootscare.serviceprovider.ui.login.subfragment.registration.FragmentRegistrationNavigator
 import com.rootscare.serviceprovider.ui.login.subfragment.registration.FragmentRegistrationviewModel
 import com.rootscare.utils.ManagePermissions
-import com.whiteelephant.monthpicker.MonthPickerDialog
 import java.io.*
 import java.util.*
 
@@ -61,7 +60,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         get() = R.layout.fragment_registration_step_two
     override val viewModel: FragmentRegistrationStepTwoViewModel
         get() {
-            fragmentRegistrationStepTwoViewModel = ViewModelProviders.of(this).get(FragmentRegistrationStepTwoViewModel::class.java!!)
+            fragmentRegistrationStepTwoViewModel = ViewModelProviders.of(this).get(FragmentRegistrationStepTwoViewModel::class.java)
             return fragmentRegistrationStepTwoViewModel as FragmentRegistrationStepTwoViewModel
         }
     companion object {
@@ -92,17 +91,23 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         )
 
         // Initialize a new instance of ManagePermissions class
-        managePermissions = ManagePermissions(this!!.activity!!, list, PermissionsRequestCode)
+        managePermissions = ManagePermissions(this.activity!!, list, PermissionsRequestCode)
 
         //check permissions states
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             managePermissions.checkPermissions()
 
+
+        fragmentRegistrationStepTwoBinding?.imageViewBack?.setOnClickListener {
+            (activity as LoginActivity).onBackPressed()
+        }
+
         //Continue Button click
         fragmentRegistrationStepTwoBinding?.btnRooscareServiceproviderRegistrationSteptwoContinue?.setOnClickListener(
             View.OnClickListener {
                 if(checkValidationForRegStepTwo()){
+                    AppData.boolSForRefreshLayout = false
                     AppData.registrationModelData?.imageFile=imageFile
                     AppData.registrationModelData?.imageName=fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text?.toString()
                     AppData.registrationModelData?.certificateFile=certificatefileFile
@@ -195,7 +200,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
     }
 
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
         /* if (resultCode == this.RESULT_CANCELED)
@@ -204,14 +209,15 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
          }*/
         if (requestCode == GALLERY) {
             if (data != null) {
-                val contentURI = data!!.data
+                val contentURI = data.data
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, contentURI)
                     val path = saveImage(bitmap)
                     bitmapToFile(bitmap)
-                    fragmentRegistrationStepTwoBinding?.txtImageSelectName?.setText(getFileName(this!!.activity!!,
+                    fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text = getFileName(
+                        this.activity!!,
                         contentURI!!
-                    ))
+                    )
 //                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 //                    fragmentAddPatientForDoctorBookingBinding?.imgRootscarePatientProfileImage?.setImageBitmap(bitmap)
@@ -227,7 +233,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         } else if (requestCode == CAMERA) {
 
             val contentURI = data!!.data
-            val thumbnail = data!!.extras!!.get("data") as Bitmap
+            val thumbnail = data.extras!!.get("data") as Bitmap
 //            fragmentAddPatientForDoctorBookingBinding?.imgRootscarePatientProfileImage?.setImageBitmap(thumbnail)
             saveImage(thumbnail)
             bitmapToFile(thumbnail)
@@ -243,7 +249,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
                 filePath = fileUri!!.path
                 // tvItemPath.setText(filePath)
                 try {
-                    val file = FileUtil.from(this!!.activity!!, fileUri!!)
+                    val file = FileUtil.from(this.activity!!, fileUri!!)
                     certificatefileFile=file
                     Log.d(
                         "file",
@@ -275,7 +281,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         try {
             Log.d("heel", wallpaperDirectory.toString())
             val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                .getTimeInMillis()).toString() + ".jpg"))
+                .timeInMillis).toString() + ".jpg"))
             //     File file = new File("/storage/emulated/0/Download/Corrections 6.jpg");
 
 
@@ -285,13 +291,13 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
             val fo = FileOutputStream(f)
             fo.write(bytes.toByteArray())
             MediaScannerConnection.scanFile(activity,
-                arrayOf(f.getPath()),
+                arrayOf(f.path),
                 arrayOf("image/jpeg"), null)
             fo.close()
-            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
+            Log.d("TAG", "File Saved::--->" + f.absolutePath)
 
 
-            return f.getAbsolutePath()
+            return f.absolutePath
         } catch (e1: IOException) {
             e1.printStackTrace()
         }
@@ -319,7 +325,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
         }
         //updateProfileImageApiCall(imageFile!!)
         // Return the saved bitmap uri
-        fragmentRegistrationStepTwoBinding?.txtImageSelectName?.setText(file.name)
+        fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text = file.name
         return Uri.parse(file.absolutePath)
 
 
@@ -417,6 +423,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
 
     private fun addCertificatePortionsSetUp(){
         with(fragmentRegistrationStepTwoBinding!!){
+            certificateListAdapter?.qualificationDataList?.clear()
             recyclerViewCertificates.layoutManager =
                 androidx.recyclerview.widget.GridLayoutManager(activity, 1, androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false)
             certificateListAdapter = CertificateListAdapter(activity!!)
@@ -434,4 +441,17 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
             }
         }
     }
+
+    /*override fun onResume() {
+        super.onResume()
+        if(AppData.registrationModelData!=null){
+
+        }else{
+            fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text = ""
+            certificateListAdapter?.qualificationDataList?.clear()
+            certificateListAdapter?.notifyDataSetChanged()
+        }
+
+    }*/
+
 }

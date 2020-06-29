@@ -249,7 +249,7 @@ class FragmentTodaysAppointment : BaseFragment<FragmentDoctorTodaysAppointmentBi
         CropImage.activity()
             .setGuidelines(CropImageView.Guidelines.ON)
             .setActivityTitle("Crop")
-            .setOutputCompressQuality(50)
+            .setOutputCompressQuality(10)
             .start(activity!!)
     }
 

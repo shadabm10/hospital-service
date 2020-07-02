@@ -20,6 +20,7 @@ import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.FragmentNursesProfile
 import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.FragmentNursesMyAppointment
 import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.FragmentNursesMySchedule
+import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.subfragment.manageschedule.FragmentNursesManageRate
 import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRating
 
 class FragmentNurseHome: BaseFragment<FragmentNursesHomeBinding, FragmentNurseHomeViewModel>(),
@@ -70,7 +71,7 @@ class FragmentNurseHome: BaseFragment<FragmentNursesHomeBinding, FragmentNurseHo
 
         fragmentNursesHomeBinding?.cardViewNurseshomeMySchedule?.setOnClickListener(View.OnClickListener {
             (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
-                FragmentNursesMySchedule.newInstance())
+                FragmentNursesManageRate.newInstance())
         })
     }
 

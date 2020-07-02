@@ -7,262 +7,302 @@
         <import type="android.view.View" />
 
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EBF8F5"
         android:orientation="vertical">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/crdview_doctorappoitment_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:elevation="@dimen/_20sdp">
+                    android:elevation="@dimen/_20sdp"
+                    app:cardCornerRadius="@dimen/_10sdp">
+
                     <LinearLayout
+                        android:id="@+id/ll_mainlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/ll_mainlayout"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Hourly Rate"
-                            android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
+                            android:text="Hourly Rate"
                             android:textColor="@color/txt_color"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_14ssp"/>
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
-                                <TextView
-                                    android:layout_width="@dimen/dimen_0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Slot"
-                                    android:padding="@dimen/_5sdp"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/_12ssp"
-                                    android:textColor="@color/txt_color"
-                                    android:textStyle="bold" />
-                                <TextView
-                                    android:layout_width="@dimen/dimen_0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Amont"
-                                    android:padding="@dimen/_5sdp"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/_12ssp"
-                                    android:textColor="@color/txt_color"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:background="#EBF8F5"
-                                android:weightSum="2">
-                                <TextView
-                                    android:layout_width="@dimen/dimen_0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="4 hour"
-                                    android:padding="@dimen/_5sdp"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
-                                    android:textColor="@color/txt_color"
-                                    />
-                                <EditText
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:maxLines="1"
-                                    android:padding="@dimen/_3sdp"
-                                    android:layout_marginStart="@dimen/_10sdp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:hint="$200"
-                                    android:background="@drawable/edit_comm_bg"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
-                                    android:textColor="@color/txt_color"
-                                    />
-                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/_5sdp"
                                 android:weightSum="2">
+
                                 <TextView
                                     android:layout_width="@dimen/dimen_0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:padding="@dimen/_5sdp"
-                                    android:text="8 hour"
                                     android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="Slot"
                                     android:textColor="@color/txt_color"
-                                    />
-                                <EditText
+                                    android:textSize="@dimen/_12ssp"
+                                    android:textStyle="bold" />
+
+                                <TextView
                                     android:layout_width="@dimen/dimen_0dp"
                                     android:layout_height="wrap_content"
-                                    android:padding="@dimen/_3sdp"
                                     android:layout_weight="1"
-                                    android:layout_marginStart="@dimen/_10sdp"
-                                    android:layout_marginEnd="@dimen/_10sdp"
-                                    android:hint="$400"
-                                    android:maxLines="1"
-                                    android:background="@drawable/edit_comm_bg"
                                     android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="Amont"
                                     android:textColor="@color/txt_color"
-                                    />
+                                    android:textSize="@dimen/_12ssp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/_5sdp"
                                 android:background="#EBF8F5"
-                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="horizontal"
                                 android:weightSum="2">
+
                                 <TextView
                                     android:layout_width="@dimen/dimen_0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="12 hour"
-                                    android:padding="@dimen/_5sdp"
                                     android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="4 Hours"
+                                    android:id="@+id/tvTitleForPrice1"
                                     android:textColor="@color/txt_color"
-                                    />
-                                <EditText
-                                    android:layout_width="@dimen/dimen_0dp"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.rootscare.customview.MyEditTextView
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:maxLines="1"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:layout_marginEnd="@dimen/_10sdp"
-                                    android:hint="$800"
-                                    android:padding="@dimen/_3sdp"
+                                    android:layout_weight="1"
                                     android:background="@drawable/edit_comm_bg"
                                     android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
+                                    android:hint="Price"
+                                    android:id="@+id/etForPrice1"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/_3sdp"
                                     android:textColor="@color/txt_color"
-                                    />
+                                    android:textSize="@dimen/_10ssp" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
                                 android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="horizontal"
                                 android:weightSum="2">
+
                                 <TextView
                                     android:layout_width="@dimen/dimen_0dp"
                                     android:layout_height="wrap_content"
-                                    android:padding="@dimen/_5sdp"
                                     android:layout_weight="1"
-                                    android:text="24 hour"
                                     android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="8 Hours"
+                                    android:id="@+id/tvTitleForPrice2"
                                     android:textColor="@color/txt_color"
-                                    />
-                                <EditText
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.rootscare.customview.MyEditTextView
                                     android:layout_width="@dimen/dimen_0dp"
                                     android:layout_height="wrap_content"
-                                    android:padding="@dimen/_3sdp"
-                                    android:layout_weight="1"
-                                    android:maxLines="1"
                                     android:layout_marginStart="@dimen/_10sdp"
                                     android:layout_marginEnd="@dimen/_10sdp"
-                                    android:text="$1200"
+                                    android:layout_weight="1"
                                     android:background="@drawable/edit_comm_bg"
                                     android:gravity="center"
-                                    android:textSize="@dimen/_10ssp"
+                                    android:hint="Price"
+                                    android:id="@+id/etForPrice2"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/_3sdp"
                                     android:textColor="@color/txt_color"
-                                    />
+                                    android:textSize="@dimen/_10ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:background="#EBF8F5"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="@dimen/dimen_0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="12 Hours"
+                                    android:id="@+id/tvTitleForPrice3"
+                                    android:textColor="@color/txt_color"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.rootscare.customview.MyEditTextView
+                                    android:layout_width="@dimen/dimen_0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/edit_comm_bg"
+                                    android:gravity="center"
+                                    android:hint="Price"
+                                    android:maxLines="1"
+                                    android:id="@+id/etForPrice3"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textColor="@color/txt_color"
+                                    android:textSize="@dimen/_10ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="@dimen/dimen_0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="24 Hours"
+                                    android:id="@+id/tvTitleForPrice4"
+                                    android:textColor="@color/txt_color"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.rootscare.customview.MyEditTextView
+                                    android:layout_width="@dimen/dimen_0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/edit_comm_bg"
+                                    android:gravity="center"
+                                    android:hint="Price"
+                                    android:maxLines="1"
+                                    android:id="@+id/etForPrice4"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textColor="@color/txt_color"
+                                    android:textSize="@dimen/_10ssp" />
                             </LinearLayout>
 
                         </LinearLayout>
+
+                        <com.rootscare.customview.MyCustomButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:background="@drawable/booking_new_bg"
+                            android:drawableEnd="@drawable/white_arrow_circle"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Save Hourly Rate"
+                            android:textAllCaps="false"
+                            android:id="@+id/btnSubmit1"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10ssp" />
+
+
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Slot Wise Rate(each 30 minutes)"
-                            android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
+                            android:text="Slot Wise Rate(each 30 minutes)"
                             android:textColor="@color/txt_color"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_14ssp"/>
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:orientation="horizontal"
                             android:weightSum="2">
-                            <EditText
-                                android:layout_width="@dimen/dimen_0dp"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/_3sdp"
-                                android:layout_weight="1"
-                                android:hint="Slot Time"
-                                android:layout_marginStart="@dimen/_10sdp"
-                                android:gravity="center"
-                                android:background="@drawable/edit_comm_bg"
-                                android:textSize="@dimen/_10ssp"
-                                android:textColor="@color/txt_color"
-                                />
+
                             <TextView
                                 android:layout_width="@dimen/dimen_0dp"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/_3sdp"
-                                android:layout_weight="1"
                                 android:layout_marginStart="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                android:hint="Amount"
+                                android:layout_weight="1"
                                 android:background="@drawable/edit_comm_bg"
                                 android:gravity="center"
-                                android:textSize="@dimen/_10ssp"
+                                android:padding="@dimen/_3sdp"
+                                android:text="Slot"
+                                android:id="@+id/tvTitleForPrice5"
                                 android:textColor="@color/txt_color"
-                                />
+                                android:textSize="@dimen/_10ssp" />
 
+                            <com.rootscare.customview.MyEditTextView
+                                android:layout_width="@dimen/dimen_0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_weight="1"
+                                android:background="@drawable/edit_comm_bg"
+                                android:gravity="center"
+                                android:hint="Price"
+                                android:id="@+id/etForPrice5"
+                                android:padding="@dimen/_3sdp"
+                                android:textColor="@color/txt_color"
+                                android:textSize="@dimen/_10ssp" />
 
 
                         </LinearLayout>
 
 
                         <Button
-                            android:id="@+id/btn_rootscare_doctor_consulting"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_25sdp"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:textAllCaps="false"
                             android:layout_marginBottom="@dimen/_50sdp"
                             android:background="@drawable/blue_booking_bg"
                             android:drawableEnd="@drawable/white_arrow_circle"
                             android:drawablePadding="@dimen/_10sdp"
                             android:padding="@dimen/_5sdp"
                             android:text="Submit"
+                            android:id="@+id/btnSubmit2"
+                            android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10ssp" />
                     </LinearLayout>

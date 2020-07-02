@@ -2,21 +2,23 @@ package com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
+import com.rootscare.data.model.api.response.doctor.review.ReviewResponse
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentNursesReviewAndRatingBinding
-import com.rootscare.serviceprovider.databinding.FragmentReviewAndRatingBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRating
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRatingNavigator
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRatingViewModel
 import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.adapter.AdapterReviewAndRatingRecyclerview
 import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.adapter.AdapterNursesReviewAndRating
 
 class FragmentNursesReviewAndRating: BaseFragment<FragmentNursesReviewAndRatingBinding, FragmentNursesReviewAndRatingViewModel>(),
     FragmentNursesReviewAndRatingNavigator {
+
+    private var contactListAdapter: AdapterNursesReviewAndRating? = null
+
     private var fragmentNursesReviewAndRatingBinding: FragmentNursesReviewAndRatingBinding? = null
     private var fragmentNursesReviewAndRatingViewModel: FragmentNursesReviewAndRatingViewModel? = null
     override val bindingVariable: Int
@@ -51,6 +53,19 @@ class FragmentNursesReviewAndRating: BaseFragment<FragmentNursesReviewAndRatingB
 //                FragmentEditDoctorProfile.newInstance())
 //        })
         setUpViewReviewAndRatinglistingRecyclerview()
+
+        if (isNetworkConnected) {
+            baseActivity?.showLoading()
+            var getDoctorUpcommingAppointmentRequest = GetDoctorUpcommingAppointmentRequest()
+            getDoctorUpcommingAppointmentRequest.userId =
+                fragmentNursesReviewAndRatingViewModel?.appSharedPref?.loginUserId
+            fragmentNursesReviewAndRatingViewModel!!.getReviewFromApi(
+                getDoctorUpcommingAppointmentRequest
+            )
+        } else {
+            Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     // Set up recycler view for service listing if available
@@ -63,7 +78,7 @@ class FragmentNursesReviewAndRating: BaseFragment<FragmentNursesReviewAndRatingB
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
-        val contactListAdapter = AdapterNursesReviewAndRating(context!!)
+        contactListAdapter = AdapterNursesReviewAndRating(context!!)
         recyclerView.adapter = contactListAdapter
 //        contactListAdapter?.recyclerViewItemClickWithView= object : OnItemClikWithIdListener {
 //            override fun onItemClick(id: Int) {
@@ -72,7 +87,27 @@ class FragmentNursesReviewAndRating: BaseFragment<FragmentNursesReviewAndRatingB
 //            }
 //
 //        }
+    }
 
+    override fun onSuccessReview(response: ReviewResponse) {
+        baseActivity?.hideLoading()
+        if (response.code.equals("200")) {
+            if (response.result != null && response.result.size > 0) {
+                fragmentNursesReviewAndRatingBinding?.recyclerViewNursesReviewandrating?.visibility = View.VISIBLE
+                fragmentNursesReviewAndRatingBinding?.tvNoDate?.visibility = View.GONE
+                contactListAdapter?.result = response.result
+                contactListAdapter?.notifyDataSetChanged()
+            }else{
+                fragmentNursesReviewAndRatingBinding?.recyclerViewNursesReviewandrating?.visibility = View.INVISIBLE
+                fragmentNursesReviewAndRatingBinding?.tvNoDate?.visibility = View.VISIBLE
+            }
+        }else{
+            fragmentNursesReviewAndRatingBinding?.recyclerViewNursesReviewandrating?.visibility = View.INVISIBLE
+            fragmentNursesReviewAndRatingBinding?.tvNoDate?.visibility = View.VISIBLE
+        }
+    }
 
+    override fun onThrowable(throwable: Throwable) {
+        baseActivity?.hideLoading()
     }
 }

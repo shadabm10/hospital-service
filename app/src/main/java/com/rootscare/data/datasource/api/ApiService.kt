@@ -136,8 +136,14 @@ interface ApiService {
     @POST("api-doctor-review")
     fun getDoctorReview(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ReviewResponse>
 
+    @POST("api-nurse-review")
+    fun getNurseReview(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ReviewResponse>
+
     @POST("api-doctor-payment-history")
     fun getPaymentHistory(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
+
+    @POST("api-nurse-payment-history")
+    fun getPaymentHistoryForNurse(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
 
     @POST("api-doctor-hospital-clinic")
     fun getMyScheduleHospitalList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<MyScheduleHospitalResponse>
@@ -176,4 +182,10 @@ interface ApiService {
     ): Single<CommonResponse>
 
 
+    // for nurse
+    @POST("api-hourly-rates")
+    fun savePriceForSlot1(@Body requestBody: RequestBody): Single<LoginResponse>
+
+    @POST("api-daily-rates")
+    fun saveHourlyPrice(@Body requestBody: RequestBody): Single<LoginResponse>
 }

@@ -22,7 +22,9 @@ import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.physiotherapy.home.PhysiotherapyHomeActivity
 import com.whiteelephant.monthpicker.MonthPickerDialog
+import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 
 class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>(), FragmentLoginNavigator{
@@ -101,7 +103,7 @@ class FragmentLogin : BaseFragment<FragmentLoginBinding, FragmentLoginViewModel>
 
                     if(checkValidation(useremail!!, password!!)) {
                         val requestUserLogin = LoginRequest()
-                        requestUserLogin.userType=fragmentLoginBinding?.txtRootscareLoginUserType?.text?.toString()?.toLowerCase()
+                        requestUserLogin.userType=fragmentLoginBinding?.txtRootscareLoginUserType?.text?.toString()?.toLowerCase(Locale.ROOT)
                         requestUserLogin.email = useremail
                         requestUserLogin.password = password
                         hideKeyboard()

@@ -7,13 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentCaregiverReviewAndRatingBinding
-import com.rootscare.serviceprovider.databinding.FragmentNursesReviewAndRatingBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.caregiver.caregigerreviewandrating.adapter.AdapterCaregiverReviewAndRatingRecyclerview
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRating
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRatingNavigator
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRatingViewModel
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.adapter.AdapterNursesReviewAndRating
 
 class FragmenntCaregiverReviewAndRating: BaseFragment<FragmentCaregiverReviewAndRatingBinding, FragmenntCaregiverReviewAndRatingViewModel>(),
     FragmenntCaregiverReviewAndRatingNavigator {

@@ -100,12 +100,12 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
 
         var dropdownlist= ArrayList<String?>()
         dropdownlist.add("Doctor")
-        dropdownlist.add("Nurses")
+        dropdownlist.add("Nurse")
         dropdownlist.add("Caregiver")
         dropdownlist.add("Hospital")
         dropdownlist.add("Babysitter")
         dropdownlist.add("Physiotherapy")
-        dropdownlist.add("Lab Technician")
+        dropdownlist.add("Lab-Technician")
         fragmentRegistrationBinding?.txtRootscareRegistrationUserType?.setOnClickListener(View.OnClickListener {
             CommonDialog.showDialogForDropDownList(this!!.activity!!,"Select User Type",dropdownlist,object:
                 DropDownDialogCallBack {
@@ -167,7 +167,7 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
             View.OnClickListener {
 
                 if(checkValidationForRegStepOne()){
-                    AppData.registrationModelData?.userType=fragmentRegistrationBinding?.txtRootscareRegistrationUserType?.text?.toString()
+                    AppData.registrationModelData?.userType=fragmentRegistrationBinding?.txtRootscareRegistrationUserType?.text?.toString()?.toLowerCase(Locale.ROOT)
                     AppData.registrationModelData?.firstName=fragmentRegistrationBinding?.edtRegFirstname?.text?.toString()
                     AppData.registrationModelData?.lastName=fragmentRegistrationBinding?.edtRegLastname?.text?.toString()
                     AppData.registrationModelData?.emailAddress=fragmentRegistrationBinding?.edtRegEmailaddress?.text?.toString()

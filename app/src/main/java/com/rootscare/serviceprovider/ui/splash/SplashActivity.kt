@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import androidx.lifecycle.ViewModelProviders
 import com.google.gson.Gson
 import com.rootscare.data.model.api.response.loginresponse.LoginResponse
@@ -14,6 +15,7 @@ import com.rootscare.serviceprovider.databinding.ActivitySplashBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.LoginActivity
+import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewModel>(), SplashActivityNavigator {
     private var activitySplashBinding: ActivitySplashBinding? = null
@@ -75,8 +77,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
                 if (splashViewModel?.appSharedPref?.loginUserType!=null && !splashViewModel?.appSharedPref?.loginUserType.equals("")){
                     if(!splashViewModel?.appSharedPref?.isloginremember.equals("") && splashViewModel?.appSharedPref?.isloginremember!=null){
                         if(splashViewModel?.appSharedPref?.isloginremember.equals("true")){
-                            if(!splashViewModel?.appSharedPref?.loginUserType.equals("") && splashViewModel?.appSharedPref?.loginUserType.equals("doctor")){
+                            if(!TextUtils.isEmpty(splashViewModel?.appSharedPref?.loginUserType?.trim()) && splashViewModel?.appSharedPref?.loginUserType?.contains("doctor")!!){
                                 startActivity(HomeActivity.newIntent(this@SplashActivity))
+                                finish()
+                            }else if(!TextUtils.isEmpty(splashViewModel?.appSharedPref?.loginUserType?.trim()) && splashViewModel?.appSharedPref?.loginUserType?.contains("nurse")!!){
+                                startActivity(NursrsHomeActivity.newIntent(this@SplashActivity))
                                 finish()
                             }
 

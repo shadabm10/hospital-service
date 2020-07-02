@@ -12,6 +12,8 @@ class AppSharedPref(context: Context, prefFileName: String) {
 
         private val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
 
+        private val PREF_KEY_LOGGED_IN_USER_NURSE = "PREF_KEY_LOGGED_IN_USER_NURSE"
+
         private val PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL"
 
         private val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
@@ -53,6 +55,11 @@ class AppSharedPref(context: Context, prefFileName: String) {
     fun deleteLoginModelData() {
         mPrefs.edit().remove(PREF_KEY_LOGIN_MODEL_DATA).apply()
     }
+
+    //Save Login Model Data
+    var loggedInDataForNurseAfterLogin: String?
+        get() = mPrefs.getString(PREF_KEY_LOGGED_IN_USER_NURSE, null)
+        set(loginmodeldata) = mPrefs.edit().putString(PREF_KEY_LOGGED_IN_USER_NURSE, loginmodeldata).apply()
 
     var loginUserType: String?
         get() = mPrefs.getString(PREF_KEY_LOGIN_USER_TYPE, null)

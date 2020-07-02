@@ -1,37 +1,45 @@
 package com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.rootscare.data.model.api.response.doctor.review.ResultItem
+
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
-import com.rootscare.serviceprovider.databinding.ItemNureseReviewAndRatingRecyclerviewBinding
 import com.rootscare.serviceprovider.databinding.ItemReviewAndRatingRecyclerviewBinding
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.adapter.AdapterReviewAndRatingRecyclerview
+import java.util.*
 
-class AdapterNursesReviewAndRating ( internal var context: Context) : RecyclerView.Adapter<AdapterNursesReviewAndRating.ViewHolder>() {
+class AdapterNursesReviewAndRating  (internal var context: Context) : RecyclerView.Adapter<AdapterNursesReviewAndRating.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
     companion object {
-        val TAG: String = AdapterReviewAndRatingRecyclerview::class.java.simpleName
+        val TAG: String = AdapterNursesReviewAndRating::class.java.simpleName
     }
 
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
     internal lateinit var recyclerViewItemClickWithView: OnItemClikWithIdListener
+    var result: LinkedList<ResultItem> = LinkedList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val singleItemDashboardListingBinding = DataBindingUtil.inflate<ItemNureseReviewAndRatingRecyclerviewBinding>(
+        val singleItemDashboardListingBinding = DataBindingUtil.inflate<ItemReviewAndRatingRecyclerviewBinding>(
             LayoutInflater.from(context),
-            R.layout.item_nurese_review_and_rating_recyclerview, parent, false)
+            R.layout.item_review_and_rating_recyclerview, parent, false)
         return ViewHolder(singleItemDashboardListingBinding)
     }
 
     override fun getItemCount(): Int {
 //        return trainerList!!.size
-        return 10
+        return result.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,7 +47,7 @@ class AdapterNursesReviewAndRating ( internal var context: Context) : RecyclerVi
     }
 
 
-    inner class ViewHolder(itemView: ItemNureseReviewAndRatingRecyclerviewBinding) : RecyclerView.ViewHolder(itemView.root) {
+    inner class ViewHolder(var itemVie: ItemReviewAndRatingRecyclerviewBinding) : RecyclerView.ViewHolder(itemVie.root) {
 
         private var local_position:Int = 0
         init {
@@ -71,19 +79,34 @@ class AdapterNursesReviewAndRating ( internal var context: Context) : RecyclerVi
             Log.d(TAG, " true")
             local_position = pos
 
-//            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name
-//            itemView?.rootView?.txt_teacher_qualification?.text= "Qualification : "+" "+trainerList?.get(pos)?.qualification
-//            if(trainerList?.get(pos)?.avgRating!=null && !trainerList?.get(pos)?.avgRating.equals("")){
-//                itemView?.rootView?.ratingBarteacher?.rating= trainerList?.get(pos)?.avgRating?.toFloat()!!
-//            }
+            with(itemVie){
 
+                if (result[local_position].rating!=null && !TextUtils.isEmpty(result[local_position].rating?.trim())){
+                    ratingBarteacherFeedback.rating = result[local_position].rating?.toFloat()!!
+                }
 
+                if (result[local_position].image!=null && !TextUtils.isEmpty(result[local_position].image?.trim())){
+                    val options: RequestOptions =
+                        RequestOptions()
+                            .centerCrop()
+                            .apply(RequestOptions.circleCropTransform())
+                            .placeholder(R.drawable.profile_no_image)
+                            .priority(Priority.HIGH)
+                    Glide
+                        .with(context)
+                        .load(context.getString(R.string.api_base) + "uploads/images/" + result[local_position].image)
+                        .apply(options)
+                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(imgReviewProfilePhoto)
+                }
 
-
-
-//            itemView?.rootView?.txt_rating_count?.text="("+contactListItem?.get(pos)?.contactRating+")"
-//            (contactListItem?.get(pos)?.contactRating)?.toFloat()?.let { itemView?.rootView?.ratingBar?.setRating(it) }
-////            itemView?.rootView?.ratingBar?.rating=1.5f
+                if (result[local_position].reviewBy!=null && !TextUtils.isEmpty(result[local_position].reviewBy?.trim())){
+                    tvTitle.text = result[local_position].reviewBy
+                }
+                if (result[local_position].review!=null && !TextUtils.isEmpty(result[local_position].review?.trim())){
+                    tvReviewDescription.text = result[local_position].review
+                }
+            }
 
 
         }

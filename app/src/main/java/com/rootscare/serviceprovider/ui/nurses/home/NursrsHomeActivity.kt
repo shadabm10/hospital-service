@@ -23,7 +23,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dialog.CommonDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import com.rootscare.adapter.DrawerAdapter
+import com.rootscare.data.model.api.response.loginresponse.Result
 import com.rootscare.interfaces.DialogClickCallback
 import com.rootscare.interfaces.OnItemClickListener
 import com.rootscare.model.DrawerDatatype
@@ -100,6 +102,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 //
 //
 //
+//
 //            R.id.navigation_booking -> {
 //                checkFragmentInBackstackAndOpen(FragmentBookingAppointment.newInstance())
 //                Handler().postDelayed({ showSelectionOfBottomNavigationItem() }, 100)
@@ -144,9 +147,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 
         // Open Default fragment when app is open ed for 1st time
         //checkFragmentInBackstackAndOpen(AdmissionFragmentPageOne.newInstance(), activityHomeBinding!!.appBarHomepage.layoutContainer.id)
-        checkFragmentInBackstackAndOpen(FragmentNurseHome.newInstance())
-
-//
+        init()
 //        activityHomeBinding!!.appBarHomepage.toolbarLayout.toolbarProfile.setOnClickListener {
 //            //a checkFragmentInBackstackAndOpen(ProfileFragment.newInstance())
 //            CommonDialog.showDialog(this, object : DialogClickCallback {
@@ -172,6 +173,27 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 //        activityHomeBinding!!.drawerLayout.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
 
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        init()
+    }
+
+
+    private fun init(){
+        if (nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin!=null){
+            val nurseDataAfterLogIn = Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin, Result::class.java)
+            if (nurseDataAfterLogIn?.hourlyRates!=null && nurseDataAfterLogIn.hourlyRates?.size!!>0){
+                checkFragmentInBackstackAndOpen(FragmentNurseHome.newInstance())
+            }else{
+                checkFragmentInBackstackAndOpen(FragmentNursesManageRate.newInstance())
+                val tootbar_profile = activityNursrsHomeBinding!!.appBarHomepage.toolbarLayout.toolbarProfile
+                tootbar_profile.visibility = View.GONE
+                val tootbar_notification = activityNursrsHomeBinding!!.appBarHomepage.toolbarLayout.toolbarNotification
+                tootbar_notification.visibility = View.GONE
+            }
+        }
     }
 
     /*private void checkFragmentInBackstackAndOpen(FragmentStudentAttendanceRecord fragment) {
@@ -287,7 +309,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         val strings = LinkedList<DrawerDatatype>()
 
         strings.add(DrawerDatatype("My Appointment", 0,R.drawable.my_appointment_side))
-        strings.add(DrawerDatatype("My Schedule", 1, R.drawable.appointment_history))
+        strings.add(DrawerDatatype("My Time Slot", 1, R.drawable.appointment_history))
         strings.add(DrawerDatatype("Profile", 2, R.drawable.cancel_appointment))
         strings.add(DrawerDatatype("Payment History", 3, R.drawable.payment_history))
 //        strings.add(DrawerDatatype("Student LIVE Status", 6, 0))
@@ -318,7 +340,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
                 when (position) {
 
                     0 -> checkFragmentInBackstackAndOpen(FragmentNursesMyAppointment.newInstance())
-                    1 -> checkFragmentInBackstackAndOpen(FragmentNursesMySchedule.newInstance())
+                    1 -> checkFragmentInBackstackAndOpen(FragmentNursesManageRate.newInstance())
                     2 -> checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
                     3 -> checkFragmentInBackstackAndOpen(FragmentNursesPaymentHistory.newInstance())
                     4 -> checkFragmentInBackstackAndOpen(FragmentNursesReviewAndRating.newInstance())
@@ -338,17 +360,35 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         if (activityNursrsHomeBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             activityNursrsHomeBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            if (supportFragmentManager.backStackEntryCount == 1 || supportFragmentManager.findFragmentById(R.id.layout_container) is FragmentNurseHome) {
-                if (check_for_close) {
-                    finish()
+            if (nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin!=null){
+                var nurseDataAfterLogIn = Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin, Result::class.java)
+                if (nurseDataAfterLogIn?.hourlyRates!=null && nurseDataAfterLogIn.hourlyRates?.size!!>0){
+                    if (supportFragmentManager.backStackEntryCount == 1 || supportFragmentManager.findFragmentById(R.id.layout_container) is FragmentNurseHome) {
+                        if (check_for_close) {
+                            finish()
+                        }
+                        check_for_close = true
+                        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+                        Handler().postDelayed({ check_for_close = false }, 2000)
+                    } else {
+                        super.onBackPressed()
+                        showSelectionOfBottomNavigationItem()
+                    }
+                }else{
+                    if (supportFragmentManager.backStackEntryCount == 1 || supportFragmentManager.findFragmentById(R.id.layout_container) is FragmentNursesManageRate) {
+                        if (check_for_close) {
+                            finish()
+                        }
+                        check_for_close = true
+                        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+                        Handler().postDelayed({ check_for_close = false }, 2000)
+                    } else {
+                        super.onBackPressed()
+                        showSelectionOfBottomNavigationItem()
+                    }
                 }
-                check_for_close = true
-                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
-                Handler().postDelayed({ check_for_close = false }, 2000)
-            } else {
-                super.onBackPressed()
-                showSelectionOfBottomNavigationItem()
             }
+
         }
     }
 

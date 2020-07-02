@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemHospitalManageDepartmentRecyclerviewBinding
-import com.rootscare.serviceprovider.databinding.ItemNureseReviewAndRatingRecyclerviewBinding
 import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.adapter.AdapterReviewAndRatingRecyclerview
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.adapter.AdapterNursesReviewAndRating
 
 class AdapterHospitalManageDepartmentRecyclerview ( internal var context: Context) : RecyclerView.Adapter<AdapterHospitalManageDepartmentRecyclerview.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,

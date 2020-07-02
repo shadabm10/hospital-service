@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.rootscare.data.model.api.request.loginrequest.LoginRequest
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
+import java.util.*
 
 
 class FragmentLoginViewModel : BaseViewModel<FragmentLoginNavigator>() {
@@ -17,7 +18,7 @@ class FragmentLoginViewModel : BaseViewModel<FragmentLoginNavigator>() {
                 if (response != null) {
                     // Store last login time
                     Log.d("check_response", ": " + Gson().toJson(response))
-                    navigator.successLoginResponse(response)
+
                     /* Saving access token after singup or login */
                     if (response.result!= null){
                         appSharedPref?.deleteLoginModelData()
@@ -27,6 +28,9 @@ class FragmentLoginViewModel : BaseViewModel<FragmentLoginNavigator>() {
                         appSharedPref?.loginUserType=response?.result?.userType
                         appSharedPref?.loginUserId=response?.result?.userId
 
+                        if (loginRequest.userType?.toLowerCase(Locale.ROOT)?.contains("nurse")!!){
+                            appSharedPref?.loggedInDataForNurseAfterLogin = Gson().toJson(response.result)
+                        }
 
                         //To get the data
 //                        val json: String = mPrefs.getString("MyObject", "")
@@ -37,7 +41,9 @@ class FragmentLoginViewModel : BaseViewModel<FragmentLoginNavigator>() {
 //                        appSharedPref?.userImage=response?.result?.image
 
 
+
                     }
+                    navigator.successLoginResponse(response)
 
                 } else {
                     Log.d("check_response", ": null response")

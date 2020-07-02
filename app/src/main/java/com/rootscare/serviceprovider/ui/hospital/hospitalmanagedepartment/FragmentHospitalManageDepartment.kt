@@ -11,8 +11,6 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentHospitalManageDepartmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagedepartment.adapter.AdapterHospitalManageDepartmentRecyclerview
-import com.rootscare.serviceprovider.ui.hospital.subfragment.FragmentHospitalHome
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.adapter.AdapterNursesReviewAndRating
 
 class FragmentHospitalManageDepartment: BaseFragment<FragmentHospitalManageDepartmentBinding, FragmentHospitalManageDepartmentViewModel>(),
     FragmentHospitalManageDepartmentNavigator {

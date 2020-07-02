@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemCaregiverPaymenthistoryRecyclerviewBinding
-import com.rootscare.serviceprovider.databinding.ItemNursesPaymentHistoryBinding
 import com.rootscare.serviceprovider.ui.doctor.doctorpaymenthistory.adapter.AdapterDoctorPaymentHistoryRecyclerview
-import com.rootscare.serviceprovider.ui.nurses.nursespaymenthistory.adapter.AdapterNursesPaymentHistory
 import kotlinx.android.synthetic.main.item_doctor_paymenthistory_recyclerview.view.*
 
 class AdapterCaregiverPaymentHistoryRecyclerview( internal var context: Context) : RecyclerView.Adapter<AdapterCaregiverPaymentHistoryRecyclerview.ViewHolder>() {

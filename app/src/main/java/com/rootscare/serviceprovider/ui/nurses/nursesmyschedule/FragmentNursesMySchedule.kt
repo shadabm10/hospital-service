@@ -7,15 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentNursesMySdheduleBinding
-import com.rootscare.serviceprovider.databinding.FragmentNursesReviewAndRatingBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
-import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.adapter.AdapterSlotWiserecyclerView
-import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.subfragment.manageschedule.FragmentNursesManageRate
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRating
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRatingNavigator
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.FragmentNursesReviewAndRatingViewModel
-import com.rootscare.serviceprovider.ui.nurses.nursesreviewandrating.adapter.AdapterNursesReviewAndRating
 
 class FragmentNursesMySchedule: BaseFragment<FragmentNursesMySdheduleBinding, FragmentNursesMyScheduleViewModel>(),
     FragmentNursesMyScheduleNavigator {

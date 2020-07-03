@@ -78,7 +78,7 @@
                                     android:layout_weight="1"
                                     android:gravity="center"
                                     android:padding="@dimen/_5sdp"
-                                    android:text="Amont"
+                                    android:text="Amont (SAR)"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_12ssp"
                                     android:textStyle="bold" />

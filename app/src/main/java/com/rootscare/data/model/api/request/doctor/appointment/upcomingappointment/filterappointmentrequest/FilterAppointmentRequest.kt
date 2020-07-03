@@ -10,5 +10,8 @@ data class FilterAppointmentRequest(
 	var userId: String? = null,
 	@field:JsonProperty("appointment_date")
 	@field:SerializedName("appointment_date")
-	var appointmentDate: String? = null
+	var appointmentDate: String? = null,
+	@field:JsonProperty("from_date")
+	@field:SerializedName("from_date")
+	var fromDate: String? = null
 )

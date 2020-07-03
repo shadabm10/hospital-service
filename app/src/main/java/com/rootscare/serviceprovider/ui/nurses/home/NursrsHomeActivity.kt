@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -21,38 +20,28 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
 import com.dialog.CommonDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.rootscare.adapter.DrawerAdapter
+import com.rootscare.data.model.api.response.loginresponse.LoginResponse
 import com.rootscare.data.model.api.response.loginresponse.Result
 import com.rootscare.interfaces.DialogClickCallback
 import com.rootscare.interfaces.OnItemClickListener
 import com.rootscare.model.DrawerDatatype
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
-import com.rootscare.serviceprovider.databinding.ActivityHomeBinding
 import com.rootscare.serviceprovider.databinding.ActivityNursrsHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointment
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.FragmentDoctorMyschedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.FragmentdoctorManageSchedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.adddoctorscheduletime.FragmentAddDoctorScheduleTime
-import com.rootscare.serviceprovider.ui.doctor.doctorpaymenthistory.FragmentDoctorPaymentHistory
-import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRating
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfile
-import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
-import com.rootscare.serviceprovider.ui.home.HomeActivity
-import com.rootscare.serviceprovider.ui.home.HomeActivityNavigator
-import com.rootscare.serviceprovider.ui.home.HomeActivityViewModel
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification.FragmentHospitalManageNotification
-import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmanageprofile.FragmentLabtechnicianManageProfile
 import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.serviceprovider.ui.nurses.home.subfragment.FragmentNurseHome
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.FragmentNursesProfile
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.subfragment.nursesprofileedit.FragmentNursesEditProfile
 import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.FragmentNursesMyAppointment
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.FragmentNursesAppointmentDetails
 import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.FragmentNursesMySchedule
 import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.subfragment.manageschedule.FragmentNursesManageRate
 import com.rootscare.serviceprovider.ui.nurses.nursespaymenthistory.FragmentNursesPaymentHistory
@@ -68,6 +57,12 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
     private var drawerAdapter: DrawerAdapter? = null
     private var check_for_close = false
 
+    var userFirstName=""
+    var userLastName=""
+    var userEmail=""
+    var userImage=""
+    var loginresponse: LoginResponse? =null
+
     private var studentName: String = ""
     private var studentEmail: String = ""
     private var studentPrifileImage: String = ""
@@ -82,6 +77,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 
         private var fragment_open_container: Int? = null
     }
+
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
@@ -181,12 +177,13 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
     }
 
 
-    private fun init(){
-        if (nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin!=null){
-            val nurseDataAfterLogIn = Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin, Result::class.java)
-            if (nurseDataAfterLogIn?.hourlyRates!=null && nurseDataAfterLogIn.hourlyRates?.size!!>0){
+    private fun init() {
+        if (nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin != null) {
+            val nurseDataAfterLogIn =
+                Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin, Result::class.java)
+            if (nurseDataAfterLogIn?.hourlyRates != null && nurseDataAfterLogIn.hourlyRates.size > 0) {
                 checkFragmentInBackstackAndOpen(FragmentNurseHome.newInstance())
-            }else{
+            } else {
                 checkFragmentInBackstackAndOpen(FragmentNursesManageRate.newInstance())
                 val tootbar_profile = activityNursrsHomeBinding!!.appBarHomepage.toolbarLayout.toolbarProfile
                 tootbar_profile.visibility = View.GONE
@@ -219,8 +216,10 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         }
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.parent_layout)
-        val actionBarDrawerToggle = object : ActionBarDrawerToggle(this, activityNursrsHomeBinding!!.drawerLayout,
-            toolbar, R.string.app_name, R.string.app_name) {
+        val actionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this, activityNursrsHomeBinding!!.drawerLayout,
+            toolbar, R.string.app_name, R.string.app_name
+        ) {
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
 
@@ -229,36 +228,47 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-//                if (homeViewModel?.appSharedPref?.studentName != null && !homeViewModel?.appSharedPref?.studentName.equals("")) {
-//                    studentName = homeViewModel?.appSharedPref?.studentName!!
-//                } else {
-//                    studentName = ""
-//                }
-//                if (homeViewModel?.appSharedPref?.studentEmail != null && !homeViewModel?.appSharedPref?.studentEmail.equals("")) {
-//                    studentEmail = homeViewModel?.appSharedPref?.studentEmail!!
-//                } else {
-//                    studentEmail = ""
-//                }
-//
-//                if (homeViewModel?.appSharedPref?.studentProfileImage != null && !homeViewModel?.appSharedPref?.studentProfileImage.equals("")) {
-//                    studentPrifileImage = homeViewModel?.appSharedPref?.studentProfileImage!!
-//                } else {
-//                    studentPrifileImage = ""
-//                }
-//
-//
-//                if (studentName != null && !studentName.equals("")) {
-//                    activityHomeBinding?.txtSidemenuName?.setText(studentName)
-//                }
-//
-//                if (studentEmail != null && !studentEmail.equals("")) {
-//                    activityHomeBinding?.txtSidemenueEmail?.setText(studentEmail)
-//                }
-//                if (studentPrifileImage != null && !studentPrifileImage.equals("")) {
-//                    Glide.with(this@HomeActivity)
-//                        .load(getString(R.string.api_base) + "admin/uploads/" + (studentPrifileImage))
-//                        .into(activityHomeBinding?.profileImage!!)
-//                }
+
+                loginresponse= Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loginmodeldata!!, LoginResponse::class.java)
+
+                if (loginresponse?.result?.firstName!= null && !loginresponse?.result?.firstName.equals("")) {
+                    userFirstName= loginresponse?.result?.firstName!!
+                } else {
+                    userFirstName = ""
+                }
+
+                if (loginresponse?.result?.lastName!= null && !loginresponse?.result?.lastName.equals("")) {
+                    userLastName= loginresponse?.result?.lastName!!
+                } else {
+                    userLastName = ""
+                }
+
+                if (loginresponse?.result?.email!= null && !loginresponse?.result?.email.equals("")) {
+                    userEmail= loginresponse?.result?.email!!
+                } else {
+                    userEmail = ""
+                }
+
+                if (loginresponse?.result?.image!= null && !loginresponse?.result?.image.equals("")) {
+                    userImage= loginresponse?.result?.image!!
+                } else {
+                    userImage = ""
+                }
+                activityNursrsHomeBinding?.txtSidemenuName?.text = userFirstName+" "+userLastName
+                activityNursrsHomeBinding?.txtSidemenueEmail?.text = (userEmail)
+
+                val options: RequestOptions =
+                    RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.profile_no_image)
+                        .priority(Priority.HIGH)
+                Glide
+                    .with(this@NursrsHomeActivity)
+                    .load(getString(R.string.api_base) + "uploads/images/" + userImage)
+                    .apply(options)
+                    .into(activityNursrsHomeBinding?.profileImage!!)
+
+
                 hideKeyboard()
             }
 
@@ -295,25 +305,23 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
     }
 
 
-
-
     //Set up drawer side menu item
 
     private fun setDataAndSelectOptionInDrawerNavigation() {
         // updateNavigationDrawerprofile();
         val linearLayoutManager = LinearLayoutManager(this@NursrsHomeActivity)
-        activityNursrsHomeBinding!!.navigationDrawerRecyclerview.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
+        activityNursrsHomeBinding!!.navigationDrawerRecyclerview.layoutManager = linearLayoutManager
         activityNursrsHomeBinding!!.navigationDrawerRecyclerview.setHasFixedSize(true)
         //     SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(HomeActivity.this);
         //  NotificationDatatype notificationDatatype = new Gson().fromJson(sharedPrefManager.getNotification(), NotificationDatatype.class);
         val strings = LinkedList<DrawerDatatype>()
 
-        strings.add(DrawerDatatype("My Appointment", 0,R.drawable.my_appointment_side))
+        strings.add(DrawerDatatype("My Appointment", 0, R.drawable.my_appointment_side))
         strings.add(DrawerDatatype("My Time Slot", 1, R.drawable.appointment_history))
         strings.add(DrawerDatatype("Profile", 2, R.drawable.cancel_appointment))
         strings.add(DrawerDatatype("Payment History", 3, R.drawable.payment_history))
 //        strings.add(DrawerDatatype("Student LIVE Status", 6, 0))
-        strings.add(DrawerDatatype("Review and Rating", 4,R.drawable.review_and_rating))
+        strings.add(DrawerDatatype("Review and Rating", 4, R.drawable.review_and_rating))
         strings.add(DrawerDatatype("Logout", 5, R.drawable.logout_icon))
 //        strings.add(DrawerDatatype("Setting", 5, R.drawable.checked))
         drawerAdapter = DrawerAdapter(this@NursrsHomeActivity, strings)
@@ -354,15 +362,14 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
     }
 
 
-
-
     override fun onBackPressed() {
         if (activityNursrsHomeBinding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             activityNursrsHomeBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            if (nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin!=null){
-                var nurseDataAfterLogIn = Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin, Result::class.java)
-                if (nurseDataAfterLogIn?.hourlyRates!=null && nurseDataAfterLogIn.hourlyRates?.size!!>0){
+            if (nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin != null) {
+                var nurseDataAfterLogIn =
+                    Gson().fromJson(nursrsHomeActivityViewModel?.appSharedPref?.loggedInDataForNurseAfterLogin, Result::class.java)
+                if (nurseDataAfterLogIn?.hourlyRates != null && nurseDataAfterLogIn.hourlyRates?.size!! > 0) {
                     if (supportFragmentManager.backStackEntryCount == 1 || supportFragmentManager.findFragmentById(R.id.layout_container) is FragmentNurseHome) {
                         if (check_for_close) {
                             finish()
@@ -374,7 +381,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
                         super.onBackPressed()
                         showSelectionOfBottomNavigationItem()
                     }
-                }else{
+                } else {
                     if (supportFragmentManager.backStackEntryCount == 1 || supportFragmentManager.findFragmentById(R.id.layout_container) is FragmentNursesManageRate) {
                         if (check_for_close) {
                             finish()
@@ -478,7 +485,6 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 //        }
 
 
-
 //        else if (fragment is ProfileFragment) {
 //            menu.findItem(R.id.navigation_profile).isChecked = true
 //        } else if (fragment is FragmentChatContact) {
@@ -513,64 +519,61 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
 //            tootbar_text.setTextColor(resources.getColor(android.R.color.white))
             //   drawerAdapter!!.selectItem(-1)
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
 
-            toolbar_back?.visibility=View.GONE
-            toolbar_menu?.visibility=View.VISIBLE
+            toolbar_back.visibility = View.GONE
+            toolbar_menu.visibility = View.VISIBLE
 
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
-        }
-
-        else if (fragment is FragmentNursesProfile) {
+        } else if (fragment is FragmentNursesProfile) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = resources.getString(R.string.roots_care)
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
-        }
-        else if (fragment is FragmentNursesEditProfile) {
+        } else if (fragment is FragmentNursesEditProfile) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = resources.getString(R.string.roots_care)
-            tootbar_profile?.visibility=View.GONE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.GONE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
 //            tootbar_profile?.setOnClickListener(View.OnClickListener {
 //                checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
 //            })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
@@ -579,21 +582,21 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         else if (fragment is FragmentNursesReviewAndRating) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Review and Rating"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
@@ -602,44 +605,42 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         else if (fragment is FragmentNursesMyAppointment) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Appointment"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
-        }
-
-        else if (fragment is FragmentNursesAppointmentDetails) {
+        } else if (fragment is FragmentNursesMyAppointment) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Appointment Details"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
@@ -648,21 +649,21 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         else if (fragment is FragmentNursesMySchedule) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Schedule"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
@@ -671,44 +672,42 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         else if (fragment is FragmentNursesManageRate) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Price List"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
-        }
-
-        else if (fragment is FragmentNursesPaymentHistory) {
+        } else if (fragment is FragmentNursesPaymentHistory) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Payment History"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
-            toolbar_back?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.visibility = View.VISIBLE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
-            tootbar_profile?.setOnClickListener(View.OnClickListener {
+            tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
-            tootbar_notification?.setOnClickListener(View.OnClickListener {
+            tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })
-            tootbar_logout?.setOnClickListener(View.OnClickListener {
+            tootbar_logout.setOnClickListener(View.OnClickListener {
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
@@ -746,8 +745,10 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
     private val RECORD_REQUEST_CODE = 101
 
     private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.WRITE_CONTACTS)
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_CONTACTS
+        )
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission to record denied")
@@ -756,14 +757,18 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
     }
 
     private fun makeRequest() {
-        ActivityCompat.requestPermissions(this,
+        ActivityCompat.requestPermissions(
+            this,
             arrayOf(Manifest.permission.WRITE_CONTACTS),
-            RECORD_REQUEST_CODE)
+            RECORD_REQUEST_CODE
+        )
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             RECORD_REQUEST_CODE -> {
 
@@ -779,11 +784,11 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var fragment=supportFragmentManager.findFragmentById(activityNursrsHomeBinding?.appBarHomepage?.layoutContainer?.id!!)
+        var fragment = supportFragmentManager.findFragmentById(activityNursrsHomeBinding?.appBarHomepage?.layoutContainer?.id!!)
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun logout(){
+    private fun logout() {
         CommonDialog.showDialog(this@NursrsHomeActivity, object :
             DialogClickCallback {
             override fun onDismiss() {

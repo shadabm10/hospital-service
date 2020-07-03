@@ -1,4 +1,4 @@
-package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment
+package com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.upcomingappointment
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -21,35 +21,35 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorUpcomingAppointmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentAppointmentDetailsForAll
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment.adapter.AdapterDoctorUpcommingAppointment
-import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
+import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
+import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.upcomingappointment.adapter.AdapterNurseUpcommingAppointment
 import java.util.*
 
 
-class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointmentBinding, FragmentUpcommingAppointmentViewModel>(),
-    FragmentUpcommingAppointmentNavigator {
+class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingAppointmentBinding, FragmentUpcommingAppointmentForNurseViewModel>(),
+    FragmentUpcommingAppointmentForNurseNavigator {
 
-    private var contactListAdapter:AdapterDoctorUpcommingAppointment?=null
+    private var contactListAdapter: AdapterNurseUpcommingAppointment?=null
 
     private var fragmentDoctorUpcomingAppointmentBinding: FragmentDoctorUpcomingAppointmentBinding? = null
-    private var fragmentUpcommingAppointmentViewModel: FragmentUpcommingAppointmentViewModel? = null
+    private var fragmentUpcommingAppointmentViewModel: FragmentUpcommingAppointmentForNurseViewModel? = null
     var monthOfDob: String=""
     var dayOfDob: String=""
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
         get() = R.layout.fragment_doctor_upcoming_appointment
-    override val viewModel: FragmentUpcommingAppointmentViewModel
+    override val viewModel: FragmentUpcommingAppointmentForNurseViewModel
         get() {
             fragmentUpcommingAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentUpcommingAppointmentViewModel::class.java!!)
-            return fragmentUpcommingAppointmentViewModel as FragmentUpcommingAppointmentViewModel
+                FragmentUpcommingAppointmentForNurseViewModel::class.java)
+            return fragmentUpcommingAppointmentViewModel as FragmentUpcommingAppointmentForNurseViewModel
         }
     companion object {
-        fun newInstance(): FragmentUpcommingAppointment {
+        fun newInstance(): FragmentUpcommingAppointmentForNurse {
             val args = Bundle()
-            val fragment = FragmentUpcommingAppointment()
+            val fragment = FragmentUpcommingAppointmentForNurse()
             fragment.arguments = args
             return fragment
         }
@@ -71,7 +71,7 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
             var getDoctorUpcommingAppointmentRequest= GetDoctorUpcommingAppointmentRequest()
             getDoctorUpcommingAppointmentRequest.userId=fragmentUpcommingAppointmentViewModel?.appSharedPref?.loginUserId
 //            getDoctorUpcommingAppointmentRequest.userId="18"
-            fragmentUpcommingAppointmentViewModel!!.apidoctorupcomingappointmentlis(getDoctorUpcommingAppointmentRequest)
+            fragmentUpcommingAppointmentViewModel!!.apiNurseUpComingAppointmentList(getDoctorUpcommingAppointmentRequest)
         }else{
             Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
         }
@@ -109,8 +109,8 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
                         var filterAppointmentRequest= FilterAppointmentRequest()
                         filterAppointmentRequest.userId=fragmentUpcommingAppointmentViewModel?.appSharedPref?.loginUserId
 //                        filterAppointmentRequest.userId="18"
-                        filterAppointmentRequest?.appointmentDate=fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString()
-                        fragmentUpcommingAppointmentViewModel!!.apifilterdoctorupcomingappointmentlist(filterAppointmentRequest)
+                        filterAppointmentRequest?.fromDate=fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString()
+                        fragmentUpcommingAppointmentViewModel!!.apiFilterNurseUpComingAppointmentList(filterAppointmentRequest)
                     }else{
                         Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
                     }
@@ -131,12 +131,12 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
-        contactListAdapter = AdapterDoctorUpcommingAppointment(upcomingAppointmentList,context!!)
+        contactListAdapter = AdapterNurseUpcommingAppointment(upcomingAppointmentList,context!!)
         recyclerView.adapter = contactListAdapter
         contactListAdapter?.recyclerViewItemClickWithView= object : OnClickOfDoctorAppointment2 {
             override fun onItemClick(position: Int) {
-                (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.upcomingAppointmentList!![position]!!.id!!, "doctor"))
+                (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
+                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.upcomingAppointmentList!![position]!!.id!!, "nurse"))
             }
 
             override fun onAcceptBtnClick(id: String, text: String) {
@@ -160,7 +160,7 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
                             var updateAppointmentRequest = UpdateAppointmentRequest()
                             updateAppointmentRequest.id = contactListAdapter?.upcomingAppointmentList!![position.toInt()]?.id
                             updateAppointmentRequest.acceptanceStatus = text
-                            fragmentUpcommingAppointmentViewModel!!.apiupdatedoctorappointmentrequest(updateAppointmentRequest, position.toInt())
+                            fragmentUpcommingAppointmentViewModel!!.apiUpdateNurseAppointmentRequest(updateAppointmentRequest, position.toInt())
                         } else {
                             Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
                         }

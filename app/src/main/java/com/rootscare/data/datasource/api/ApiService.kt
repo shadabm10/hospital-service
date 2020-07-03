@@ -94,23 +94,42 @@ interface ApiService {
     @POST("api-doctor-upcoming-appointment-list")
     fun apidoctorupcomingappointmentlis(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
 
+    @POST("api-nurse-upcoming-appointment-list")
+    fun apiNurseUpComingAppointmentList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
+
     @POST("api-filter-doctor-upcoming-appointment-list")
     fun apifilterdoctorupcomingappointmentlist(@Body filterAppointmentRequestBody: FilterAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
+
+    @POST("api-filter-nurse-upcoming-appointment-list")
+    fun apiFilterNurseUpComingAppointmentList(@Body filterAppointmentRequestBody: FilterAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
 
     @POST("api-doctor-today-appointment-list")
     fun apidoctortodayappointmentlist(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorTodaysAppointmentResponse>
 
+    @POST("api-nurse-today-appointment-list")
+    fun apiNurseTodayAppointmentList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorTodaysAppointmentResponse>
+
     @POST("api-doctor-appointment-request-list")
     fun apidoctorappointmentrequestlist(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
 
+    @POST("api-nurse-appointment-request-list")
+    fun apiNurseAppointmentRequestList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
+
     @POST("api-update-doctor-appointment-request")
     fun apiupdatedoctorappointmentrequest(@Body updateAppointmentRequestBody: UpdateAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
+
+    @POST("api-update-nurse-appointment-request")
+    fun apiUpdateNurseAppointmentRequest(@Body updateAppointmentRequestBody: UpdateAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
 
     @POST("api-department-list")
     fun apidepartmentlist(): Single<DepartmentListResponse>
 
     @POST("api-doctor-past-appointment-list")
     fun apidoctorappointmentPastList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ResponsePastAppointment>
+
+
+    @POST("api-nurse-past-appointment-list")
+    fun apiNurseAppointmentPastList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ResponsePastAppointment>
 
 
     @Multipart
@@ -191,6 +210,9 @@ interface ApiService {
 
     @POST("api-doctor-complete-appointment-status")
     fun apiHitForMarkAsComplete(@Body request: CommonUserIdRequest): Single<CommonResponse>
+
+    @POST("api-nurse-complete-appointment-status")
+    fun apiHitForMarkAsCompleteForNurse(@Body request: CommonUserIdRequest): Single<CommonResponse>
 
     @Multipart
     @POST("api-doctor-insert-prescription")

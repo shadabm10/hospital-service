@@ -1,29 +1,17 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment
 
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorAppointmentListBinding
-import com.rootscare.serviceprovider.databinding.FragmentDoctorMyAppointmentBinding
-import com.rootscare.serviceprovider.databinding.FragmentDoctorProfileBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.adapter.AddapterDoctorMyAppointmentListRecyclerview
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentDoctorAppointmentDetails
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.pastappointment.FragmentPastAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment.FragmentRequestedAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.FragmentTodaysAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment.FragmentUpcommingAppointment
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfile
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfileNavigator
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfileViewModel
-import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
 import com.rootscare.serviceprovider.ui.home.HomeActivity
-import com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification.FragmentHospitalManageNotification
 
 class FragmentMyAppointment: BaseFragment<FragmentDoctorAppointmentListBinding, FragmentMyAppointmentViewModel>(),
     FragmentMyAppointmentNavigator {

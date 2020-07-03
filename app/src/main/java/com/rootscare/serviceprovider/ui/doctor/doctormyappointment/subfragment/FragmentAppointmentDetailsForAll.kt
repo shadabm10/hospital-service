@@ -26,7 +26,7 @@ import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.showimagelarger.TransaprentPopUpActivityForImageShow
 
 
-class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentDetailsBinding, FragmentDoctorAppointmentDetailsViewModel>(),
+class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentDetailsBinding, FragmentDoctorAppointmentDetailsViewModel>(),
     FragmentDoctorAppointmentDetailsNavigator {
 
     private var appointmentId: String? = null
@@ -49,11 +49,11 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
         }
 
     companion object {
-        fun newInstance(appointmentId: String, service_type: String): FragmentDoctorAppointmentDetails {
+        fun newInstance(appointmentId: String, service_type: String): FragmentAppointmentDetailsForAll {
             val args = Bundle()
             args.putString("appointmentId", appointmentId)
             args.putString("service_type", service_type)
-            val fragment = FragmentDoctorAppointmentDetails()
+            val fragment = FragmentAppointmentDetailsForAll()
             fragment.arguments = args
             return fragment
         }
@@ -102,21 +102,43 @@ class FragmentDoctorAppointmentDetails : BaseFragment<FragmentDoctorAppointmentD
             if (response.result != null) {
                 with(fragmentDoctorAppointmentDetailsBinding!!) {
                     crdviewDoctorappoitmentList.visibility = View.VISIBLE
-                    if (response.result.doctorImage != null && !TextUtils.isEmpty(response.result.doctorImage.trim())) {
-                        val options: RequestOptions =
-                            RequestOptions()
-                                .centerCrop()
-                                .placeholder(R.drawable.profile_no_image)
-                                .priority(Priority.HIGH)
-                        Glide
-                            .with(activity!!)
-                            .load(getString(R.string.api_base) + "uploads/images/" + response.result.doctorImage)
-                            .apply(options)
-                            .into(imageView)
+                    if (service_type.equals("doctor")) {
+                        if (response.result.doctorImage != null && !TextUtils.isEmpty(response.result.doctorImage.trim())) {
+                            val options: RequestOptions =
+                                RequestOptions()
+                                    .centerCrop()
+                                    .placeholder(R.drawable.profile_no_image)
+                                    .priority(Priority.HIGH)
+                            Glide
+                                .with(activity!!)
+                                .load(getString(R.string.api_base) + "uploads/images/" + response.result.doctorImage)
+                                .apply(options)
+                                .into(imageView)
+                        }
+                    }else if (service_type.equals("nurse")){
+                        if (response.result.nurseImage != null && !TextUtils.isEmpty(response.result.nurseImage.trim())) {
+                            val options: RequestOptions =
+                                RequestOptions()
+                                    .centerCrop()
+                                    .placeholder(R.drawable.profile_no_image)
+                                    .priority(Priority.HIGH)
+                            Glide
+                                .with(activity!!)
+                                .load(getString(R.string.api_base) + "uploads/images/" + response.result.nurseImage)
+                                .apply(options)
+                                .into(imageView)
+                        }
                     }
 
-                    if (response.result.doctorName != null && !TextUtils.isEmpty(response.result.doctorName.trim())) {
-                        tvDoctorName.text = response.result.doctorName
+
+                    if (service_type.equals("doctor")) {
+                        if (response.result.doctorName != null && !TextUtils.isEmpty(response.result.doctorName.trim())) {
+                            tvDoctorName.text = response.result.doctorName
+                        }
+                    }else if (service_type.equals("nurse")){
+                        if (response.result.nurseName != null && !TextUtils.isEmpty(response.result.nurseName.trim())) {
+                            tvDoctorName.text = response.result.nurseName
+                        }
                     }
 
                     if (response.result.patientName != null && !TextUtils.isEmpty(response.result.patientName.trim())) {

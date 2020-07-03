@@ -1,4 +1,4 @@
-package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment
+package com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.newappointment
 
 import android.os.Bundle
 import android.util.Log
@@ -19,33 +19,33 @@ import com.rootscare.serviceprovider.databinding.FragmentDoctorRequestedAppointm
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentAppointmentDetailsForAll
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment.adapter.AdapterRequestedAppointmentListRecyclerview
-import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
-import java.util.ArrayList
+import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
+import java.util.*
 
-class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointmentBinding, FragmentRequestedAppointmentViewModel>(),
-    FragmentRequestedAppointmentNavigator {
+class FragmentRequestedAppointmentForNurse: BaseFragment<FragmentDoctorRequestedAppointmentBinding, FragmentRequestedAppointmentForNurseViewModel>(),
+    FragmentRequestedAppointmentForNurseNavigator {
 
     private var contactListAdapter:AdapterRequestedAppointmentListRecyclerview?=null
     private var booleanIsAcceptedClick = true
 
     private var fragmentDoctorRequestedAppointmentBinding: FragmentDoctorRequestedAppointmentBinding? = null
-    private var fragmentRequestedAppointmentViewModel: FragmentRequestedAppointmentViewModel? = null
+    private var fragmentRequestedAppointmentViewModel: FragmentRequestedAppointmentForNurseViewModel? = null
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
         get() = R.layout.fragment_doctor_requested_appointment
-    override val viewModel: FragmentRequestedAppointmentViewModel
+    override val viewModel: FragmentRequestedAppointmentForNurseViewModel
         get() {
             fragmentRequestedAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentRequestedAppointmentViewModel::class.java)
-            return fragmentRequestedAppointmentViewModel as FragmentRequestedAppointmentViewModel
+                FragmentRequestedAppointmentForNurseViewModel::class.java)
+            return fragmentRequestedAppointmentViewModel as FragmentRequestedAppointmentForNurseViewModel
         }
 
     companion object {
-        fun newInstance(): FragmentRequestedAppointment {
+        fun newInstance(): FragmentRequestedAppointmentForNurse {
             val args = Bundle()
-            val fragment = FragmentRequestedAppointment()
+            val fragment = FragmentRequestedAppointmentForNurse()
             fragment.arguments = args
             return fragment
         }
@@ -62,7 +62,7 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
             var getDoctorUpcommingAppointmentRequest= GetDoctorUpcommingAppointmentRequest()
             getDoctorUpcommingAppointmentRequest.userId=fragmentRequestedAppointmentViewModel?.appSharedPref?.loginUserId
 //            getDoctorUpcommingAppointmentRequest.userId="18"
-            fragmentRequestedAppointmentViewModel!!.apidoctorappointmentrequestlist(getDoctorUpcommingAppointmentRequest)
+            fragmentRequestedAppointmentViewModel!!.apiNurseAppointmentRequestList(getDoctorUpcommingAppointmentRequest)
         }else{
             Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
         }
@@ -82,8 +82,8 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
         recyclerView.adapter = contactListAdapter
         contactListAdapter?.recyclerViewItemClickWithView= object : OnClickOfDoctorAppointment {
             override fun onItemClick(position: Int) {
-                (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.requestedappointmentList!![position]!!.id!!, "doctor"))
+                (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
+                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.requestedappointmentList!![position]!!.id!!, "nurse"))
             }
 
             override fun onAcceptBtnClick(position: String, text: String) {
@@ -102,7 +102,7 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
 //            getDoctorUpcommingAppointmentRequest.userId=fragmentRequestedAppointmentViewModel?.appSharedPref?.loginUserId
                             updateAppointmentRequest.id=contactListAdapter?.requestedappointmentList!![position.toInt()]?.id
                             updateAppointmentRequest.acceptanceStatus=text
-                            fragmentRequestedAppointmentViewModel!!.apiupdatedoctorappointmentrequest(
+                            fragmentRequestedAppointmentViewModel!!.apiUpdateNurseAppointmentRequest(
                                 updateAppointmentRequest,
                                 position.toInt()
                             )
@@ -133,7 +133,7 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
 //            getDoctorUpcommingAppointmentRequest.userId=fragmentRequestedAppointmentViewModel?.appSharedPref?.loginUserId
                             updateAppointmentRequest.id=contactListAdapter?.requestedappointmentList!![position.toInt()]?.id
                             updateAppointmentRequest.acceptanceStatus=text
-                            fragmentRequestedAppointmentViewModel!!.apiupdatedoctorappointmentrequest(updateAppointmentRequest, position.toInt())
+                            fragmentRequestedAppointmentViewModel!!.apiUpdateNurseAppointmentRequest(updateAppointmentRequest, position.toInt())
                         }else{
                             Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
                         }

@@ -1,17 +1,8 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment
 
 import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.Bitmap
-import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -32,7 +23,7 @@ import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorTodaysAppointmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentDoctorAppointmentDetails
+import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentAppointmentDetailsForAll
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.adapter.AdapterDoctorTodaysAppointmentRecyclerview
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.tempModel.AddlabTestImageSelectionModel
 import com.rootscare.serviceprovider.ui.home.HomeActivity
@@ -115,7 +106,7 @@ class FragmentTodaysAppointment : BaseFragment<FragmentDoctorTodaysAppointmentBi
         contactListAdapter?.recyclerViewItemClickWithView2 = object : OnClickOfDoctorAppointment2 {
             override fun onItemClick(position: Int) {
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentDoctorAppointmentDetails.newInstance(contactListAdapter?.todaysAppointList!![position]!!.id!!, "doctor")
+                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.todaysAppointList!![position]!!.id!!, "doctor")
                 )
             }
 

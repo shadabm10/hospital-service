@@ -7,20 +7,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
-import com.rootscare.serviceprovider.databinding.FragmentDoctorMyAppointmentBinding
 import com.rootscare.serviceprovider.databinding.FragmentLabtechnicianMyAppointmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointment
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointmentNavigator
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointmentViewModel
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.adapter.AddapterDoctorMyAppointmentListRecyclerview
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentDoctorAppointmentDetails
-import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.labtechnician.home.LabTechnicianHomeActivity
 import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyappointment.adapter.AdapterLabTechnicianMyAppointmentRecyclerview
 import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyappointment.subfragment.FragmentLabTechnicianMyAppointmentDetails
 
-class FragmentLabtechnicianMyAppointment: BaseFragment<FragmentLabtechnicianMyAppointmentBinding, FragmentLabtechnicianMyAppointmentViewModel>(),
+class FragmentLabtechnicianMyAppointment :
+    BaseFragment<FragmentLabtechnicianMyAppointmentBinding, FragmentLabtechnicianMyAppointmentViewModel>(),
     FragmentLabtechnicianMyAppointmentNavigator {
     private var fragmentLabtechnicianMyAppointmentBinding: FragmentLabtechnicianMyAppointmentBinding? = null
     private var fragmentLabtechnicianMyAppointmentViewModel: FragmentLabtechnicianMyAppointmentViewModel? = null
@@ -31,7 +25,8 @@ class FragmentLabtechnicianMyAppointment: BaseFragment<FragmentLabtechnicianMyAp
     override val viewModel: FragmentLabtechnicianMyAppointmentViewModel
         get() {
             fragmentLabtechnicianMyAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentLabtechnicianMyAppointmentViewModel::class.java!!)
+                FragmentLabtechnicianMyAppointmentViewModel::class.java!!
+            )
             return fragmentLabtechnicianMyAppointmentViewModel as FragmentLabtechnicianMyAppointmentViewModel
         }
 
@@ -54,6 +49,7 @@ class FragmentLabtechnicianMyAppointment: BaseFragment<FragmentLabtechnicianMyAp
         fragmentLabtechnicianMyAppointmentBinding = viewDataBinding
         setUpDoctorMyAppointmentlistingRecyclerview()
     }
+
     // Set up recycler view for service listing if available
     private fun setUpDoctorMyAppointmentlistingRecyclerview() {
 //        trainerList: ArrayList<TrainerListItem?>?
@@ -66,10 +62,11 @@ class FragmentLabtechnicianMyAppointment: BaseFragment<FragmentLabtechnicianMyAp
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
         val contactListAdapter = AdapterLabTechnicianMyAppointmentRecyclerview(context!!)
         recyclerView.adapter = contactListAdapter
-        contactListAdapter?.recyclerViewItemClickWithView= object : OnItemClikWithIdListener {
+        contactListAdapter?.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
             override fun onItemClick(id: Int) {
                 (activity as LabTechnicianHomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentLabTechnicianMyAppointmentDetails.newInstance())
+                    FragmentLabTechnicianMyAppointmentDetails.newInstance()
+                )
             }
 
         }

@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -32,22 +31,10 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityPhysiotherapyHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
 import com.rootscare.serviceprovider.ui.caregiver.caregiverschedule.FragmentCaregiverSchedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointment
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.FragmentDoctorMyschedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.FragmentdoctorManageSchedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.adddoctorscheduletime.FragmentAddDoctorScheduleTime
-import com.rootscare.serviceprovider.ui.doctor.doctorpaymenthistory.FragmentDoctorPaymentHistory
 import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRating
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfile
-import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
-import com.rootscare.serviceprovider.ui.home.HomeActivity
-import com.rootscare.serviceprovider.ui.home.HomeActivityNavigator
-import com.rootscare.serviceprovider.ui.home.HomeActivityViewModel
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification.FragmentHospitalManageNotification
-import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyappointment.FragmentLabtechnicianMyAppointment
 import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyappointment.subfragment.FragmentLabTechnicianMyAppointmentDetails
 import com.rootscare.serviceprovider.ui.login.LoginActivity
-import com.rootscare.serviceprovider.ui.nurses.nurseprofile.FragmentNursesProfile
 import com.rootscare.serviceprovider.ui.physiotherapy.appointmentlist.FragmentPhysiotherapyAppointmentList
 import com.rootscare.serviceprovider.ui.physiotherapy.home.subfragment.FeagmentPhysiotheraphyHome
 import com.rootscare.serviceprovider.ui.physiotherapy.physiotheraphymanageprofile.FragmentPhysiotheraphyManageProfile
@@ -194,8 +181,10 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
         }
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.parent_layout)
-        val actionBarDrawerToggle = object : ActionBarDrawerToggle(this, activityPhysiotherapyHomeBinding!!.drawerLayout,
-            toolbar, R.string.app_name, R.string.app_name) {
+        val actionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this, activityPhysiotherapyHomeBinding!!.drawerLayout,
+            toolbar, R.string.app_name, R.string.app_name
+        ) {
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
 
@@ -270,8 +259,6 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
     }
 
 
-
-
     //Set up drawer side menu item
 
     private fun setDataAndSelectOptionInDrawerNavigation() {
@@ -283,12 +270,12 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
         //  NotificationDatatype notificationDatatype = new Gson().fromJson(sharedPrefManager.getNotification(), NotificationDatatype.class);
         val strings = LinkedList<DrawerDatatype>()
 
-        strings.add(DrawerDatatype("My Appointment", 0,R.drawable.my_appointment_side))
+        strings.add(DrawerDatatype("My Appointment", 0, R.drawable.my_appointment_side))
         strings.add(DrawerDatatype("My Speciality", 1, R.drawable.appointment_history))
         strings.add(DrawerDatatype("Manage Profile", 2, R.drawable.cancel_appointment))
 //        strings.add(DrawerDatatype("Payment History", 3, R.drawable.checked))
 //        strings.add(DrawerDatatype("Student LIVE Status", 6, 0))
-        strings.add(DrawerDatatype("Review and Rating", 3,R.drawable.review_and_rating))
+        strings.add(DrawerDatatype("Review and Rating", 3, R.drawable.review_and_rating))
 
 
         strings.add(DrawerDatatype("Logout", 4, R.drawable.logout_icon))
@@ -320,7 +307,7 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
                     1 -> checkFragmentInBackstackAndOpen(FragmentCaregiverSchedule.newInstance())
                     2 -> checkFragmentInBackstackAndOpen(FragmentPhysiotheraphyManageProfile.newInstance())
                     3 -> checkFragmentInBackstackAndOpen(FragmentReviewAndRating.newInstance())
-                     4 -> logout()
+                    4 -> logout()
 
 
                 }
@@ -328,8 +315,6 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
 
         })
     }
-
-
 
 
     override fun onBackPressed() {
@@ -436,7 +421,6 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
 //        }
 
 
-
 //        else if (fragment is ProfileFragment) {
 //            menu.findItem(R.id.navigation_profile).isChecked = true
 //        } else if (fragment is FragmentChatContact) {
@@ -468,12 +452,12 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
 
         if (fragment is FeagmentPhysiotheraphyHome) {
             tootbar_text.text = resources.getString(R.string.home)
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
 
-            toolbar_back?.visibility=View.GONE
-            toolbar_menu?.visibility=View.VISIBLE
+            toolbar_back?.visibility = View.GONE
+            toolbar_menu?.visibility = View.VISIBLE
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentPhysiotheraphyManageProfile.newInstance())
@@ -487,17 +471,15 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
             tootbar_text.setTextColor(ContextCompat.getColor(this@PhysiotherapyHomeActivity, android.R.color.white))
 //            tootbar_text.setTextColor(resources.getColor(android.R.color.white))
             //   drawerAdapter!!.selectItem(-1)
-        }
-
-        else if (fragment is FragmentPhysiotheraphyManageProfile) {
+        } else if (fragment is FragmentPhysiotheraphyManageProfile) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = resources.getString(R.string.roots_care)
-            tootbar_profile?.visibility=View.GONE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
+            tootbar_profile?.visibility = View.GONE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
 
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -512,16 +494,14 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@PhysiotherapyHomeActivity, android.R.color.white))
-        }
-
-        else if (fragment is FragmentPhysiotherapyAppointmentList) {
+        } else if (fragment is FragmentPhysiotherapyAppointmentList) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Appointment"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -540,11 +520,11 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
         else if (fragment is FragmentLabTechnicianMyAppointmentDetails) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Appointment Details"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -558,16 +538,14 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@PhysiotherapyHomeActivity, android.R.color.white))
-        }
-
-        else if (fragment is FragmentReviewAndRating) {
+        } else if (fragment is FragmentReviewAndRating) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Review and Rating"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -581,15 +559,14 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@PhysiotherapyHomeActivity, android.R.color.white))
-        }
-        else if (fragment is FragmentCaregiverSchedule) {
+        } else if (fragment is FragmentCaregiverSchedule) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Schedule"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -735,8 +712,10 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
     private val RECORD_REQUEST_CODE = 101
 
     private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.WRITE_CONTACTS)
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_CONTACTS
+        )
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission to record denied")
@@ -745,14 +724,18 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
     }
 
     private fun makeRequest() {
-        ActivityCompat.requestPermissions(this,
+        ActivityCompat.requestPermissions(
+            this,
             arrayOf(Manifest.permission.WRITE_CONTACTS),
-            RECORD_REQUEST_CODE)
+            RECORD_REQUEST_CODE
+        )
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             RECORD_REQUEST_CODE -> {
 
@@ -768,11 +751,11 @@ class PhysiotherapyHomeActivity : BaseActivity<ActivityPhysiotherapyHomeBinding,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var fragment=supportFragmentManager.findFragmentById(activityPhysiotherapyHomeBinding?.appBarHomepage?.layoutContainer?.id!!)
+        var fragment = supportFragmentManager.findFragmentById(activityPhysiotherapyHomeBinding?.appBarHomepage?.layoutContainer?.id!!)
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun logout(){
+    private fun logout() {
         CommonDialog.showDialog(this@PhysiotherapyHomeActivity, object :
             DialogClickCallback {
             override fun onDismiss() {

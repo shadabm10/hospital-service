@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -31,15 +30,7 @@ import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityLabTechnicianHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
-import com.rootscare.serviceprovider.ui.caregiver.caregiverprofile.FragmentCaregiverProfile
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.FragmentMyAppointment
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.FragmentDoctorMyschedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.FragmentdoctorManageSchedule
-import com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.adddoctorscheduletime.FragmentAddDoctorScheduleTime
-import com.rootscare.serviceprovider.ui.doctor.doctorpaymenthistory.FragmentDoctorPaymentHistory
 import com.rootscare.serviceprovider.ui.doctor.doctorreviewandrating.FragmentReviewAndRating
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfile
-import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification.FragmentHospitalManageNotification
 import com.rootscare.serviceprovider.ui.labtechnician.home.subfragment.FragmentLabTechnicianHome
 import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmanageprofile.FragmentLabtechnicianManageProfile
@@ -47,7 +38,6 @@ import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyappointment
 import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyappointment.subfragment.FragmentLabTechnicianMyAppointmentDetails
 import com.rootscare.serviceprovider.ui.labtechnician.labtechnicianmyspeciality.FragmentLabTechnicianMySpeciality
 import com.rootscare.serviceprovider.ui.login.LoginActivity
-
 import com.rootscare.utils.BottomNavigationViewHelper
 import java.util.*
 
@@ -191,8 +181,10 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
         }
 
         val constraintLayout = findViewById<ConstraintLayout>(R.id.parent_layout)
-        val actionBarDrawerToggle = object : ActionBarDrawerToggle(this, activityLabTechnicianHomeBinding!!.drawerLayout,
-            toolbar, R.string.app_name, R.string.app_name) {
+        val actionBarDrawerToggle = object : ActionBarDrawerToggle(
+            this, activityLabTechnicianHomeBinding!!.drawerLayout,
+            toolbar, R.string.app_name, R.string.app_name
+        ) {
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
 
@@ -267,8 +259,6 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
     }
 
 
-
-
     //Set up drawer side menu item
 
     private fun setDataAndSelectOptionInDrawerNavigation() {
@@ -280,12 +270,12 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
         //  NotificationDatatype notificationDatatype = new Gson().fromJson(sharedPrefManager.getNotification(), NotificationDatatype.class);
         val strings = LinkedList<DrawerDatatype>()
 
-        strings.add(DrawerDatatype("My Appointment", 0,R.drawable.my_appointment_side))
+        strings.add(DrawerDatatype("My Appointment", 0, R.drawable.my_appointment_side))
         strings.add(DrawerDatatype("My Speciality", 1, R.drawable.appointment_history))
         strings.add(DrawerDatatype("Manage Profile", 2, R.drawable.cancel_appointment))
 //        strings.add(DrawerDatatype("Payment History", 3, R.drawable.checked))
 //        strings.add(DrawerDatatype("Student LIVE Status", 6, 0))
-        strings.add(DrawerDatatype("Review and Rating", 3,R.drawable.review_and_rating))
+        strings.add(DrawerDatatype("Review and Rating", 3, R.drawable.review_and_rating))
 
 
         strings.add(DrawerDatatype("Logout", 4, R.drawable.logout_icon))
@@ -325,8 +315,6 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
 
         })
     }
-
-
 
 
     override fun onBackPressed() {
@@ -433,7 +421,6 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
 //        }
 
 
-
 //        else if (fragment is ProfileFragment) {
 //            menu.findItem(R.id.navigation_profile).isChecked = true
 //        } else if (fragment is FragmentChatContact) {
@@ -468,12 +455,12 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
             tootbar_text.setTextColor(ContextCompat.getColor(this@LabTechnicianHomeActivity, android.R.color.white))
 //            tootbar_text.setTextColor(resources.getColor(android.R.color.white))
             //   drawerAdapter!!.selectItem(-1)
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
 
-            toolbar_back?.visibility=View.GONE
-            toolbar_menu?.visibility=View.VISIBLE
+            toolbar_back?.visibility = View.GONE
+            toolbar_menu?.visibility = View.VISIBLE
 
 
 
@@ -486,17 +473,15 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
             tootbar_logout?.setOnClickListener(View.OnClickListener {
                 logout()
             })
-        }
-
-        else if (fragment is FragmentLabtechnicianManageProfile) {
+        } else if (fragment is FragmentLabtechnicianManageProfile) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = resources.getString(R.string.roots_care)
-            tootbar_profile?.visibility=View.GONE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
+            tootbar_profile?.visibility = View.GONE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
 
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -511,15 +496,14 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@LabTechnicianHomeActivity, android.R.color.white))
-        }
-        else if (fragment is FragmentLabtechnicianMyAppointment) {
+        } else if (fragment is FragmentLabtechnicianMyAppointment) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Appointment"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -538,11 +522,11 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
         else if (fragment is FragmentLabTechnicianMyAppointmentDetails) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Appointment Details"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -556,16 +540,14 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@LabTechnicianHomeActivity, android.R.color.white))
-        }
-
-        else if (fragment is FragmentReviewAndRating) {
+        } else if (fragment is FragmentReviewAndRating) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Review and Rating"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -585,11 +567,11 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
         else if (fragment is FragmentLabTechnicianMySpeciality) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Speciality"
-            tootbar_profile?.visibility=View.VISIBLE
-            tootbar_notification?.visibility=View.VISIBLE
-            tootbar_logout?.visibility=View.GONE
-            toolbar_back?.visibility=View.VISIBLE
-            toolbar_menu?.visibility=View.GONE
+            tootbar_profile?.visibility = View.VISIBLE
+            tootbar_notification?.visibility = View.VISIBLE
+            tootbar_logout?.visibility = View.GONE
+            toolbar_back?.visibility = View.VISIBLE
+            toolbar_menu?.visibility = View.GONE
             toolbar_back?.setOnClickListener(View.OnClickListener {
                 onBackPressed()
             })
@@ -723,8 +705,10 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
     private val RECORD_REQUEST_CODE = 101
 
     private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.WRITE_CONTACTS)
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_CONTACTS
+        )
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission to record denied")
@@ -733,14 +717,18 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
     }
 
     private fun makeRequest() {
-        ActivityCompat.requestPermissions(this,
+        ActivityCompat.requestPermissions(
+            this,
             arrayOf(Manifest.permission.WRITE_CONTACTS),
-            RECORD_REQUEST_CODE)
+            RECORD_REQUEST_CODE
+        )
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             RECORD_REQUEST_CODE -> {
 
@@ -756,11 +744,11 @@ class LabTechnicianHomeActivity : BaseActivity<ActivityLabTechnicianHomeBinding,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var fragment=supportFragmentManager.findFragmentById(activityLabTechnicianHomeBinding?.appBarHomepage?.layoutContainer?.id!!)
+        var fragment = supportFragmentManager.findFragmentById(activityLabTechnicianHomeBinding?.appBarHomepage?.layoutContainer?.id!!)
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun logout(){
+    private fun logout() {
         CommonDialog.showDialog(this@LabTechnicianHomeActivity, object :
             DialogClickCallback {
             override fun onDismiss() {

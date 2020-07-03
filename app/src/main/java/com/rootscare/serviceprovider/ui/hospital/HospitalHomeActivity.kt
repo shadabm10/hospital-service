@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -30,9 +29,7 @@ import com.rootscare.model.DrawerDatatype
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityHospitalHomeBinding
-import com.rootscare.serviceprovider.databinding.ActivityNursrsHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
-import com.rootscare.serviceprovider.ui.doctor.profile.FragmentDoctorProfile
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanageappointments.FragmentHospitalManageAppointments
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagedepartment.FragmentHospitalManageDepartment
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagedoctor.FragmenthospitalManageDoctor
@@ -46,12 +43,6 @@ import com.rootscare.serviceprovider.ui.hospital.hospitaluploadpathologyreport.F
 import com.rootscare.serviceprovider.ui.hospital.hospitaluploadpathologyreport.subfragment.FragmentPathReportDocumentUpload
 import com.rootscare.serviceprovider.ui.hospital.subfragment.FragmentHospitalHome
 import com.rootscare.serviceprovider.ui.login.LoginActivity
-import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
-import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivityNavigator
-import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivityViewModel
-import com.rootscare.serviceprovider.ui.nurses.nurseprofile.subfragment.nursesprofileedit.FragmentNursesEditProfile
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.FragmentNursesAppointmentDetails
-import com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.subfragment.manageschedule.FragmentNursesManageRate
 import com.rootscare.utils.BottomNavigationViewHelper
 import java.util.*
 

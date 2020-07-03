@@ -8,19 +8,12 @@ import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentCaregiverMyAppointmentBinding
-import com.rootscare.serviceprovider.databinding.FragmentNursesMyAppointmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.adapter.AdapterCaregiverAppointmentRecyclerview
 import com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.caregiverappointmentdetails.FragmentCaregiverAppointmentDetails
 import com.rootscare.serviceprovider.ui.caregiver.home.CaregiverHomeActivity
-import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.FragmentNursesMyAppointment
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.FragmentNursesMyAppointmentNavigator
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.FragmentNursesMyAppointmentViewModel
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.adapter.AdapterNursesMyAppointmentListrecyclerview
-import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.FragmentNursesAppointmentDetails
 
-class FragmentCaregiverMyAppointment: BaseFragment<FragmentCaregiverMyAppointmentBinding, FragmentCaregiverMyAppointmentViewModel>(),
+class FragmentCaregiverMyAppointment : BaseFragment<FragmentCaregiverMyAppointmentBinding, FragmentCaregiverMyAppointmentViewModel>(),
     FragmentCaregiverMyAppointmentNavigator {
     private var fragmentCaregiverMyAppointmentBinding: FragmentCaregiverMyAppointmentBinding? = null
     private var fragmentCaregiverMyAppointmentViewModel: FragmentCaregiverMyAppointmentViewModel? = null
@@ -31,7 +24,8 @@ class FragmentCaregiverMyAppointment: BaseFragment<FragmentCaregiverMyAppointmen
     override val viewModel: FragmentCaregiverMyAppointmentViewModel
         get() {
             fragmentCaregiverMyAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentCaregiverMyAppointmentViewModel::class.java!!)
+                FragmentCaregiverMyAppointmentViewModel::class.java!!
+            )
             return fragmentCaregiverMyAppointmentViewModel as FragmentCaregiverMyAppointmentViewModel
         }
 
@@ -67,10 +61,11 @@ class FragmentCaregiverMyAppointment: BaseFragment<FragmentCaregiverMyAppointmen
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
         val contactListAdapter = AdapterCaregiverAppointmentRecyclerview(context!!)
         recyclerView.adapter = contactListAdapter
-        contactListAdapter?.recyclerViewItemClickWithView= object : OnItemClikWithIdListener {
+        contactListAdapter?.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
             override fun onItemClick(id: Int) {
                 (activity as CaregiverHomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentCaregiverAppointmentDetails.newInstance())
+                    FragmentCaregiverAppointmentDetails.newInstance()
+                )
             }
 
         }

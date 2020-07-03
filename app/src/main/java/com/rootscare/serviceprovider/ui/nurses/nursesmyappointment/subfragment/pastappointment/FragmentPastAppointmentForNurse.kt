@@ -1,4 +1,4 @@
-package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.pastappointment
+package com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.pastappointment
 
 import android.os.Bundle
 import android.util.Log
@@ -14,33 +14,33 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorPastAppointmentBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.FragmentAppointmentDetailsForAll
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.pastappointment.adapter.AdapterPastAppointmentListRecyclerview
-import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
+import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
+import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.pastappointment.adapter.AdapterPastAppointmentListForNurse
 import java.util.*
 
-class FragmentPastAppointment :
-    BaseFragment<FragmentDoctorPastAppointmentBinding, FragmentPastAppointmentViewModel>(),
-    FragmentPastAppointmentNavigator {
+class FragmentPastAppointmentForNurse :
+    BaseFragment<FragmentDoctorPastAppointmentBinding, FragmentPastAppointmentForNurseViewModel>(),
+    FragmentPastAppointmentForNurseNavigator {
     private var fragmentDoctorRequestedAppointmentBinding: FragmentDoctorPastAppointmentBinding? =
         null
-    private var fragmentRequestedAppointmentViewModel: FragmentPastAppointmentViewModel? = null
+    private var fragmentRequestedAppointmentViewModel: FragmentPastAppointmentForNurseViewModel? = null
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
         get() = R.layout.fragment_doctor_past_appointment
-    override val viewModel: FragmentPastAppointmentViewModel
+    override val viewModel: FragmentPastAppointmentForNurseViewModel
         get() {
             fragmentRequestedAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentPastAppointmentViewModel::class.java
+                FragmentPastAppointmentForNurseViewModel::class.java
             )
-            return fragmentRequestedAppointmentViewModel as FragmentPastAppointmentViewModel
+            return fragmentRequestedAppointmentViewModel as FragmentPastAppointmentForNurseViewModel
         }
 
     companion object {
-        fun newInstance(): FragmentPastAppointment {
+        fun newInstance(): FragmentPastAppointmentForNurse {
             val args = Bundle()
-            val fragment = FragmentPastAppointment()
+            val fragment = FragmentPastAppointmentForNurse()
             fragment.arguments = args
             return fragment
         }
@@ -78,12 +78,12 @@ class FragmentPastAppointment :
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.setHasFixedSize(true)
         val contactListAdapter =
-            AdapterPastAppointmentListRecyclerview(requestedappointmentList, context!!)
+            AdapterPastAppointmentListForNurse(requestedappointmentList, context!!)
         recyclerView.adapter = contactListAdapter
         contactListAdapter.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
             override fun onItemClick(position: Int) {
-                (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter.upcomingAppointmentList!![position].id!!, "doctor")
+                (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
+                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter.upcomingAppointmentList!![position].id!!, "nurse")
                 )
             }
         }

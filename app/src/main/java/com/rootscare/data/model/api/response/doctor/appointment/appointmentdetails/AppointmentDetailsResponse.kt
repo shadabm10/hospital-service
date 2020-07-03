@@ -90,7 +90,25 @@ data class Result(
 	val paymentStatus: String? = null,
 
 	@field:SerializedName("prescription")
-	val prescription: LinkedList<Prescription>? = null
+	val prescription: LinkedList<Prescription>? = null,
+
+
+
+	@field:SerializedName("nurse_name")
+	val nurseName: String? = null,
+
+	@field:SerializedName("nurse_experience")
+	val nurseExperience: String? = null,
+
+	@field:SerializedName("from_date")
+	val fromDate: String? = null,
+
+	@field:SerializedName("to_date")
+	val toDate: String? = null,
+
+	@field:SerializedName("nurse_image")
+	val nurseImage: String? = null
+
 )
 
 

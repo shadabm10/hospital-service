@@ -7,6 +7,7 @@ import com.rootscare.serviceprovider.ui.base.BaseViewModel
 import io.reactivex.disposables.Disposable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.util.*
 
 class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfileNavigator>() {
     private val TAG = "FragmentEditDoctorProfi"
@@ -126,6 +127,10 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
             .subscribe({ response ->
                 if (response != null) {
                     Log.d("check_response", ": " + Gson().toJson(response))
+                    val gson = Gson()
+                    val loginresposeJson = gson.toJson(response)
+                    appSharedPref?.loginmodeldata=loginresposeJson
+
                     navigator.onSuccessEditProfile(response)
                 } else {
                     Log.d("check_response", ": null response")

@@ -153,7 +153,7 @@ interface ApiService {
         @Part("department") department: RequestBody,
         @Part image: MultipartBody.Part?=null,
         @Part certificate: List<MultipartBody.Part>?=null
-    ): Single<RegistrationResponse>
+    ): Single<LoginResponse>
 
 //@Multipart
 //@POST("api-sp-doctor-edit-profile")

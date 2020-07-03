@@ -317,7 +317,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         val strings = LinkedList<DrawerDatatype>()
 
         strings.add(DrawerDatatype("My Appointment", 0, R.drawable.my_appointment_side))
-        strings.add(DrawerDatatype("My Time Slot", 1, R.drawable.appointment_history))
+        strings.add(DrawerDatatype("My Price List", 1, R.drawable.appointment_history))
         strings.add(DrawerDatatype("Profile", 2, R.drawable.cancel_appointment))
         strings.add(DrawerDatatype("Payment History", 3, R.drawable.payment_history))
 //        strings.add(DrawerDatatype("Student LIVE Status", 6, 0))

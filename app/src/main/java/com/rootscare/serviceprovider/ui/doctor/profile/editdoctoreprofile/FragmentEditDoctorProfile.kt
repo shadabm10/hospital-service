@@ -30,6 +30,7 @@ import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListRespon
 import com.rootscare.data.model.api.response.deaprtmentlist.ResultItem
 import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
 import com.rootscare.data.model.api.response.doctor.profileresponse.QualificationDataItem
+import com.rootscare.data.model.api.response.loginresponse.LoginResponse
 import com.rootscare.data.model.api.response.registrationresponse.RegistrationResponse
 import com.rootscare.dialog.certificateupload.CertificateUploadFragment
 import com.rootscare.interfaces.OnDepartmentDropDownListItemClickListener
@@ -281,7 +282,7 @@ class FragmentEditDoctorProfile :
         }
     }
 
-    override fun onSuccessEditProfile(response: RegistrationResponse) {
+    override fun onSuccessEditProfile(response: LoginResponse) {
 //        baseActivity?.hideLoading()
         certificateListAdapter?.qualificationDataList?.clear()
         Handler().postDelayed({

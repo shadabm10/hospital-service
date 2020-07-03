@@ -112,7 +112,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/home_btn_bg"
                             android:padding="@dimen/_10sdp"
-                            android:text="My Time Slot"
+                            android:text="My Price List"
                             android:textColor="@color/txt_color"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />

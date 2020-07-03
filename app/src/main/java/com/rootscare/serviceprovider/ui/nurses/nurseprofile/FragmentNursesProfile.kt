@@ -196,7 +196,7 @@ class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, Fragment
                     fragmentNursesProfileBinding?.tvDoctorAddress?.setText("")
                 }
                 if (getDoctorProfileResponse?.result?.description!=null && !getDoctorProfileResponse?.result?.description.equals("")){
-                    fragmentNursesProfileBinding?.tvDoctorAddress?.append("\nDescription: "+getDoctorProfileResponse?.result?.description)
+                    fragmentNursesProfileBinding?.tvDoctorAddress?.append("\n"+getDoctorProfileResponse?.result?.description)
                 }
                 if (getDoctorProfileResponse?.result?.experience!=null && !getDoctorProfileResponse?.result?.experience.equals("")){
                     fragmentNursesProfileBinding?.tvDoctorAddress?.append("\n\nExperience: "+getDoctorProfileResponse?.result?.experience +" Years")

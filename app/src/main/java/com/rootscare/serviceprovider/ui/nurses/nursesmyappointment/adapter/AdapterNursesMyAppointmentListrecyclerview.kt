@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.item_nurses_my_appointment_list_recyclervi
 class AdapterNursesMyAppointmentListrecyclerview  ( internal var context: Context) : RecyclerView.Adapter<AdapterNursesMyAppointmentListrecyclerview.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
     companion object {
-        val TAG: String = AddapterDoctorMyAppointmentListRecyclerview::class.java.simpleName
+        val TAG: String = AdapterNursesMyAppointmentListrecyclerview::class.java.simpleName
     }
 
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick

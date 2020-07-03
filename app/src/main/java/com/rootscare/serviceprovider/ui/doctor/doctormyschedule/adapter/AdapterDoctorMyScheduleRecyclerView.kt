@@ -19,7 +19,7 @@ class AdapterDoctorMyScheduleRecyclerView(internal var context: Context) :
     RecyclerView.Adapter<AdapterDoctorMyScheduleRecyclerView.ViewHolder>() {
 
     companion object {
-        val TAG: String = AddapterDoctorMyAppointmentListRecyclerview::class.java.simpleName
+        val TAG: String = AdapterDoctorMyScheduleRecyclerView::class.java.simpleName
     }
 
     internal lateinit var recyclerViewItemClickWithView: OnItemClikWithIdListener

@@ -70,7 +70,7 @@ class CertificateListAdapter  (internal var context: Context) : RecyclerView.Ada
                     textViewInstitute.text = qualificationDataList[local_position].institute
                 }
                 if (qualificationDataList[local_position].passingYear!=null && !TextUtils.isEmpty(qualificationDataList[local_position].passingYear?.trim())){
-                    textViewPassingYear.text = "${qualificationDataList[local_position].passingYear} years"
+                    textViewPassingYear.text = "${qualificationDataList[local_position].passingYear}"
                 }
                 if (qualificationDataList[local_position].qualificationCertificate!=null &&
                     !TextUtils.isEmpty(qualificationDataList[local_position].qualificationCertificate?.trim())){

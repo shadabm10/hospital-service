@@ -127,15 +127,15 @@ class AdapterPastAppointmentListForNurse(
             }
 
             itemView?.rootView?.txt_upcoming_time?.setText(startTime + "-" + endTime)
-            if (upcomingAppointmentList?.get(pos)?.appointmentDate != null && !upcomingAppointmentList?.get(
+            if (upcomingAppointmentList?.get(pos)?.fromDate != null && !upcomingAppointmentList?.get(
                     pos
-                )?.appointmentDate.equals("")
+                )?.fromDate.equals("")
             ) {
                 itemView?.rootView?.txt_upcoming_appointment_date?.setText(
                     formateDateFromstring(
                         "yyyy-MM-dd",
                         "dd MMM yyyy",
-                        upcomingAppointmentList?.get(pos)?.appointmentDate
+                        upcomingAppointmentList?.get(pos)?.fromDate
                     )
                 )
             } else {

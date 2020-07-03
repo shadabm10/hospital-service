@@ -21,12 +21,13 @@ import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.F
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment.adapter.AdapterRequestedAppointmentListRecyclerview
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
+import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.newappointment.adapter.AdapterRequestedAppointmentListForNurse
 import java.util.*
 
 class FragmentRequestedAppointmentForNurse: BaseFragment<FragmentDoctorRequestedAppointmentBinding, FragmentRequestedAppointmentForNurseViewModel>(),
     FragmentRequestedAppointmentForNurseNavigator {
 
-    private var contactListAdapter:AdapterRequestedAppointmentListRecyclerview?=null
+    private var contactListAdapter: AdapterRequestedAppointmentListForNurse?=null
     private var booleanIsAcceptedClick = true
 
     private var fragmentDoctorRequestedAppointmentBinding: FragmentDoctorRequestedAppointmentBinding? = null
@@ -78,7 +79,7 @@ class FragmentRequestedAppointmentForNurse: BaseFragment<FragmentDoctorRequested
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 //        val contactListAdapter = AdapterHospitalRecyclerviw(trainerList,context!!)
-        contactListAdapter = AdapterRequestedAppointmentListRecyclerview(requestedappointmentList,context!!)
+        contactListAdapter = AdapterRequestedAppointmentListForNurse(requestedappointmentList,context!!)
         recyclerView.adapter = contactListAdapter
         contactListAdapter?.recyclerViewItemClickWithView= object : OnClickOfDoctorAppointment {
             override fun onItemClick(position: Int) {

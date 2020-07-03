@@ -125,9 +125,9 @@ class AdapterRequestedAppointmentListForNurse (val requestedappointmentList: Arr
             }
 
             itemView.rootView?.txt_requested_time?.text = startTime+"-"+endTime
-            if(requestedappointmentList?.get(pos)?.appointmentDate!=null && !requestedappointmentList.get(pos)?.appointmentDate.equals("")){
+            if(requestedappointmentList?.get(pos)?.fromDate!=null && !requestedappointmentList.get(pos)?.fromDate.equals("")){
                 itemView.rootView?.txt_requested_appointment_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",
-                    requestedappointmentList.get(pos)?.appointmentDate)
+                    requestedappointmentList.get(pos)?.fromDate)
             }else{
                 itemView.rootView?.txt_requested_appointment_date?.text = ""
             }

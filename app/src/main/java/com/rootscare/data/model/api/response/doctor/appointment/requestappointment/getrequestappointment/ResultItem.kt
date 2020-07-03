@@ -64,5 +64,25 @@ data class ResultItem(
 	val orderId: String? = null,
 	@field:JsonProperty("paymentStatus")
 	@field:SerializedName("paymentStatus")
-	val paymentStatus: String? = null
+	val paymentStatus: String? = null,
+
+
+
+
+
+
+	@field:SerializedName("nurse_name")
+	val nurseName: String? = null,
+
+	@field:SerializedName("from_date")
+	val fromDate: String? = null,
+
+	@field:SerializedName("to_date")
+	val toDate: String? = null,
+
+	@field:SerializedName("patient_id")
+	val patientId: String? = null,
+
+	@field:SerializedName("nurse_id")
+	val nurseId: String? = null
 )

@@ -129,9 +129,9 @@ class AdapterNurseTodaysAppointmentRecyclerview (internal var todaysAppointList:
                 }
 
                 txtTodaysTime?.text = startTime + "-" + endTime
-                if (todaysAppointList?.get(pos)?.appointmentDate != null && !todaysAppointList?.get(pos)?.appointmentDate.equals("")) {
+                if (todaysAppointList?.get(pos)?.fromDate != null && !todaysAppointList?.get(pos)?.fromDate.equals("")) {
                     txtTodaysAppointmentDate?.text =
-                        formateDateFromstring("yyyy-MM-dd", "dd MMM yyyy", todaysAppointList?.get(pos)?.appointmentDate)
+                        formateDateFromstring("yyyy-MM-dd", "dd MMM yyyy", todaysAppointList?.get(pos)?.fromDate)
                 } else {
                     txtTodaysAppointmentDate?.text = ""
                 }

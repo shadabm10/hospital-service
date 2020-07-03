@@ -60,8 +60,8 @@ class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<R
         private var local_position: Int = 0
 
         init {
-            itemView?.root?.btnViewDetails?.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView?.onItemClick(local_position)
+            itemView.root.btnViewDetails?.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView.onItemClick(local_position)
             })
             itemView.btnRejectt.setOnClickListener(View.OnClickListener {
                 recyclerViewItemClickWithView.onRejectBtnBtnClick(local_position.toString(),"Reject")
@@ -91,46 +91,48 @@ class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<R
             Log.d(TAG, " true")
             local_position = pos
 
-            if(upcomingAppointmentList?.get(pos)?.orderId!=null && !upcomingAppointmentList?.get(pos)?.orderId.equals("")){
-                itemView?.rootView?.txt_appointment?.setText(upcomingAppointmentList?.get(pos)?.orderId)
+            if(upcomingAppointmentList?.get(pos)?.orderId!=null && !upcomingAppointmentList.get(pos)?.orderId.equals("")){
+                itemView.rootView?.txt_appointment?.text = upcomingAppointmentList.get(pos)?.orderId
             }else{
-                itemView?.rootView?.txt_appointment?.setText("")
+                itemView.rootView?.txt_appointment?.text = ""
             }
 
-            if(upcomingAppointmentList?.get(pos)?.patientName!=null && !upcomingAppointmentList?.get(pos)?.patientName.equals("")){
-                itemView?.rootView?.txt_upcoming_patient_name?.setText(upcomingAppointmentList?.get(pos)?.patientName)
+            if(upcomingAppointmentList?.get(pos)?.patientName!=null && !upcomingAppointmentList.get(pos)?.patientName.equals("")){
+                itemView.rootView?.txt_upcoming_patient_name?.text = upcomingAppointmentList.get(pos)?.patientName
             }else{
-                itemView?.rootView?.txt_upcoming_patient_name?.setText("")
+                itemView.rootView?.txt_upcoming_patient_name?.text = ""
             }
-            if(upcomingAppointmentList?.get(pos)?.bookingDate!=null && !upcomingAppointmentList?.get(pos)?.bookingDate.equals("")){
-                itemView?.rootView?.txt_upcoming_booking_date?.setText(formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",upcomingAppointmentList?.get(pos)?.bookingDate))
+            if(upcomingAppointmentList?.get(pos)?.bookingDate!=null && !upcomingAppointmentList.get(pos)?.bookingDate.equals("")){
+                itemView.rootView?.txt_upcoming_booking_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",
+                    upcomingAppointmentList.get(pos)?.bookingDate)
             }else{
-                itemView?.rootView?.txt_upcoming_booking_date?.setText("")
+                itemView.rootView?.txt_upcoming_booking_date?.text = ""
             }
-            if(upcomingAppointmentList?.get(pos)?.fromTime!=null && !upcomingAppointmentList?.get(pos)?.fromTime.equals("")){
-                startTime= upcomingAppointmentList?.get(pos)?.fromTime!!
+            if(upcomingAppointmentList?.get(pos)?.fromTime!=null && !upcomingAppointmentList.get(pos)?.fromTime.equals("")){
+                startTime= upcomingAppointmentList.get(pos)?.fromTime!!
             }else{
                 startTime=""
             }
 
-            if(upcomingAppointmentList?.get(pos)?.toTime!=null && !upcomingAppointmentList?.get(pos)?.toTime.equals("")){
-                endTime= upcomingAppointmentList?.get(pos)?.toTime!!
+            if(upcomingAppointmentList?.get(pos)?.toTime!=null && !upcomingAppointmentList.get(pos)?.toTime.equals("")){
+                endTime= upcomingAppointmentList.get(pos)?.toTime!!
             }else{
                 endTime=""
             }
 
-            itemView?.rootView?.txt_upcoming_time?.setText(startTime+"-"+endTime)
-            if(upcomingAppointmentList?.get(pos)?.appointmentDate!=null && !upcomingAppointmentList?.get(pos)?.appointmentDate.equals("")){
-                itemView?.rootView?.txt_upcoming_appointment_date?.setText(formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",upcomingAppointmentList?.get(pos)?.appointmentDate))
+            itemView.rootView?.txt_upcoming_time?.text = startTime+"-"+endTime
+            if(upcomingAppointmentList?.get(pos)?.fromDate!=null && !upcomingAppointmentList.get(pos)?.fromDate.equals("")){
+                itemView.rootView?.txt_upcoming_appointment_date?.text =
+                    formateDateFromstring("yyyy-MM-dd","dd MMM yyyy", upcomingAppointmentList.get(pos)?.fromDate)
             }else{
-                itemView?.rootView?.txt_upcoming_appointment_date?.setText("")
+                itemView.rootView?.txt_upcoming_appointment_date?.text = ""
             }
 
-            if (upcomingAppointmentList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(upcomingAppointmentList?.get(pos)?.acceptanceStatus?.trim()) &&
-                upcomingAppointmentList?.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
-                itemView?.rootView?.btn_rejectt?.visibility = View.GONE
+            if (upcomingAppointmentList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(upcomingAppointmentList.get(pos)?.acceptanceStatus?.trim()) &&
+                upcomingAppointmentList.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
+                itemView.rootView?.btn_rejectt?.visibility = View.GONE
             }else{
-                itemView?.rootView?.btn_rejectt?.visibility = View.VISIBLE
+                itemView.rootView?.btn_rejectt?.visibility = View.VISIBLE
             }
 
 

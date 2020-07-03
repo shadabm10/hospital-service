@@ -119,7 +119,7 @@ class FragmentEditDoctorProfileViewModel : BaseViewModel<FragmentEditDoctorProfi
             fees,
             department,
             image,
-            certificate!!
+            certificate
         )
             .subscribeOn(_scheduler_io)
             .observeOn(_scheduler_ui)

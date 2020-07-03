@@ -114,7 +114,8 @@ interface ApiService {
 
 
     @Multipart
-    @POST("api-sp-doctor-edit-profile")
+//    @POST("api-sp-doctor-edit-profile")
+    @POST("api-sp-edit-profile")
     fun apiHitUpdateProfileWithImageAndCertificate(
         @Part("user_id") user_id: RequestBody,
         @Part("first_name") first_name: RequestBody,
@@ -134,6 +135,23 @@ interface ApiService {
         @Part image: MultipartBody.Part?=null,
         @Part certificate: List<MultipartBody.Part>?=null
     ): Single<RegistrationResponse>
+
+//@Multipart
+//@POST("api-sp-doctor-edit-profile")
+//fun apiHitUpdateProfileWithImageAndCertificate(
+//    @Part("user_id") user_id: RequestBody,
+//    @Part("first_name") first_name: RequestBody,
+//    @Part("last_name") last_name: RequestBody,
+//    @Part("email") email: RequestBody,
+//    @Part("mobile_number") mobile_number: RequestBody,
+//    @Part("dob") dob: RequestBody,
+//    @Part("gender") gender: RequestBody,
+//    @Part("description") description: RequestBody,
+//    @Part("experience") experience: RequestBody,
+//    @Part("available_time") available_time: RequestBody,
+//    @Part("fees") fees: RequestBody,
+//    @Part("department") department: RequestBody
+//): Single<RegistrationResponse>
 
 
     @POST("api-doctor-review")

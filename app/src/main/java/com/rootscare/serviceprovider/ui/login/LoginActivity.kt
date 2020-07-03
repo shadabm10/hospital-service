@@ -80,6 +80,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
         }
     }
 
+
+
+    var isdeaprtmentMandatory:Boolean?=null
     private fun setUpViewPager() {
         with(ativityLoginBinding!!) {
             viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -97,8 +100,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityViewModel>
                     } else {
                         viewPager.setPagingEnabled(false)
                     }
+                    if (AppData.registrationModelData?.userType!=null){
+                        val userTempType = AppData.registrationModelData?.userType?.trim()
+                        if (userTempType?.contains("doctor")!! ||
+                            userTempType.contains("nurse") ||
+                            userTempType.contains("hospital")){
+                            isdeaprtmentMandatory = true
+                        }else{
+                            isdeaprtmentMandatory = false
+                        }
+                    }
                 }
             })
         }
     }
+
 }

@@ -1,8 +1,11 @@
 package com.rootscare.serviceprovider.ui.nurses.nursesmyschedule.subfragment.manageschedule
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.google.gson.Gson
@@ -14,7 +17,6 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentNursesManageRateBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
-import com.rootscare.serviceprovider.ui.nurses.home.subfragment.FragmentNurseHome
 import okhttp3.RequestBody
 
 class FragmentNursesManageRate : BaseFragment<FragmentNursesManageRateBinding, FragmentNursesManageRateViewModel>(),
@@ -56,6 +58,13 @@ class FragmentNursesManageRate : BaseFragment<FragmentNursesManageRateBinding, F
 //        })
 
         with(fragmentNursesManageRateBinding!!) {
+            restrictEdittextFromEnetringOnlyZero(etForPrice1)
+            restrictEdittextFromEnetringOnlyZero(etForPrice2)
+            restrictEdittextFromEnetringOnlyZero(etForPrice3)
+            restrictEdittextFromEnetringOnlyZero(etForPrice4)
+            restrictEdittextFromEnetringOnlyZero(etForPrice5)
+
+
             btnSubmit1.setOnClickListener {
                 if (checkValidation()) {
                     apiHitToSaveSlotPrice()
@@ -170,5 +179,31 @@ class FragmentNursesManageRate : BaseFragment<FragmentNursesManageRateBinding, F
     override fun onResume() {
         super.onResume()
         showDataoField()
+    }
+
+    private fun restrictEdittextFromEnetringOnlyZero(editText: EditText){
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(
+                s: CharSequence, start: Int, before: Int,
+                count: Int
+            ) {
+                val enteredString = s.toString()
+                if (enteredString.startsWith("0")) {
+                    if (enteredString.isNotEmpty()) {
+                        editText.setText(enteredString.substring(1))
+                    } else {
+                        editText.setText("")
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 }

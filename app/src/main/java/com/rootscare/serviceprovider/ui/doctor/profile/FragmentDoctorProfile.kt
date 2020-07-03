@@ -70,7 +70,7 @@ class FragmentDoctorProfile: BaseFragment<FragmentDoctorProfileBinding, Fragment
         fragmentDoctorProfileBinding = viewDataBinding
         fragmentDoctorProfileBinding?.btnDoctorEditProfile?.setOnClickListener(View.OnClickListener {
             (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                FragmentEditDoctorProfile.newInstance())
+                FragmentEditDoctorProfile.newInstance("doctor"))
         })
 // GET PROFILE API CALL
         if(isNetworkConnected){

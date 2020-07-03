@@ -15,7 +15,7 @@ class FragmentRegistrationStepThreeViewModel : BaseViewModel<FragmentRegistratio
                                       gender: RequestBody,password: RequestBody,
                                       confirm_password: RequestBody,image: MultipartBody.Part? = null,
                                       certificate: List<MultipartBody.Part>? = null,qualification: RequestBody,passing_year: RequestBody,institute: RequestBody,
-                                      description: RequestBody,experience: RequestBody,available_time: RequestBody,fees: RequestBody,department: RequestBody) {
+                                      description: RequestBody,experience: RequestBody,available_time: RequestBody,fees: RequestBody,department: RequestBody?=null) {
 //        userId: RequestBody,first_name: RequestBody,last_name: RequestBody,id_number: RequestBody,status: RequestBody,image: MultipartBody.Part? = null
 //        val body = RequestBody.create(MediaType.parse("application/json"), "")
         var disposable: Disposable? = null

@@ -20,7 +20,6 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
@@ -37,13 +36,9 @@ import com.rootscare.interfaces.OnDepartmentDropDownListItemClickListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorEditProfileBinding
-import com.rootscare.serviceprovider.ui.base.AppData
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.adapter.CertificateListAdapter
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
-import com.rootscare.serviceprovider.ui.login.subfragment.registration.subfragment.registrationstetwo.FragmentRegistrationStepTwo
-import com.whiteelephant.monthpicker.MonthPickerDialog
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_doctor_edit_profile.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -79,6 +74,7 @@ class FragmentEditDoctorProfile :
     private var filePath: String? = null
     private var certificatefileFile: File? = null
     private var imageFile: File? = null
+    private var userType:String?=null
 
     private var fragmentDoctorEditProfileBinding: FragmentDoctorEditProfileBinding? = null
     private var fragmentEditDoctorProfileViewModel: FragmentEditDoctorProfileViewModel? = null
@@ -95,8 +91,9 @@ class FragmentEditDoctorProfile :
         }
 
     companion object {
-        fun newInstance(): FragmentEditDoctorProfile {
+        fun newInstance(userType:String): FragmentEditDoctorProfile {
             val args = Bundle()
+            args.putString("userType",userType)
             val fragment = FragmentEditDoctorProfile()
             fragment.arguments = args
             return fragment
@@ -112,6 +109,7 @@ class FragmentEditDoctorProfile :
         super.onViewCreated(view, savedInstanceState)
         fragmentDoctorEditProfileBinding = viewDataBinding
 
+        userType = arguments?.getString("userType")
 
         with(fragmentDoctorEditProfileBinding!!) {
 
@@ -266,7 +264,7 @@ class FragmentEditDoctorProfile :
             baseActivity?.showLoading()
             var commonUserIdRequest = CommonUserIdRequest()
             commonUserIdRequest.id = fragmentEditDoctorProfileViewModel?.appSharedPref?.loginUserId
-            fragmentEditDoctorProfileViewModel!!.apidoctorprofile(commonUserIdRequest)
+            fragmentEditDoctorProfileViewModel!!.apidoctorprofile(commonUserIdRequest, userType)
         } else {
             Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
         }
@@ -387,11 +385,20 @@ class FragmentEditDoctorProfile :
                     } else {
                         ediitexAvailableTime.setText("")
                     }
-                    if (getDoctorProfileResponse.result.fees != null && !getDoctorProfileResponse.result.fees.equals("")) {
-                        ediitextFees.setText(getDoctorProfileResponse.result.fees)
-                    } else {
-                        ediitextFees.setText("")
+                    if (userType.equals("nurse")){
+                        if (getDoctorProfileResponse.result.dailyRate != null && !getDoctorProfileResponse.result.dailyRate.equals("")) {
+                            ediitextFees.setText(getDoctorProfileResponse.result.dailyRate)
+                        } else {
+                            ediitextFees.setText("")
+                        }
+                    }else{
+                        if (getDoctorProfileResponse.result.fees != null && !getDoctorProfileResponse.result.fees.equals("")) {
+                            ediitextFees.setText(getDoctorProfileResponse.result.fees)
+                        } else {
+                            ediitextFees.setText("")
+                        }
                     }
+
                     if (getDoctorProfileResponse.result.department != null && getDoctorProfileResponse.result.department.size > 0) {
                         textViewDepartment.setText("")
                         departTitle = ""
@@ -706,18 +713,27 @@ class FragmentEditDoctorProfile :
 
                     }*/
                 }
-                val qualification = RequestBody.create(
-                    MediaType.parse("multipart/form-data"),
-                    qualificationStr
-                )
-                val passingYear = RequestBody.create(
-                    MediaType.parse("multipart/form-data"),
-                    passingYearStr
-                )
-                val institute = RequestBody.create(
-                    MediaType.parse("multipart/form-data"),
-                    instituteStr
-                )
+                var qualification:RequestBody?=null
+                if (!TextUtils.isEmpty(qualificationStr.trim())) {
+                    qualification = RequestBody.create(
+                        MediaType.parse("multipart/form-data"),
+                        qualificationStr
+                    )
+                }
+                var passingYear:RequestBody?=null
+                if (!TextUtils.isEmpty(qualificationStr.trim())) {
+                    passingYear = RequestBody.create(
+                        MediaType.parse("multipart/form-data"),
+                        passingYearStr
+                    )
+                }
+                var institute:RequestBody?=null
+                if (!TextUtils.isEmpty(qualificationStr.trim())) {
+                    institute = RequestBody.create(
+                        MediaType.parse("multipart/form-data"),
+                        instituteStr
+                    )
+                }
                 val description = RequestBody.create(
                     MediaType.parse("multipart/form-data"),
                     ediitextDescription.text?.trim().toString()
@@ -739,184 +755,60 @@ class FragmentEditDoctorProfile :
                     departmentId.trim().toString()
                 )
 
-
-
-                if (imageFile == null && (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0)) {
-                    var imageMultipartBody: MultipartBody.Part? = null
-                    val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                    imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
-                    val certificateMultipartBody: MutableList<MultipartBody.Part> = ArrayList()
-                    /*if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0) {
-                        for (item in certificateListAdapter?.qualificationDataList!!) {
-                            if (item.certificateFileTemporay != null) {
-                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
-                                certificateMultipartBody.add(
-                                    MultipartBody.Part.createFormData(
-                                        "certificate[]",
-                                        item.certificateFileTemporay?.name,
-                                        certificate
-                                    )
-                                )
-                            }
-                        }
-                    }*/
-                    val tempList: ArrayList<QualificationDataItem> = ArrayList()
-                    for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
-                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData){
-                            tempList.add(certificateListAdapter?.qualificationDataList!![i])
-                        }
-                    }
-                    if (tempList.size > 0) {
-                        for (item in tempList) {
-                            if (item.certificateFileTemporay != null && !item.isOldData) {
-                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
-                                certificateMultipartBody.add(
-                                    MultipartBody.Part.createFormData(
-                                        "certificate[]",
-                                        item.certificateFileTemporay?.name,
-                                        certificate
-                                    )
-                                )
-                            }
-                        }
-                    }
-                    /*var certificateMultipartBody: MultipartBody.Part? = null
-                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), certificatefileFile!!)
-                    certificateMultipartBody = MultipartBody.Part.createFormData("certificate", certificatefileFile?.name, certificate)*/
-
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
-                        user_id,
-                        first_name,
-                        last_name,
-                        email,
-                        mobile_number,
-                        dob,
-                        gender,
-                        qualification,
-                        passingYear,
-                        institute,
-                        description,
-                        experience,
-                        availableTime,
-                        fees,
-                        department,
-                        imageMultipartBody,
-                        certificateMultipartBody
-                    )
-                } else if (imageFile != null && certificatefileFile == null) {
-                    var imageMultipartBody: MultipartBody.Part? = null
-                    val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
+                var imageMultipartBody: MultipartBody.Part? = null
+                var image:RequestBody?=null
+                if (imageFile != null){
+                    image= RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                    val certificateMultipartBody: MutableList<MultipartBody.Part> = ArrayList()
-                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                    certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", "", certificate))
-
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
-                        user_id,
-                        first_name,
-                        last_name,
-                        email,
-                        mobile_number,
-                        dob,
-                        gender,
-                        qualification,
-                        passingYear,
-                        institute,
-                        description,
-                        experience,
-                        availableTime,
-                        fees,
-                        department,
-                        imageMultipartBody,
-                        certificateMultipartBody
-                    )
-                } else if (imageFile != null && certificatefileFile != null) {
-                    var imageMultipartBody: MultipartBody.Part? = null
-                    val image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
-                    imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                    val certificateMultipartBody: ArrayList<MultipartBody.Part> = ArrayList()
-                    val tempList: ArrayList<QualificationDataItem> = ArrayList()
-                    for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
-                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData){
-                            tempList.add(certificateListAdapter?.qualificationDataList!![i])
-                        }
-                    }
-                    if (tempList.size > 0) {
-                        for (item in tempList) {
-                            if (item.certificateFileTemporay != null && !item.isOldData) {
-                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
-                                certificateMultipartBody.add(
-                                    MultipartBody.Part.createFormData(
-                                        "certificate[]",
-                                        item.certificateFileTemporay?.name,
-                                        certificate
-                                    )
-                                )
-                            }
-                        }
-                    }
-                    /*if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0) {
-                        for (item in certificateListAdapter?.qualificationDataList!!) {
-                            if (item.certificateFileTemporay != null) {
-                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
-                                certificateMultipartBody.add(
-                                    MultipartBody.Part.createFormData(
-                                        "certificate",
-                                        item.certificateFileTemporay?.name,
-                                        certificate
-                                    )
-                                )
-                            }
-                        }
-                    }*/
-
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
-                        user_id,
-                        first_name,
-                        last_name,
-                        email,
-                        mobile_number,
-                        dob,
-                        gender,
-                        qualification,
-                        passingYear,
-                        institute,
-                        description,
-                        experience,
-                        availableTime,
-                        fees,
-                        department,
-                        imageMultipartBody,
-                        certificateMultipartBody
-                    )
-                } else if (imageFile == null && certificatefileFile == null) {
-                    var imageMultipartBody: MultipartBody.Part? = null
-                    val image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                    imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
-                    val certificateMultipartBody: MutableList<MultipartBody.Part> = ArrayList()
-                    val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), "")
-                    certificateMultipartBody.add(MultipartBody.Part.createFormData("certificate[]", "", certificate))
-
-                    fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
-                        user_id,
-                        first_name,
-                        last_name,
-                        email,
-                        mobile_number,
-                        dob,
-                        gender,
-                        qualification,
-                        passingYear,
-                        institute,
-                        description,
-                        experience,
-                        availableTime,
-                        fees,
-                        department,
-                        imageMultipartBody,
-                        certificateMultipartBody
-                    )
+                }else{
+//                    image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
+//                    imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
                 }
+
+                var certificateMultipartBody: ArrayList<MultipartBody.Part>?=null
+                if ((certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0)) {
+                    val tempList: ArrayList<QualificationDataItem> = ArrayList()
+                    for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
+                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData) {
+                            tempList.add(certificateListAdapter?.qualificationDataList!![i])
+                        }
+                    }
+                    if (tempList.size > 0) {
+                        certificateMultipartBody = ArrayList()
+                        for (item in tempList) {
+                            if (item.certificateFileTemporay != null && !item.isOldData) {
+                                val certificate = RequestBody.create(MediaType.parse("multipart/form-data"), item.certificateFileTemporay!!)
+                                certificateMultipartBody.add(
+                                    MultipartBody.Part.createFormData(
+                                        "certificate[]",
+                                        item.certificateFileTemporay?.name,
+                                        certificate
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+
+                fragmentEditDoctorProfileViewModel?.apiHitForUdateProfileWithProfileAndCertificationImage(
+                    user_id,
+                    first_name,
+                    last_name,
+                    email,
+                    mobile_number,
+                    dob,
+                    gender,
+                    qualification,
+                    passingYear,
+                    institute,
+                    description,
+                    experience,
+                    availableTime,
+                    fees,
+                    department,
+                    imageMultipartBody,
+                    certificateMultipartBody
+                )
             }
         }
     }

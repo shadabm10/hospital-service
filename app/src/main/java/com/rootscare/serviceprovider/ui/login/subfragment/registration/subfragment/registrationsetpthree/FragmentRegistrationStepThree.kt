@@ -37,6 +37,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     var departmentList: ArrayList<ResultItem?>?=null
     var departmentId=""
     var departTitle=""
+
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
@@ -59,6 +60,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fragmentRegistrationStepThreeViewModel!!.navigator = this
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -166,7 +168,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
         }
-        if (fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text?.toString().equals("") ) {
+        if ((activity as LoginActivity).isdeaprtmentMandatory!! && fragmentRegistrationStepthreeBinding?.txtRegDepartment?.text?.toString()?.trim().equals("") ) {
             Toast.makeText(activity, "Please select your department!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
@@ -217,6 +219,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     //
     private fun registrationApiCall(){
         baseActivity?.showLoading()
+
         val user_type = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.userType?.toLowerCase())
         val first_name = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.firstName)
         val last_name = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.lastName)
@@ -246,7 +249,10 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
         val experience = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.experience)
         val available_time = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.availableTime)
         val fees = RequestBody.create(MediaType.parse("multipart/form-data"), AppData.registrationModelData?.fees)
-        val department = RequestBody.create(MediaType.parse("multipart/form-data"), departmentId)
+        var department:RequestBody?=null
+        if ((activity as LoginActivity).isdeaprtmentMandatory!!){
+            department = RequestBody.create(MediaType.parse("multipart/form-data"), departmentId)
+        }
         val certificateMultipartBody:MutableList<MultipartBody.Part> = ArrayList()
         if (AppData.registrationModelData?.qualificationDataList != null && AppData.registrationModelData?.qualificationDataList?.size!!>0) {
             var index = 0

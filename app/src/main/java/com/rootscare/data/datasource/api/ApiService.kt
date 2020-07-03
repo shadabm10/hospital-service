@@ -55,6 +55,9 @@ interface ApiService {
     @POST("api-doctor-profile")
     fun apidoctorprofile(@Body commonUserIdRequestBody: CommonUserIdRequest): Single<GetDoctorProfileResponse>
 
+    @POST("api-nurse-profile")
+    fun apinurseprofile(@Body commonUserIdRequestBody: CommonUserIdRequest): Single<GetDoctorProfileResponse>
+
     @Multipart
     @POST("api-service-provider-registration")
     fun apiserviceproviderregistration(
@@ -74,7 +77,7 @@ interface ApiService {
         @Part("experience") experience: RequestBody,
         @Part("available_time") available_time: RequestBody,
         @Part("fees") fees: RequestBody,
-        @Part("department") department: RequestBody,
+        @Part("department") department: RequestBody?=null,
         @Part certificate: List<MultipartBody.Part>,
         @Part image: MultipartBody.Part
     ): Single<RegistrationResponse>
@@ -120,9 +123,9 @@ interface ApiService {
         @Part("mobile_number") mobile_number: RequestBody,
         @Part("dob") dob: RequestBody,
         @Part("gender") gender: RequestBody,
-        @Part("qualification") qualification: RequestBody,
-        @Part("passing_year") passing_year: RequestBody,
-        @Part("institute") institute: RequestBody,
+        @Part("qualification") qualification: RequestBody?=null,
+        @Part("passing_year") passing_year: RequestBody?=null,
+        @Part("institute") institute: RequestBody?=null,
         @Part("description") description: RequestBody,
         @Part("experience") experience: RequestBody,
         @Part("available_time") available_time: RequestBody,

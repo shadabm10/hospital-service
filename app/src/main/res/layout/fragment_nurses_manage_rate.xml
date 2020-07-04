@@ -264,19 +264,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:background="#EBF8F5"
                             android:orientation="horizontal"
                             android:weightSum="2">
 
                             <TextView
                                 android:layout_width="@dimen/dimen_0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_weight="1"
-                                android:background="@drawable/edit_comm_bg"
                                 android:gravity="center"
-                                android:padding="@dimen/_3sdp"
+                                android:padding="@dimen/_5sdp"
                                 android:text="Slot"
-                                android:id="@+id/tvTitleForPrice5"
                                 android:textColor="@color/txt_color"
                                 android:textSize="@dimen/_10ssp" />
 
@@ -295,24 +293,20 @@
                                 android:padding="@dimen/_3sdp"
                                 android:textColor="@color/txt_color"
                                 android:textSize="@dimen/_10ssp" />
-
-
                         </LinearLayout>
 
-
-                        <Button
+                        <com.rootscare.customview.MyCustomButton
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_25sdp"
+                            android:layout_height="@dimen/_30sdp"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_20sdp"
-                            android:layout_marginBottom="@dimen/_50sdp"
-                            android:background="@drawable/blue_booking_bg"
+                            android:background="@drawable/booking_new_bg"
                             android:drawableEnd="@drawable/white_arrow_circle"
                             android:drawablePadding="@dimen/_10sdp"
                             android:padding="@dimen/_5sdp"
-                            android:text="Submit"
-                            android:id="@+id/btnSubmit2"
+                            android:text="Save Slot wise Rate"
                             android:textAllCaps="false"
+                            android:id="@+id/btnSubmit2"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_10ssp" />
                     </LinearLayout>

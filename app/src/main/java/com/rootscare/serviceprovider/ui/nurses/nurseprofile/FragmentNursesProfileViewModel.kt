@@ -3,6 +3,7 @@ package com.rootscare.serviceprovider.ui.nurses.nurseprofile
 import android.util.Log
 import com.google.gson.Gson
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
+import com.rootscare.data.model.api.response.loginresponse.LoginResponse
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
 import com.rootscare.serviceprovider.ui.nurses.home.subfragment.FragmentNurseHomeNavigator
 
@@ -15,6 +16,11 @@ class FragmentNursesProfileViewModel : BaseViewModel<FragmentNursesProfileNaviga
                 if (response != null) {
                     // Store last login time
                     Log.d("check_response", ": " + Gson().toJson(response))
+                    val tempModel = Gson().fromJson(appSharedPref?.loginmodeldata, LoginResponse::class.java)
+                    tempModel?.result?.image = response.result?.image
+                    val loginresposeJson = Gson().toJson(tempModel)
+                    appSharedPref?.loginmodeldata=loginresposeJson
+
                     navigator.successGetDoctorProfileResponse(response)
 
                 } else {

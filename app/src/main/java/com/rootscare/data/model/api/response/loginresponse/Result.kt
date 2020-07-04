@@ -49,7 +49,7 @@ data class Result(
 	val email: String? = null,
 	@field:JsonProperty("image")
 	@field:SerializedName("image")
-	val image: String? = null,
+	var image: String? = null,
 	@field:JsonProperty("id_number")
 	@field:SerializedName("id_number")
 	val idNumber: String? = null,

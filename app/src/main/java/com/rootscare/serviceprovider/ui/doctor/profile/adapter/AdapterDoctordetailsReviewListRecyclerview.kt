@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.doctor.profile.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -73,6 +74,9 @@ class AdapterDoctordetailsReviewListRecyclerview (val reviewRatingList: ArrayLis
 
             itemView?.rootView?.txt_review_provider_name?.setText("Review By:"+" "+reviewRatingList?.get(pos)?.reviewBy)
             itemView?.rootView?.txt_review?.setText(reviewRatingList?.get(pos)?.review)
+            if (reviewRatingList!![local_position]?.rating!=null && !TextUtils.isEmpty(reviewRatingList!![local_position]?.rating?.trim())){
+                itemView.ratingBardoctordetailseview.rating = reviewRatingList[local_position]?.rating?.toFloat()!!
+            }
 //            itemView?.rootView?.txt_home_babysitter_qualification?.setText(babysitterList?.get(pos)?.qualification)
 //            Glide.with(context)
 //                .load(context.getString(R.string.api_base)+"uploads/images/" + (babysitterList?.get(pos)?.image))

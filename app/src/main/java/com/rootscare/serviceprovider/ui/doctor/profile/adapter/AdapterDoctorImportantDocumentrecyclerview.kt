@@ -3,6 +3,7 @@ package com.rootscare.serviceprovider.ui.doctor.profile.adapter
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -45,11 +46,10 @@ class AdapterDoctorImportantDocumentrecyclerview   (val qualificationDataList: A
 
         private var local_position:Int = 0
         init {
-//            itemView?.root?.crdview_appoitment_list?.setOnClickListener(View.OnClickListener {
-//                recyclerViewItemClickWithView?.onItemClick(1)
-//            })
-//            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
-//
+            itemView?.parentLayout?.setOnClickListener(View.OnClickListener {
+                recyclerViewItemClickWithView?.onItemClick(local_position)
+            })
+
         }
 
         fun onBind(pos: Int) {
@@ -57,21 +57,6 @@ class AdapterDoctorImportantDocumentrecyclerview   (val qualificationDataList: A
             local_position = pos
 
             itemView?.txt_description?.setText(qualificationDataList?.get(pos)?.qualification)
-
-//            itemView?.rootView?.txt_teacher_name?.text= trainerList?.get(pos)?.name
-//            itemView?.rootView?.txt_teacher_qualification?.text= "Qualification : "+" "+trainerList?.get(pos)?.qualification
-//            if(trainerList?.get(pos)?.avgRating!=null && !trainerList?.get(pos)?.avgRating.equals("")){
-//                itemView?.rootView?.ratingBarteacher?.rating= trainerList?.get(pos)?.avgRating?.toFloat()!!
-//            }
-
-
-
-
-
-//            itemView?.rootView?.txt_rating_count?.text="("+contactListItem?.get(pos)?.contactRating+")"
-//            (contactListItem?.get(pos)?.contactRating)?.toFloat()?.let { itemView?.rootView?.ratingBar?.setRating(it) }
-////            itemView?.rootView?.ratingBar?.rating=1.5f
-
 
         }
     }

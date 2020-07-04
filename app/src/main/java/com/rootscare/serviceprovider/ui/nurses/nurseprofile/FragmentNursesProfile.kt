@@ -14,6 +14,7 @@ import com.rootscare.data.model.api.response.doctor.profileresponse.DepartmentIt
 import com.rootscare.data.model.api.response.doctor.profileresponse.GetDoctorProfileResponse
 import com.rootscare.data.model.api.response.doctor.profileresponse.QualificationDataItem
 import com.rootscare.data.model.api.response.doctor.profileresponse.ReviewRatingItem
+import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentNursesHomeBinding
@@ -32,6 +33,7 @@ import com.rootscare.serviceprovider.ui.nurses.home.subfragment.FragmentNurseHom
 import com.rootscare.serviceprovider.ui.nurses.home.subfragment.FragmentNurseHomeViewModel
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.adapter.AdapterNursesUploadDocument
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.subfragment.nursesprofileedit.FragmentNursesEditProfile
+import com.rootscare.serviceprovider.ui.showimagelarger.TransaprentPopUpActivityForImageShow
 
 class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, FragmentNursesProfileViewModel>(),
     FragmentNursesProfileNavigator {
@@ -115,8 +117,16 @@ class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, Fragment
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.setHasFixedSize(true)
-        val contactListAdapter = AdapterDoctorImportantDocumentrecyclerview(qualificationDataList,context!!)
+        val contactListAdapter = AdapterDoctorImportantDocumentrecyclerview(qualificationDataList,activity!!)
         recyclerView.adapter = contactListAdapter
+
+        contactListAdapter.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
+            override fun onItemClick(position: Int) {
+                val imageUrl =
+                    context?.getString(R.string.api_base) + "uploads/images/" + contactListAdapter.qualificationDataList!![position].qualificationCertificate!!
+                startActivity(TransaprentPopUpActivityForImageShow.newIntent(activity!!, imageUrl))
+            }
+        }
     }
 
     // Set up recycler view for service listing if available
@@ -171,6 +181,7 @@ class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, Fragment
                 val options: RequestOptions =
                     RequestOptions()
                         .centerCrop()
+                        .apply(RequestOptions.circleCropTransform())
                         .placeholder(R.drawable.profile_no_image)
                         .priority(Priority.HIGH)
                 Glide

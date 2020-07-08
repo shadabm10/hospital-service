@@ -115,22 +115,24 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
                 override fun onConfirm(departmentList: ArrayList<ResultItem?>?) {
                     departTitle=""
                     departmentId=""
-                    var p=0
-                    for (i in 0 until departmentList?.size!!) {
-                        if (departmentList.get(i)?.isChecked.equals("true")){
-                            if (p==0){
-                                departTitle= departmentList.get(i)?.title!!
-                                departmentId= departmentList.get(i)?.id!!
-                                p++
+                    if (departmentList?.size!=null && departmentList.size>0) {
+                        var p = 0
+                        for (i in 0 until departmentList?.size!!) {
+                            if (departmentList.get(i)?.isChecked.equals("true")) {
+                                if (p == 0) {
+                                    departTitle = departmentList.get(i)?.title!!
+                                    departmentId = departmentList.get(i)?.id!!
+                                    p++
 
 //                                Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
 //                                Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
-                            }else{
-                                departTitle=departTitle+","+ departmentList.get(i)?.title
-                            departmentId=departmentId+","+ departmentList.get(i)?.id
+                                } else {
+                                    departTitle = departTitle + "," + departmentList.get(i)?.title
+                                    departmentId = departmentId + "," + departmentList.get(i)?.id
 
 //                                Log.d(FragmentLogin.TAG, "--SELECT DEPARTMENT:-- ${departTitle}")
 //                                Log.d(FragmentLogin.TAG, "--SELECT ID:-- ${departmentId}")
+                                }
                             }
                         }
                     }

@@ -232,8 +232,8 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
 
         } else if (requestCode == CAMERA) {
 
-            val contentURI = data!!.data
-            val thumbnail = data.extras!!.get("data") as Bitmap
+//            val contentURI = data?.data
+            val thumbnail = data?.extras?.get("data") as Bitmap
 //            fragmentAddPatientForDoctorBookingBinding?.imgRootscarePatientProfileImage?.setImageBitmap(thumbnail)
             saveImage(thumbnail)
             bitmapToFile(thumbnail)

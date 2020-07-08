@@ -405,12 +405,15 @@ class FragmentEditDoctorProfile :
                         departTitle = ""
                         departmentId = ""
                         for (i in 0 until getDoctorProfileResponse.result.department.size) {
-                            if (i == 0) {
-                                departTitle += getDoctorProfileResponse.result.department[i]?.title!!
-                                departmentId += getDoctorProfileResponse.result.department[i]?.id!!
-                            } else {
-                                departTitle += "," + getDoctorProfileResponse.result.department[i]?.title!!
-                                departmentId += "," + getDoctorProfileResponse.result.department[i]?.id!!
+                            if (getDoctorProfileResponse.result.department[i]?.title!=null &&
+                                    getDoctorProfileResponse.result.department[i]?.id!=null){
+                                if (i == 0) {
+                                    departTitle += getDoctorProfileResponse.result.department[i]?.title
+                                    departmentId += getDoctorProfileResponse.result.department[i]?.id
+                                } else {
+                                    departTitle += "," + getDoctorProfileResponse.result.department[i]?.title
+                                    departmentId += "," + getDoctorProfileResponse.result.department[i]?.id
+                                }
                             }
                             textViewDepartment.setText(departTitle)
                             for (j in 0 until departmentList?.size!!) {
@@ -505,8 +508,8 @@ class FragmentEditDoctorProfile :
 
 
         } else if (requestCode == CAMERA) {
-            val contentURI = data!!.data
-            val thumbnail = data!!.extras!!.get("data") as Bitmap
+//            val contentURI = data!!.data
+            val thumbnail = data?.extras?.get("data") as Bitmap
             saveImage(thumbnail)
             bitmapToFile(thumbnail)
             Glide.with(activity!!).load(thumbnail).apply(RequestOptions.circleCropTransform())

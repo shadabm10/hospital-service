@@ -124,18 +124,15 @@ class FragmentTodaysAppointmentViewModel  : BaseViewModel<FragmentTodaysAppointm
 
 
     private fun sortListByDate(response: GetDoctorTodaysAppointmentResponse): GetDoctorTodaysAppointmentResponse {
-        if (response.result != null && response.result?.size!! > 0) {
-            var tempData = response.result
+        if (response.result != null && response.result.size > 0) {
+            val tempData = response.result
             for (item in tempData) {
                 if (item?.appointmentDate!=null && !TextUtils.isEmpty(item.appointmentDate.trim()) && item.fromTime!=null && !TextUtils.isEmpty(item.fromTime.trim())){
-                    var appointmentDateTimeAsString = "${item?.appointmentDate} ${item?.fromTime}"
-                    var appointmentDateTimeAsDate = DateTimeUtils.getDateByGivenString(appointmentDateTimeAsString, "yyyy-MM-dd hh:mm a")
-                    var currentDate = Date()
-                    if (currentDate.compareTo(appointmentDateTimeAsDate)<0 || currentDate.compareTo(appointmentDateTimeAsDate)==0){
-                        item.isCompletedButtonVisible = false
-                    }else{
-                        item.isCompletedButtonVisible = true
-                    }
+                    val appointmentDateTimeAsString = "${item.appointmentDate} ${item.fromTime}"
+                    val appointmentDateTimeAsDate = DateTimeUtils.getDateByGivenString(appointmentDateTimeAsString, "yyyy-MM-dd hh:mm a")
+                    val currentDate = Date()
+                    item.isCompletedButtonVisible =
+                        !(currentDate.compareTo(appointmentDateTimeAsDate)<0 || currentDate.compareTo(appointmentDateTimeAsDate)==0)
                 }
             }
         }

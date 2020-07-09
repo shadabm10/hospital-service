@@ -150,13 +150,9 @@ class FragmentForGotPassword: BaseFragment<FragmentForgotPasswordBinding, Fragme
             Toast.makeText(activity, "Password can not be blank", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (TextUtils.isEmpty(fragmentForgotPasswordBinding?.edtRootscareForgotPassword?.getText().toString().trim())) {
-            Toast.makeText(activity, "Password can not be blank", Toast.LENGTH_SHORT).show()
-            return false
-        }
 
         if(!fragmentForgotPasswordBinding?.firstPinView?.getText().toString().trim().equals(sendOTP)){
-            Toast.makeText(activity, "Password Miss Matched", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Please enter correct otp", Toast.LENGTH_SHORT).show()
             return false
         }
         return true

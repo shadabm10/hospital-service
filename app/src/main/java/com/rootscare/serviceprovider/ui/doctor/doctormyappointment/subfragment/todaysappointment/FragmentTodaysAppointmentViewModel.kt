@@ -1,14 +1,20 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment
 
+import android.text.TextUtils
 import android.util.Log
 import com.google.gson.Gson
+import com.latikaseafood.utils.DateTimeUtils
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.updateappointmentrequest.UpdateAppointmentRequest
+import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.GetDoctorTodaysAppointmentResponse
+import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.ResultItem
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
 import io.reactivex.disposables.Disposable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.util.*
+import kotlin.Comparator
 
 class FragmentTodaysAppointmentViewModel  : BaseViewModel<FragmentTodaysAppointmentNavigator>() {
     fun apidoctortodayappointmentlist(getDoctorUpcommingAppointmentRequest: GetDoctorUpcommingAppointmentRequest) {
@@ -20,6 +26,7 @@ class FragmentTodaysAppointmentViewModel  : BaseViewModel<FragmentTodaysAppointm
                 if (response != null) {
                     // Store last login time
                     Log.d("check_response", ": " + Gson().toJson(response))
+                    sortListByDate(response)
                     navigator.successGetDoctorTodaysAppointmentResponse(response)
 
                 } else {
@@ -113,5 +120,25 @@ class FragmentTodaysAppointmentViewModel  : BaseViewModel<FragmentTodaysAppointm
                 }
             })
         compositeDisposable.add(disposable!!)
+    }
+
+
+    private fun sortListByDate(response: GetDoctorTodaysAppointmentResponse): GetDoctorTodaysAppointmentResponse {
+        if (response.result != null && response.result?.size!! > 0) {
+            var tempData = response.result
+            for (item in tempData) {
+                if (item?.appointmentDate!=null && !TextUtils.isEmpty(item.appointmentDate.trim()) && item.fromTime!=null && !TextUtils.isEmpty(item.fromTime.trim())){
+                    var appointmentDateTimeAsString = "${item?.appointmentDate} ${item?.fromTime}"
+                    var appointmentDateTimeAsDate = DateTimeUtils.getDateByGivenString(appointmentDateTimeAsString, "yyyy-MM-dd hh:mm a")
+                    var currentDate = Date()
+                    if (currentDate.compareTo(appointmentDateTimeAsDate)<0 || currentDate.compareTo(appointmentDateTimeAsDate)==0){
+                        item.isCompletedButtonVisible = false
+                    }else{
+                        item.isCompletedButtonVisible = true
+                    }
+                }
+            }
+        }
+        return response
     }
 }

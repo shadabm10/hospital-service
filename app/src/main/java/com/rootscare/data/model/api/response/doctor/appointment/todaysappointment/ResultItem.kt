@@ -82,5 +82,7 @@ data class ResultItem(
 	val toDate: String? = null,
 
 	@field:SerializedName("nurse_id")
-	val nurseId: String? = null
+	val nurseId: String? = null,
+
+	var isCompletedButtonVisible:Boolean = false
 )

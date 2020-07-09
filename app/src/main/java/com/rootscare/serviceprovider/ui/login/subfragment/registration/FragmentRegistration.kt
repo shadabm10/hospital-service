@@ -222,7 +222,7 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
             return false
         }
         if (!isValidPassword(fragmentRegistrationBinding?.edtRegPhonenumber?.text?.toString()!!) ) {
-            Toast.makeText(activity, "Please enter Password!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Please enter Mobile number!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
         }

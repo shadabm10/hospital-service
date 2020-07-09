@@ -308,6 +308,11 @@ object CommonDialog {
 
 
         btn_dropdown_cancel?.setOnClickListener(View.OnClickListener {
+            if (departmentList!=null && departmentList.size>0){
+                for (item in departmentList){
+                    item?.isChecked = "false"
+                }
+            }
             dialog.dismiss()
         })
 

@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.login.subfragment.registration.subfragment.registrationstetwo
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
@@ -203,63 +204,65 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
-        /* if (resultCode == this.RESULT_CANCELED)
+        if (resultCode == Activity.RESULT_OK) {
+            /* if (resultCode == this.RESULT_CANCELED)
          {
          return
          }*/
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                val contentURI = data.data
-                try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, contentURI)
-                    val path = saveImage(bitmap)
-                    bitmapToFile(bitmap)
-                    fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text = getFileName(
-                        this.activity!!,
-                        contentURI!!
-                    )
+            if (requestCode == GALLERY) {
+                if (data != null) {
+                    val contentURI = data.data
+                    try {
+                        val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, contentURI)
+                        val path = saveImage(bitmap)
+                        bitmapToFile(bitmap)
+                        fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text = getFileName(
+                            this.activity!!,
+                            contentURI!!
+                        )
 //                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 //                    fragmentAddPatientForDoctorBookingBinding?.imgRootscarePatientProfileImage?.setImageBitmap(bitmap)
 
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    Toast.makeText(activity, "Failed!", Toast.LENGTH_SHORT).show()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        Toast.makeText(activity, "Failed!", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
-            }
 
-
-        } else if (requestCode == CAMERA) {
+            } else if (requestCode == CAMERA) {
 
 //            val contentURI = data?.data
-            val thumbnail = data?.extras?.get("data") as Bitmap
+                val thumbnail = data?.extras?.get("data") as Bitmap
 //            fragmentAddPatientForDoctorBookingBinding?.imgRootscarePatientProfileImage?.setImageBitmap(thumbnail)
-            saveImage(thumbnail)
-            bitmapToFile(thumbnail)
+                saveImage(thumbnail)
+                bitmapToFile(thumbnail)
 //                fragmentRegistrationBinding?.txtImageSelectName?.setText(getFileName(this!!.activity!!,
 //                    contentURI!!
 //                ))
 //            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 
-        }else if(requestCode==PICKFILE_RESULT_CODE){
-            if (resultCode == -1) {
-                fileUri = data!!.data
-                filePath = fileUri!!.path
-                // tvItemPath.setText(filePath)
-                try {
-                    val file = FileUtil.from(this.activity!!, fileUri!!)
-                    certificatefileFile=file
-                    Log.d(
-                        "file",
-                        "File...:::: uti - " + file.path + " file -" + file + " : " + file.exists()
-                    )
+            } else if (requestCode == PICKFILE_RESULT_CODE) {
+                if (resultCode == -1) {
+                    fileUri = data!!.data
+                    filePath = fileUri!!.path
+                    // tvItemPath.setText(filePath)
+                    try {
+                        val file = FileUtil.from(this.activity!!, fileUri!!)
+                        certificatefileFile = file
+                        Log.d(
+                            "file",
+                            "File...:::: uti - " + file.path + " file -" + file + " : " + file.exists()
+                        )
 //                    fragmentRegistrationStepTwoBinding?.txtCertificate?.setText(
 //                        getFileName(this!!.activity!!, fileUri!!)
 //                    )
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -385,7 +388,7 @@ class FragmentRegistrationStepTwo : BaseFragment<FragmentRegistrationStepTwoBind
 
     private fun checkValidationForRegStepTwo(): Boolean {
         if (fragmentRegistrationStepTwoBinding?.txtImageSelectName?.text?.toString().equals("") ) {
-            Toast.makeText(activity, "Please select your image!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Please select your profile image!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false
         }

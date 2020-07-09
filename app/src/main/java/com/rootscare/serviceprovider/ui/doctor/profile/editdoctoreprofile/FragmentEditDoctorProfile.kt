@@ -1,5 +1,6 @@
 package com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
@@ -487,53 +488,55 @@ class FragmentEditDoctorProfile :
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                val contentURI = data!!.data
-                try {
-                    val bitmap =
-                        MediaStore.Images.Media.getBitmap(activity?.contentResolver, contentURI)
-                    val path = saveImage(bitmap)
-                    bitmapToFile(bitmap)
-                    Glide.with(activity!!).load(bitmap).apply(RequestOptions.circleCropTransform())
-                        .into(fragmentDoctorEditProfileBinding!!.imgDoctorProfile)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY) {
+                if (data != null) {
+                    val contentURI = data!!.data
+                    try {
+                        val bitmap =
+                            MediaStore.Images.Media.getBitmap(activity?.contentResolver, contentURI)
+                        val path = saveImage(bitmap)
+                        bitmapToFile(bitmap)
+                        Glide.with(activity!!).load(bitmap).apply(RequestOptions.circleCropTransform())
+                            .into(fragmentDoctorEditProfileBinding!!.imgDoctorProfile)
 //                    Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
 //                    Toast.makeText(activity, "Failed!", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
-            }
 
-
-        } else if (requestCode == CAMERA) {
+            } else if (requestCode == CAMERA) {
 //            val contentURI = data!!.data
-            val thumbnail = data?.extras?.get("data") as Bitmap
-            saveImage(thumbnail)
-            bitmapToFile(thumbnail)
-            Glide.with(activity!!).load(thumbnail).apply(RequestOptions.circleCropTransform())
-                .into(fragmentDoctorEditProfileBinding!!.imgDoctorProfile)
+                val thumbnail = data?.extras?.get("data") as Bitmap
+                saveImage(thumbnail)
+                bitmapToFile(thumbnail)
+                Glide.with(activity!!).load(thumbnail).apply(RequestOptions.circleCropTransform())
+                    .into(fragmentDoctorEditProfileBinding!!.imgDoctorProfile)
 //            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 
-        } else if (requestCode == PICKFILE_RESULT_CODE) {
-            if (resultCode == -1) {
-                fileUri = data!!.data
-                filePath = fileUri!!.path
-                // tvItemPath.setText(filePath)
-                try {
-                    val file = FileUtil.from(this!!.activity!!, fileUri!!)
-                    certificatefileFile = file
-                    Log.d(
-                        "file",
-                        "File...:::: uti - " + file.path + " file -" + file + " : " + file.exists()
-                    )
-                    /*fragmentDoctorEditProfileBinding?.textViewCertificate?.setText(
+            } else if (requestCode == PICKFILE_RESULT_CODE) {
+                if (resultCode == -1) {
+                    fileUri = data!!.data
+                    filePath = fileUri!!.path
+                    // tvItemPath.setText(filePath)
+                    try {
+                        val file = FileUtil.from(this!!.activity!!, fileUri!!)
+                        certificatefileFile = file
+                        Log.d(
+                            "file",
+                            "File...:::: uti - " + file.path + " file -" + file + " : " + file.exists()
+                        )
+                        /*fragmentDoctorEditProfileBinding?.textViewCertificate?.setText(
                         getFileName(this!!.activity!!, fileUri!!)
                     )*/
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }

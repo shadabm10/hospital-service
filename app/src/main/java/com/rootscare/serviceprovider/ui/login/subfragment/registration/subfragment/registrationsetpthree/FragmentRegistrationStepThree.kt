@@ -1,6 +1,7 @@
 package com.rootscare.serviceprovider.ui.login.subfragment.registration.subfragment.registrationsetpthree
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -150,7 +151,7 @@ class FragmentRegistrationStepThree : BaseFragment<FragmentRegistrationStepthree
     }
 
     private fun checkValidationForRegStepThree(): Boolean {
-        if (fragmentRegistrationStepthreeBinding?.edtRegDescription?.text?.toString().equals("") ) {
+        if (TextUtils.isEmpty(fragmentRegistrationStepthreeBinding?.edtRegDescription?.text?.toString()?.trim()) ) {
             Toast.makeText(activity, "Please enter your description!", Toast.LENGTH_SHORT).show()
 //            activityLoginBinding?.edtPassword?.setError("Please enter Password")
             return false

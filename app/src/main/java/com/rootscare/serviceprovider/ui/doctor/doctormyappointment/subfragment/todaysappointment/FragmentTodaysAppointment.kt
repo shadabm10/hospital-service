@@ -29,7 +29,7 @@ import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.t
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
 import com.rootscare.utils.MyImageCompress
-import com.sihatku.commondialog.inputfilename.FileNameInputDialog
+import com.rootscare.dialog.inputfilename.FileNameInputDialog
 import com.unversal.imagecropper.CropImage
 import com.unversal.imagecropper.CropImageView
 import okhttp3.MediaType

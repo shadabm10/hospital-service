@@ -117,9 +117,8 @@
                                 android:layout_gravity="start"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:isIndicator="false"
-                                android:numStars="7"
+                                android:numStars="5"
                                 android:progressTint="@color/orange"
-                                android:rating="7.0"
                                 android:stepSize="1.0" />
 
                             <com.rootscare.customview.MyTextView

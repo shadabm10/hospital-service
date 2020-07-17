@@ -1,4 +1,4 @@
-package com.sihatku.commondialog.inputfilename
+package com.rootscare.dialog.inputfilename
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -15,6 +15,8 @@ import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FileInputDialogLayoutBinding
 import com.rootscare.serviceprovider.ui.base.BaseDialog
+import com.sihatku.commondialog.inputfilename.FileNameNavigator
+import com.sihatku.commondialog.inputfilename.FileNameViewModel
 
 
 class FileNameInputDialog(internal var activity: Activity, callbackAfterDateTimeSelect: CallbackAfterDateTimeSelect) :

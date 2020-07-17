@@ -84,5 +84,5 @@ data class ResultItem(
 	@field:SerializedName("nurse_id")
 	val nurseId: String? = null,
 
-	var isCompletedButtonVisible:Boolean = false
+	var isCompletedButtonVisible:Boolean = true
 )

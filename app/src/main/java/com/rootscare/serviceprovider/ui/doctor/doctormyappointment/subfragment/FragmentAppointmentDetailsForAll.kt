@@ -154,6 +154,11 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
                         tvAppointmentDate.text = response.result.appointmentDate
                     }
 
+                    if (response.result.fromTime != null && !TextUtils.isEmpty(response.result.fromTime.trim())) {
+                        llAppointmentTime.visibility = View.VISIBLE
+                        tvAppointmentTime.text = response.result.fromTime
+                    }
+
                     if (response.result.appointmentStatus != null && !TextUtils.isEmpty(response.result.appointmentStatus.trim())) {
                         tvAppointmentStatus.text = response.result.appointmentStatus
                     }

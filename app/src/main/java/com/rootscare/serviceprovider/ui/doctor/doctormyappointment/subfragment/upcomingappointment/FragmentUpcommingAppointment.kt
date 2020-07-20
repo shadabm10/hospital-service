@@ -32,9 +32,9 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
     FragmentUpcommingAppointmentNavigator {
 
     private var contactListAdapter:AdapterDoctorUpcommingAppointment?=null
-    var yearForReopen:Int?=null
-    var monthForReopen:Int?=null
-    var dayForReopen:Int?=null
+    private var yearForReopen:Int?=null
+    private var monthForReopen:Int?=null
+    private var dayForReopen:Int?=null
     private var fragmentDoctorUpcomingAppointmentBinding: FragmentDoctorUpcomingAppointmentBinding? = null
     private var fragmentUpcommingAppointmentViewModel: FragmentUpcommingAppointmentViewModel? = null
     var monthOfDob: String=""
@@ -125,13 +125,6 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
             }, year, month, day)
             if (yearForReopen!=null && monthForReopen!=null && dayForReopen!=null){
                 dpd.updateDate(yearForReopen!!,monthForReopen!!, dayForReopen!!)
-            }
-            var mDatePickerField: Field?=null
-            try {
-                mDatePickerField = dpd.javaClass.getDeclaredField("mDatePicker")
-                mDatePickerField.isAccessible = true
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
             dpd.datePicker.minDate = System.currentTimeMillis() - 1000
             dpd.show()

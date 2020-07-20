@@ -31,6 +31,7 @@ import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.utils.ManagePermissions
 import com.whiteelephant.monthpicker.MonthPickerDialog
 import java.io.*
+import java.lang.reflect.Field
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
@@ -39,7 +40,9 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
     FragmentRegistrationNavigator {
     private var fragmentRegistrationBinding: FragmentRegistrationBinding? = null
     private var fragmentRegistrationviewModel: FragmentRegistrationviewModel? = null
-
+    private var yearForReopen:Int?=null
+    private var monthForReopen:Int?=null
+    private var dayForReopen:Int?=null
     private val GALLERY = 1
     private val CAMERA = 2
     private val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 3
@@ -139,8 +142,10 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
             val day = c.get(Calendar.DAY_OF_MONTH)
 
 
-            val dpd = DatePickerDialog(this!!.activity!!, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
+            val dpd = DatePickerDialog(this!!.activity!!, DatePickerDialog.OnDateSetListener { view, yearLocal, monthOfYear, dayOfMonth ->
+                yearForReopen = yearLocal
+                monthForReopen = monthOfYear
+                dayForReopen = dayOfMonth
                 // Display Selected date in textbox
                 // fragmentAdmissionFormBinding?.txtDob?.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
                 if((monthOfYear+1)<10){
@@ -155,9 +160,15 @@ class FragmentRegistration : BaseFragment<FragmentRegistrationBinding, FragmentR
                 }else{
                     dayOfDob=dayOfMonth.toString()
                 }
-                fragmentRegistrationBinding?.txtRegDob?.setText("" + year + "-" + monthOfDob+ "-" + dayOfDob)
+                fragmentRegistrationBinding?.txtRegDob?.setText("" + yearLocal + "-" + monthOfDob+ "-" + dayOfDob)
             }, year, month, day)
 
+            if (yearForReopen!=null && monthForReopen!=null && dayForReopen!=null){
+                dpd.updateDate(yearForReopen!!,monthForReopen!!, dayForReopen!!)
+            }
+            val date = Date()
+            date.year = Date().year - 5
+            dpd.datePicker.maxDate = date.time // for 5 years
             dpd.show()
         })
 

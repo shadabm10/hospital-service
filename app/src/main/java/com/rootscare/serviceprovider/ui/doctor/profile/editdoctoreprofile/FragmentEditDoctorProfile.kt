@@ -206,7 +206,22 @@ class FragmentEditDoctorProfile :
                     month,
                     day
                 )
+                var yearForReopen:Int?=null
+                var monthForReopen:Int?=null
+                var dayForReopen:Int?=null
+                if (!TextUtils.isDigitsOnly(textViewDOB.text.toString().trim())){
+                    val strings = textViewDOB.text.toString().split("-")
+                    yearForReopen = strings[0].toInt()
+                    monthForReopen = strings[1].toInt()-1
+                    dayForReopen = strings[2].toInt()
+                }
+                if (yearForReopen!=null && monthForReopen!=null && dayForReopen!=null){
+                    dpd.updateDate(yearForReopen,monthForReopen, dayForReopen)
+                }
 
+                val date = Date()
+                date.year = Date().year - 5
+                dpd.datePicker.maxDate = date.time // for 5 years
                 dpd.show()
             })
 
@@ -936,3 +951,4 @@ class FragmentEditDoctorProfile :
         }
     }
 }
+

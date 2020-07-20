@@ -2,6 +2,7 @@ package com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -116,7 +117,19 @@ class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingA
                     }
                 }
             }, year, month, day)
-
+            var yearForReopen:Int?=null
+            var monthForReopen:Int?=null
+            var dayForReopen:Int?=null
+            if (!TextUtils.isDigitsOnly(fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text.toString().trim())){
+                val strings = fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text.toString().split("-")
+                yearForReopen = strings[0].toInt()
+                monthForReopen = strings[1].toInt()-1
+                dayForReopen = strings[2].toInt()
+            }
+            if (yearForReopen!=null && monthForReopen!=null && dayForReopen!=null){
+                dpd.updateDate(yearForReopen,monthForReopen, dayForReopen)
+            }
+            dpd.datePicker.minDate = System.currentTimeMillis() - 1000
             dpd.show()
         })
     }

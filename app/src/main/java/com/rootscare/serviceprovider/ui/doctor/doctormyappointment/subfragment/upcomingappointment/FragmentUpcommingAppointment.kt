@@ -24,6 +24,7 @@ import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.F
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.upcomingappointment.adapter.AdapterDoctorUpcommingAppointment
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
+import java.lang.reflect.Field
 import java.util.*
 
 
@@ -31,7 +32,9 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
     FragmentUpcommingAppointmentNavigator {
 
     private var contactListAdapter:AdapterDoctorUpcommingAppointment?=null
-
+    var yearForReopen:Int?=null
+    var monthForReopen:Int?=null
+    var dayForReopen:Int?=null
     private var fragmentDoctorUpcomingAppointmentBinding: FragmentDoctorUpcomingAppointmentBinding? = null
     private var fragmentUpcommingAppointmentViewModel: FragmentUpcommingAppointmentViewModel? = null
     var monthOfDob: String=""
@@ -43,7 +46,8 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
     override val viewModel: FragmentUpcommingAppointmentViewModel
         get() {
             fragmentUpcommingAppointmentViewModel = ViewModelProviders.of(this).get(
-                FragmentUpcommingAppointmentViewModel::class.java!!)
+                FragmentUpcommingAppointmentViewModel::class.java
+            )
             return fragmentUpcommingAppointmentViewModel as FragmentUpcommingAppointmentViewModel
         }
     companion object {
@@ -77,6 +81,7 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
         }
 
 
+
         fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.setOnClickListener(View.OnClickListener {
             // TODO Auto-generated method stub
 
@@ -86,10 +91,12 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
             val day = c.get(Calendar.DAY_OF_MONTH)
 
 
-            val dpd = DatePickerDialog(this!!.activity!!, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
+            val dpd = DatePickerDialog(this.activity!!, DatePickerDialog.OnDateSetListener { view, yearLocal, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
                 // fragmentAdmissionFormBinding?.txtDob?.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
+                yearForReopen = yearLocal
+                monthForReopen = monthOfYear
+                dayForReopen = dayOfMonth
                 if((monthOfYear+1)<10){
                     monthOfDob= "0" + (monthOfYear+1)
                 }else{
@@ -102,22 +109,33 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
                 }else{
                     dayOfDob=dayOfMonth.toString()
                 }
-                fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.setText("" + year + "-" + monthOfDob+ "-" + dayOfDob)
+                fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text = "" + yearLocal + "-" + monthOfDob+ "-" + dayOfDob
                 if(fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString()!=null && !fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString().equals("")){
                     if(isNetworkConnected){
                         baseActivity?.showLoading()
                         var filterAppointmentRequest= FilterAppointmentRequest()
                         filterAppointmentRequest.userId=fragmentUpcommingAppointmentViewModel?.appSharedPref?.loginUserId
 //                        filterAppointmentRequest.userId="18"
-                        filterAppointmentRequest?.appointmentDate=fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString()
+                        filterAppointmentRequest.appointmentDate =fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString()
                         fragmentUpcommingAppointmentViewModel!!.apifilterdoctorupcomingappointmentlist(filterAppointmentRequest)
                     }else{
                         Toast.makeText(activity, "Please check your network connection.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }, year, month, day)
-
+            if (yearForReopen!=null && monthForReopen!=null && dayForReopen!=null){
+                dpd.updateDate(yearForReopen!!,monthForReopen!!, dayForReopen!!)
+            }
+            var mDatePickerField: Field?=null
+            try {
+                mDatePickerField = dpd.javaClass.getDeclaredField("mDatePicker")
+                mDatePickerField.isAccessible = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            dpd.datePicker.minDate = System.currentTimeMillis() - 1000
             dpd.show()
+
         })
     }
 
@@ -177,20 +195,20 @@ class FragmentUpcommingAppointment: BaseFragment<FragmentDoctorUpcomingAppointme
         baseActivity?.hideLoading()
         if (doctorUpcomingAppointmentResponse?.code.equals("200")){
 
-            if(doctorUpcomingAppointmentResponse?.result!=null && doctorUpcomingAppointmentResponse?.result?.size>0){
+            if(doctorUpcomingAppointmentResponse?.result!=null && doctorUpcomingAppointmentResponse.result.size >0){
                 fragmentDoctorUpcomingAppointmentBinding?.recyclerViewRootscareDoctorMyappointment?.visibility=View.VISIBLE
                 fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.visibility=View.GONE
-                setUpDoctorMyAppointmentlistingRecyclerview(doctorUpcomingAppointmentResponse?.result)
+                setUpDoctorMyAppointmentlistingRecyclerview(doctorUpcomingAppointmentResponse.result)
             }else{
                 fragmentDoctorUpcomingAppointmentBinding?.recyclerViewRootscareDoctorMyappointment?.visibility=View.GONE
                 fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.visibility=View.VISIBLE
-                fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.setText("No Upcoming Appointment List Found for this Doctor.")
+                fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.text = "No Upcoming Appointment List Found for this Doctor."
             }
 
         }else{
             fragmentDoctorUpcomingAppointmentBinding?.recyclerViewRootscareDoctorMyappointment?.visibility=View.GONE
             fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.visibility=View.VISIBLE
-            fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.setText(doctorUpcomingAppointmentResponse?.message)
+            fragmentDoctorUpcomingAppointmentBinding?.tvNoDate?.text = doctorUpcomingAppointmentResponse?.message
             Toast.makeText(activity, doctorUpcomingAppointmentResponse?.message, Toast.LENGTH_SHORT).show()
         }
     }

@@ -2,12 +2,15 @@ package com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.dialog.CommonDialog
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.filterappointmentrequest.FilterAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
@@ -30,7 +33,7 @@ import java.util.*
 
 class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingAppointmentBinding, FragmentUpcommingAppointmentForNurseViewModel>(),
     FragmentUpcommingAppointmentForNurseNavigator {
-
+    private var lastPosition:Int? = null
     private var contactListAdapter: AdapterNurseUpcommingAppointment?=null
 
     private var fragmentDoctorUpcomingAppointmentBinding: FragmentDoctorUpcomingAppointmentBinding? = null
@@ -148,6 +151,7 @@ class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingA
         recyclerView.adapter = contactListAdapter
         contactListAdapter?.recyclerViewItemClickWithView= object : OnClickOfDoctorAppointment2 {
             override fun onItemClick(position: Int) {
+                lastPosition = position
                 (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
                     FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.upcomingAppointmentList!![position]!!.id!!, "nurse"))
             }
@@ -184,6 +188,19 @@ class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingA
 
         }
 
+        if (lastPosition!=null){
+            Handler().postDelayed({
+                activity?.runOnUiThread {
+                    val smoothScroller: RecyclerView.SmoothScroller = object : LinearSmoothScroller(context) {
+                        override fun getVerticalSnapPreference(): Int {
+                            return SNAP_TO_ANY
+                        }
+                    }
+                    smoothScroller.targetPosition = lastPosition!!
+                    gridLayoutManager.startSmoothScroll(smoothScroller)
+                }
+            }, 400)
+        }
     }
 
     override fun successDoctorUpcomingAppointmentResponse(doctorUpcomingAppointmentResponse: DoctorUpcomingAppointmentResponse?) {

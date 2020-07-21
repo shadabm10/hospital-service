@@ -1,11 +1,14 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.pastappointment
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResponsePastAppointment
 import com.rootscare.interfaces.OnItemClikWithIdListener
@@ -22,6 +25,7 @@ import java.util.*
 class FragmentPastAppointment :
     BaseFragment<FragmentDoctorPastAppointmentBinding, FragmentPastAppointmentViewModel>(),
     FragmentPastAppointmentNavigator {
+    private var lastPosition:Int? = null
     private var fragmentDoctorRequestedAppointmentBinding: FragmentDoctorPastAppointmentBinding? =
         null
     private var fragmentRequestedAppointmentViewModel: FragmentPastAppointmentViewModel? = null
@@ -82,10 +86,24 @@ class FragmentPastAppointment :
         recyclerView.adapter = contactListAdapter
         contactListAdapter.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
             override fun onItemClick(position: Int) {
+                lastPosition = position
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
                     FragmentAppointmentDetailsForAll.newInstance(contactListAdapter.upcomingAppointmentList!![position].id!!, "doctor")
                 )
             }
+        }
+        if (lastPosition!=null){
+            Handler().postDelayed({
+                activity?.runOnUiThread {
+                    val smoothScroller: RecyclerView.SmoothScroller = object : LinearSmoothScroller(context) {
+                        override fun getVerticalSnapPreference(): Int {
+                            return SNAP_TO_ANY
+                        }
+                    }
+                    smoothScroller.targetPosition = lastPosition!!
+                    gridLayoutManager.startSmoothScroll(smoothScroller)
+                }
+            }, 400)
         }
 
     }

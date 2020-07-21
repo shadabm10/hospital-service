@@ -1,11 +1,14 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.requestedappointment
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.dialog.CommonDialog
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.updateappointmentrequest.UpdateAppointmentRequest
@@ -25,7 +28,7 @@ import java.util.ArrayList
 
 class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointmentBinding, FragmentRequestedAppointmentViewModel>(),
     FragmentRequestedAppointmentNavigator {
-
+    private var lastPosition:Int? = null
     private var contactListAdapter:AdapterRequestedAppointmentListRecyclerview?=null
     private var booleanIsAcceptedClick = true
 
@@ -82,6 +85,7 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
         recyclerView.adapter = contactListAdapter
         contactListAdapter?.recyclerViewItemClickWithView= object : OnClickOfDoctorAppointment {
             override fun onItemClick(position: Int) {
+                lastPosition = position
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
                     FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.requestedappointmentList!![position]!!.id!!, "doctor"))
             }
@@ -144,6 +148,19 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
 
         }
 
+        if (lastPosition!=null){
+            Handler().postDelayed({
+                activity?.runOnUiThread {
+                    val smoothScroller: RecyclerView.SmoothScroller = object : LinearSmoothScroller(context) {
+                        override fun getVerticalSnapPreference(): Int {
+                            return SNAP_TO_ANY
+                        }
+                    }
+                    smoothScroller.targetPosition = lastPosition!!
+                    gridLayoutManager.startSmoothScroll(smoothScroller)
+                }
+            }, 400)
+        }
     }
 
     override fun successGetDoctorRequestAppointmentResponse(getDoctorRequestAppointmentResponse: GetDoctorRequestAppointmentResponse?) {

@@ -1,11 +1,14 @@
 package com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.pastappointment
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResponsePastAppointment
 import com.rootscare.interfaces.OnItemClikWithIdListener
@@ -19,9 +22,11 @@ import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.nurses.nursesmyappointment.subfragment.pastappointment.adapter.AdapterPastAppointmentListForNurse
 import java.util.*
 
+
 class FragmentPastAppointmentForNurse :
     BaseFragment<FragmentDoctorPastAppointmentBinding, FragmentPastAppointmentForNurseViewModel>(),
     FragmentPastAppointmentForNurseNavigator {
+    private var lastPosition:Int? = null
     private var fragmentDoctorRequestedAppointmentBinding: FragmentDoctorPastAppointmentBinding? =
         null
     private var fragmentRequestedAppointmentViewModel: FragmentPastAppointmentForNurseViewModel? = null
@@ -82,10 +87,24 @@ class FragmentPastAppointmentForNurse :
         recyclerView.adapter = contactListAdapter
         contactListAdapter.recyclerViewItemClickWithView = object : OnItemClikWithIdListener {
             override fun onItemClick(position: Int) {
+                lastPosition = position
                 (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
                     FragmentAppointmentDetailsForAll.newInstance(contactListAdapter.upcomingAppointmentList!![position].id!!, "nurse")
                 )
             }
+        }
+        if (lastPosition!=null){
+            Handler().postDelayed({
+                activity?.runOnUiThread {
+                    val smoothScroller: SmoothScroller = object : LinearSmoothScroller(context) {
+                        override fun getVerticalSnapPreference(): Int {
+                            return SNAP_TO_ANY
+                        }
+                    }
+                    smoothScroller.targetPosition = lastPosition!!
+                    gridLayoutManager.startSmoothScroll(smoothScroller)
+                }
+            }, 400)
         }
 
     }
@@ -103,16 +122,14 @@ class FragmentPastAppointmentForNurse :
                 fragmentDoctorRequestedAppointmentBinding?.recyclerViewDoctorPastAppointment?.visibility =
                     View.GONE
                 fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.visibility = View.VISIBLE
-                fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.setText("Doctor Appointment Not Found.")
+                fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.text = "Doctor Appointment Not Found."
             }
 
         } else {
             fragmentDoctorRequestedAppointmentBinding?.recyclerViewDoctorPastAppointment?.visibility =
                 View.GONE
             fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.visibility = View.VISIBLE
-            fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.setText(
-                getDoctorRequestAppointmentResponse.message
-            )
+            fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.text = getDoctorRequestAppointmentResponse.message
             Toast.makeText(
                 activity,
                 getDoctorRequestAppointmentResponse.message,

@@ -6,7 +6,7 @@ import java.util.*
 data class ResponsePastAppointment(
 
 	@field:SerializedName("result")
-	val result: LinkedList<ResultItem>? = null,
+	var result: LinkedList<ResultItem>? = null,
 
 	@field:SerializedName("code")
 	val code: String? = null,
@@ -99,5 +99,7 @@ data class ResultItem(
 	val patientId: String? = null,
 
 	@field:SerializedName("nurse_id")
-	val nurseId: String? = null
+	val nurseId: String? = null,
+
+	var date:Date?=null
 )

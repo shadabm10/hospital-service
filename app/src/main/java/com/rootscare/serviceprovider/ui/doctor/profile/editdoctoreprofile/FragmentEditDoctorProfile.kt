@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.dialog.CommonDialog
+import com.latikaseafood.utils.DateTimeUtils
 import com.myfilepickesexample.FileUtil
 import com.rootscare.data.model.api.request.commonuseridrequest.CommonUserIdRequest
 import com.rootscare.data.model.api.response.deaprtmentlist.DepartmentListResponse
@@ -34,13 +35,19 @@ import com.rootscare.data.model.api.response.doctor.profileresponse.Qualificatio
 import com.rootscare.data.model.api.response.loginresponse.LoginResponse
 import com.rootscare.data.model.api.response.registrationresponse.RegistrationResponse
 import com.rootscare.dialog.certificateupload.CertificateUploadFragment
+import com.rootscare.dialog.inputfilename.FileNameInputDialog
 import com.rootscare.interfaces.OnDepartmentDropDownListItemClickListener
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorEditProfileBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
+import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.FragmentTodaysAppointment
+import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.tempModel.AddlabTestImageSelectionModel
 import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.adapter.CertificateListAdapter
 import com.rootscare.serviceprovider.ui.login.subfragment.login.FragmentLogin
+import com.rootscare.utils.MyImageCompress
+import com.unversal.imagecropper.CropImage
+import com.unversal.imagecropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_doctor_edit_profile.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -53,6 +60,7 @@ class FragmentEditDoctorProfile :
     BaseFragment<FragmentDoctorEditProfileBinding, FragmentEditDoctorProfileViewModel>(),
     FragmentEditDoctorProfileNavigator {
 
+    private var imageSelectionModel: AddlabTestImageSelectionModel? = null
     private val TAG = "FragmentEditDoctorProfi"
     private var certificateListAdapter: CertificateListAdapter? = null
 
@@ -76,7 +84,7 @@ class FragmentEditDoctorProfile :
     private var filePath: String? = null
     private var certificatefileFile: File? = null
     private var imageFile: File? = null
-    private var userType:String?=null
+    private var userType: String? = null
 
     private var fragmentDoctorEditProfileBinding: FragmentDoctorEditProfileBinding? = null
     private var fragmentEditDoctorProfileViewModel: FragmentEditDoctorProfileViewModel? = null
@@ -93,9 +101,9 @@ class FragmentEditDoctorProfile :
         }
 
     companion object {
-        fun newInstance(userType:String): FragmentEditDoctorProfile {
+        fun newInstance(userType: String): FragmentEditDoctorProfile {
             val args = Bundle()
-            args.putString("userType",userType)
+            args.putString("userType", userType)
             val fragment = FragmentEditDoctorProfile()
             fragment.arguments = args
             return fragment
@@ -206,22 +214,22 @@ class FragmentEditDoctorProfile :
                     month,
                     day
                 )
-                var yearForReopen:Int?=null
-                var monthForReopen:Int?=null
-                var dayForReopen:Int?=null
-                if (!TextUtils.isDigitsOnly(textViewDOB.text.toString().trim())){
+                var yearForReopen: Int? = null
+                var monthForReopen: Int? = null
+                var dayForReopen: Int? = null
+                if (!TextUtils.isDigitsOnly(textViewDOB.text.toString().trim())) {
                     val strings = textViewDOB.text.toString().split("-")
                     yearForReopen = strings[0].toInt()
-                    monthForReopen = strings[1].toInt()-1
+                    monthForReopen = strings[1].toInt() - 1
                     dayForReopen = strings[2].toInt()
                 }
-                if (yearForReopen!=null && monthForReopen!=null && dayForReopen!=null){
-                    dpd.updateDate(yearForReopen,monthForReopen, dayForReopen)
+                if (yearForReopen != null && monthForReopen != null && dayForReopen != null) {
+                    dpd.updateDate(yearForReopen, monthForReopen, dayForReopen)
                 }
 
                 val date = Date()
                 date.year = Date().year - 5
-                dpd.datePicker.maxDate = date.time // for 5 years
+//                dpd.datePicker.maxDate = date.time // for 5 years
                 dpd.show()
             })
 
@@ -239,7 +247,7 @@ class FragmentEditDoctorProfile :
 
             //Image Selection Button Click
             imgDoctorProfile.setOnClickListener(View.OnClickListener {
-                showPictureDialog()
+                openCamera()
             })
 
             radioYesOrNo.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
@@ -402,13 +410,13 @@ class FragmentEditDoctorProfile :
                     } else {
                         ediitexAvailableTime.setText("")
                     }
-                    if (userType.equals("nurse")){
+                    if (userType.equals("nurse")) {
                         if (getDoctorProfileResponse.result.dailyRate != null && !getDoctorProfileResponse.result.dailyRate.equals("")) {
                             ediitextFees.setText(getDoctorProfileResponse.result.dailyRate)
                         } else {
                             ediitextFees.setText("")
                         }
-                    }else{
+                    } else {
                         if (getDoctorProfileResponse.result.fees != null && !getDoctorProfileResponse.result.fees.equals("")) {
                             ediitextFees.setText(getDoctorProfileResponse.result.fees)
                         } else {
@@ -421,8 +429,9 @@ class FragmentEditDoctorProfile :
                         departTitle = ""
                         departmentId = ""
                         for (i in 0 until getDoctorProfileResponse.result.department.size) {
-                            if (getDoctorProfileResponse.result.department[i]?.title!=null &&
-                                    getDoctorProfileResponse.result.department[i]?.id!=null){
+                            if (getDoctorProfileResponse.result.department[i]?.title != null &&
+                                getDoctorProfileResponse.result.department[i]?.id != null
+                            ) {
                                 if (i == 0) {
                                     departTitle += getDoctorProfileResponse.result.department[i]?.title
                                     departmentId += getDoctorProfileResponse.result.department[i]?.id
@@ -470,7 +479,7 @@ class FragmentEditDoctorProfile :
     }
 
 
-    private fun showPictureDialog() {
+    /*private fun showPictureDialog() {
         val pictureDialog = AlertDialog.Builder(activity)
         pictureDialog.setTitle("Select Action")
         val pictureDialogItems = arrayOf("Select photo from gallery", "Capture photo from camera")
@@ -483,9 +492,9 @@ class FragmentEditDoctorProfile :
             }
         }
         pictureDialog.show()
-    }
+    }*/
 
-    fun choosePhotoFromGallary() {
+    /*fun choosePhotoFromGallary() {
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -497,13 +506,13 @@ class FragmentEditDoctorProfile :
     private fun takePhotoFromCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, CAMERA)
-    }
+    }*/
 
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GALLERY) {
+            /*if (requestCode == GALLERY) {
                 if (data != null) {
                     val contentURI = data!!.data
                     try {
@@ -533,7 +542,7 @@ class FragmentEditDoctorProfile :
 //            Toast.makeText(activity, "Image Saved!", Toast.LENGTH_SHORT).show()
 
 
-            } else if (requestCode == PICKFILE_RESULT_CODE) {
+            } else*/ if (requestCode == PICKFILE_RESULT_CODE) {
                 if (resultCode == -1) {
                     fileUri = data!!.data
                     filePath = fileUri!!.path
@@ -553,10 +562,72 @@ class FragmentEditDoctorProfile :
                     }
                 }
             }
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                imageSelectionModel = AddlabTestImageSelectionModel()
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+                    imageSelectionModel?.imageDataFromCropLibrary = result
+                    val resultUri = result.uri
+                    if (resultUri != null) { // Get file from cache directory
+//                        FileNameInputDialog(activity!!, object : FileNameInputDialog.CallbackAfterDateTimeSelect {
+//                            override fun selectDateTime(dateTime: String) {
+//
+//                            }
+//                        }).show(activity!!.supportFragmentManager)
+                        val fileCacheDir = File(activity?.cacheDir, resultUri.lastPathSegment)
+                        if (fileCacheDir.exists()) {
+//                                    imageSelectionModel?.file = fileCacheDir
+                            imageSelectionModel?.file = MyImageCompress.compressImageFilGottenFromCache(activity, resultUri, 10)
+                            imageSelectionModel?.filePath = resultUri.toString()
+                            imageSelectionModel?.rawFileName = resultUri.lastPathSegment
+                            var tempNameExtension = ""
+                            if (resultUri.lastPathSegment?.contains(".jpg")!!) {
+                                tempNameExtension = ".jpg"
+                            } else if (resultUri.lastPathSegment?.contains(".png")!!) {
+                                tempNameExtension = ".png"
+                            }
+                            imageSelectionModel?.fileName =
+                                "${resultUri.lastPathSegment}_${DateTimeUtils.getFormattedDate(Date(), "dd/MM/yyyy_HH:mm:ss")}${tempNameExtension}"
+//                                    imageSelectionModel.fileNameAsOriginal = "${dateTime}${tempNameExtension}"
+                            imageSelectionModel?.fileNameAsOriginal = "${resultUri.lastPathSegment}"
+                            if (activity?.contentResolver?.getType(resultUri) == null) {
+                                imageSelectionModel?.type = "image"
+                            } else {
+                                imageSelectionModel?.type = activity?.contentResolver?.getType(resultUri)
+                            }
+                            val options: RequestOptions =
+                                RequestOptions()
+                                    .centerCrop()
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .placeholder(R.drawable.profile_no_image)
+                                    .error(R.drawable.profile_no_image)
+                                    .priority(Priority.HIGH)
+                            Glide
+                                .with(activity!!)
+                                .load(imageSelectionModel?.file?.absolutePath)
+                                .apply(options)
+                                .into(fragmentDoctorEditProfileBinding?.imgDoctorProfile!!)
+                            imageFile = imageSelectionModel?.file  // as imageFile is used at the timeof api hit
+
+//                                    if (imageSelectionModel?.file!=null && imageSelectionModel?.file?.exists()!!) {
+//                                        uploadPrescription(imageSelectionModel!!)
+//                                    }
+                            Log.d("check_path", ": $resultUri")
+                            Log.d("check_file_get", ": $fileCacheDir")
+                        } else {
+                            Log.d("file_does_not_exists", ": " + true)
+                        }
+                        hideKeyboard()
+                    }
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    val error = result.error
+                    Log.d("check_error", ": " + error.message)
+                }
+            }
         }
     }
 
-    private fun getFileName(context: Context, uri: Uri): String? {
+    /*private fun getFileName(context: Context, uri: Uri): String? {
         var result: String? = null
         if (uri.scheme == "content") {
             val cursor =
@@ -650,7 +721,7 @@ class FragmentEditDoctorProfile :
         return Uri.parse(file.absolutePath)
 
 
-    }
+    }*/
 
 
     private fun submitDetailsForEditProfile() {
@@ -705,12 +776,12 @@ class FragmentEditDoctorProfile :
                 if (certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList!!.size > 0) {
                     val tempList: ArrayList<QualificationDataItem> = ArrayList()
                     for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
-                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData){
+                        if (!certificateListAdapter?.qualificationDataList!![i].isOldData) {
                             tempList.add(certificateListAdapter?.qualificationDataList!![i])
                         }
                     }
                     for (i in 0 until tempList.size) {
-                        if (i == 0 ) {
+                        if (i == 0) {
                             qualificationStr += tempList[i].qualification!!
                             passingYearStr += tempList[i].passingYear!!
                             instituteStr += tempList[i].institute!!
@@ -734,21 +805,21 @@ class FragmentEditDoctorProfile :
 
                     }*/
                 }
-                var qualification:RequestBody?=null
+                var qualification: RequestBody? = null
                 if (!TextUtils.isEmpty(qualificationStr.trim())) {
                     qualification = RequestBody.create(
                         MediaType.parse("multipart/form-data"),
                         qualificationStr
                     )
                 }
-                var passingYear:RequestBody?=null
+                var passingYear: RequestBody? = null
                 if (!TextUtils.isEmpty(qualificationStr.trim())) {
                     passingYear = RequestBody.create(
                         MediaType.parse("multipart/form-data"),
                         passingYearStr
                     )
                 }
-                var institute:RequestBody?=null
+                var institute: RequestBody? = null
                 if (!TextUtils.isEmpty(qualificationStr.trim())) {
                     institute = RequestBody.create(
                         MediaType.parse("multipart/form-data"),
@@ -777,16 +848,16 @@ class FragmentEditDoctorProfile :
                 )
 
                 var imageMultipartBody: MultipartBody.Part? = null
-                var image:RequestBody?=null
-                if (imageFile != null){
-                    image= RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
+                var image: RequestBody? = null
+                if (imageFile != null) {
+                    image = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile!!)
                     imageMultipartBody = MultipartBody.Part.createFormData("image", imageFile?.name, image)
-                }else{
+                } else {
 //                    image = RequestBody.create(MediaType.parse("multipart/form-data"), "")
 //                    imageMultipartBody = MultipartBody.Part.createFormData("image", "", image)
                 }
 
-                var certificateMultipartBody: ArrayList<MultipartBody.Part>?=null
+                var certificateMultipartBody: ArrayList<MultipartBody.Part>? = null
                 if ((certificateListAdapter?.qualificationDataList != null && certificateListAdapter?.qualificationDataList?.size!! > 0)) {
                     val tempList: ArrayList<QualificationDataItem> = ArrayList()
                     for (i in 0 until certificateListAdapter?.qualificationDataList?.size!!) {
@@ -936,6 +1007,8 @@ class FragmentEditDoctorProfile :
         with(fragmentDoctorEditProfileBinding!!) {
             recyclerViewCertificates.layoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
             certificateListAdapter = CertificateListAdapter(activity!!)
+            recyclerViewCertificates.isNestedScrollingEnabled = false
+            recyclerViewCertificates.setHasFixedSize(false)
             recyclerViewCertificates.adapter = certificateListAdapter
             var fragment = CertificateUploadFragment.newInstance()
             fragment.listener = object : CertificateUploadFragment.PassDataCallBack {
@@ -949,6 +1022,15 @@ class FragmentEditDoctorProfile :
                 baseActivity?.openDialogFragment(fragment)
             }
         }
+    }
+
+    private fun openCamera() {
+//        mCameraIntentHelper!!.startCameraIntent()
+        CropImage.activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setActivityTitle("Crop")
+            .setOutputCompressQuality(10)
+            .start(activity!!)
     }
 }
 

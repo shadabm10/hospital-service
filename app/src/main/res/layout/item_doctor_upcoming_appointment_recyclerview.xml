@@ -148,6 +148,38 @@
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:orientation="horizontal"
+                android:id="@+id/llAppointmentStatus"
+                android:visibility="gone"
+                android:weightSum="2">
+
+                <com.rootscare.customview.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Status : "
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+
+                <com.rootscare.customview.MyTextView
+                    android:id="@+id/txtAppointmnetStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/txt_color"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -174,7 +206,7 @@
                         android:id="@+id/btnViewDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
-                        android:layout_centerInParent="true"
+                        android:layout_alignParentEnd="true"
                         android:background="@drawable/rounded_white_btn"
                         android:text="View Details"
                         android:paddingStart="@dimen/_5sdp"
@@ -189,11 +221,11 @@
                         android:layout_height="@dimen/_30sdp"
                         android:text="Reject"
                         android:id="@+id/btn_rejectt"
-                        android:textColor="@color/colorPrimary"
-                        android:background="@drawable/rounded_white_btn"
+                        android:textColor="@color/white"
+                        android:background="@drawable/rounded_red_btn"
                         android:textSize="@dimen/_10ssp"
                         android:textAllCaps="false"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_centerInParent="true"/>
                 </RelativeLayout>
 
 

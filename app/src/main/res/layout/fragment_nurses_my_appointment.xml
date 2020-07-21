@@ -24,7 +24,7 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:id="@+id/btn_doctor_todays_appointment"
+                android:id="@+id/btn_doctor_requested_appointment"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -37,7 +37,7 @@
                     android:textAllCaps="false"
                     android:gravity="center"
                     android:background="@drawable/booking_new_bg"
-                    android:text="Todays Appointment"
+                    android:text="Pending Appointment"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp" />
 
@@ -54,7 +54,7 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:id="@+id/btn_doctor_requested_appointment"
+                android:id="@+id/btn_doctor_todays_appointment"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -67,7 +67,7 @@
                     android:textAllCaps="false"
                     android:gravity="center"
                     android:background="@drawable/booking_new_bg"
-                    android:text="New Appointment"
+                    android:text="Today's Appointment"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp" />
 
@@ -78,6 +78,8 @@
                     android:src="@drawable/white_arrow_circle"/>
 
             </LinearLayout>
+
+
 
 
             <LinearLayout
@@ -128,7 +130,7 @@
                     android:textAllCaps="false"
                     android:gravity="center"
                     android:background="@drawable/booking_new_bg"
-                    android:text="Past Appointment"
+                    android:text="Appointment History"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp" />
 

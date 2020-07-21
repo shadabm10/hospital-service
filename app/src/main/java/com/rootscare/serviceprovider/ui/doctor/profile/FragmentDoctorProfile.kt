@@ -105,7 +105,7 @@ class FragmentDoctorProfile : BaseFragment<FragmentDoctorProfileBinding, Fragmen
         val recyclerView = fragmentDoctorProfileBinding!!.recyclerViewRootscareDoctorimportentDocument
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.setHasFixedSize(false)
         val contactListAdapter = AdapterDoctorImportantDocumentrecyclerview(qualificationDataList, activity!!)
         recyclerView.adapter = contactListAdapter
 
@@ -124,7 +124,8 @@ class FragmentDoctorProfile : BaseFragment<FragmentDoctorProfileBinding, Fragmen
         val recyclerView = fragmentDoctorProfileBinding!!.recyclerViewRootscareDoctorReview
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.setHasFixedSize(false)
+        recyclerView.isNestedScrollingEnabled = false
         val contactListAdapter = AdapterDoctordetailsReviewListRecyclerview(reviewRatingList, context!!)
         recyclerView.adapter = contactListAdapter
     }
@@ -135,7 +136,8 @@ class FragmentDoctorProfile : BaseFragment<FragmentDoctorProfileBinding, Fragmen
         val recyclerView = fragmentDoctorProfileBinding!!.recyclerViewRootscareDoctorSpecility
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.setHasFixedSize(false)
+        recyclerView.isNestedScrollingEnabled = false
         val contactListAdapter = AdapterDoctordetailsSpecilityListRecyclerview(departmentList, context!!)
         recyclerView.adapter = contactListAdapter
 

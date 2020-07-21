@@ -6,24 +6,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.upcomingappointment.ResultItem
 import com.rootscare.interfaces.OnClickOfDoctorAppointment2
-import com.rootscare.interfaces.OnItemClikWithIdListener
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ItemDoctorUpcomingAppointmentRecyclerviewBinding
-import kotlinx.android.synthetic.main.item_doctor_myappointment_recyclerview.view.*
-import kotlinx.android.synthetic.main.item_doctor_myappointment_recyclerview.view.crdview_doctorappoitment_list
-import kotlinx.android.synthetic.main.item_doctor_todays_appointmentrecyclerview.view.*
 import kotlinx.android.synthetic.main.item_doctor_upcoming_appointment_recyclerview.view.*
-import kotlinx.android.synthetic.main.item_doctor_upcoming_appointment_recyclerview.view.btnViewDetails
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<ResultItem?>?, internal var context: Context) : RecyclerView.Adapter<AdapterNurseUpcommingAppointment.ViewHolder>() {
+class AdapterNurseUpcommingAppointment(val upcomingAppointmentList: ArrayList<ResultItem?>?, internal var context: Context) :
+    RecyclerView.Adapter<AdapterNurseUpcommingAppointment.ViewHolder>() {
     //    val trainerList: ArrayList<TrainerListItem?>?,
     companion object {
         val TAG: String = AdapterNurseUpcommingAppointment::class.java.simpleName
@@ -32,8 +30,8 @@ class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<R
     //    internal lateinit var recyclerViewItemClick: ItemStudyMaterialRecyclerviewOnItemClick
 //
     internal lateinit var recyclerViewItemClickWithView: OnClickOfDoctorAppointment2
-    var startTime=""
-    var endTime=""
+    var startTime = ""
+    var endTime = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val singleItemDashboardListingBinding =
@@ -64,7 +62,7 @@ class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<R
                 recyclerViewItemClickWithView.onItemClick(local_position)
             })
             itemView.btnRejectt.setOnClickListener(View.OnClickListener {
-                recyclerViewItemClickWithView.onRejectBtnBtnClick(local_position.toString(),"Reject")
+                recyclerViewItemClickWithView.onRejectBtnBtnClick(local_position.toString(), "Reject")
             })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
 //                recyclerViewItemClickWithView?.onItemClick(trainerList?.get(local_position)?.id?.toInt()!!)
@@ -91,47 +89,50 @@ class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<R
             Log.d(TAG, " true")
             local_position = pos
 
-            if(upcomingAppointmentList?.get(pos)?.orderId!=null && !upcomingAppointmentList.get(pos)?.orderId.equals("")){
+            if (upcomingAppointmentList?.get(pos)?.orderId != null && !upcomingAppointmentList.get(pos)?.orderId.equals("")) {
                 itemView.rootView?.txt_appointment?.text = upcomingAppointmentList.get(pos)?.orderId
-            }else{
+            } else {
                 itemView.rootView?.txt_appointment?.text = ""
             }
 
-            if(upcomingAppointmentList?.get(pos)?.patientName!=null && !upcomingAppointmentList.get(pos)?.patientName.equals("")){
+            if (upcomingAppointmentList?.get(pos)?.patientName != null && !upcomingAppointmentList.get(pos)?.patientName.equals("")) {
                 itemView.rootView?.txt_upcoming_patient_name?.text = upcomingAppointmentList.get(pos)?.patientName
-            }else{
+            } else {
                 itemView.rootView?.txt_upcoming_patient_name?.text = ""
             }
-            if(upcomingAppointmentList?.get(pos)?.bookingDate!=null && !upcomingAppointmentList.get(pos)?.bookingDate.equals("")){
-                itemView.rootView?.txt_upcoming_booking_date?.text = formateDateFromstring("yyyy-MM-dd","dd MMM yyyy",
-                    upcomingAppointmentList.get(pos)?.bookingDate)
-            }else{
+            if (upcomingAppointmentList?.get(pos)?.bookingDate != null && !upcomingAppointmentList.get(pos)?.bookingDate.equals("")) {
+                itemView.rootView?.txt_upcoming_booking_date?.text = formateDateFromstring(
+                    "yyyy-MM-dd", "dd MMM yyyy",
+                    upcomingAppointmentList.get(pos)?.bookingDate
+                )
+            } else {
                 itemView.rootView?.txt_upcoming_booking_date?.text = ""
             }
-            if(upcomingAppointmentList?.get(pos)?.fromTime!=null && !upcomingAppointmentList.get(pos)?.fromTime.equals("")){
-                startTime= upcomingAppointmentList.get(pos)?.fromTime!!
-            }else{
-                startTime=""
+            if (upcomingAppointmentList?.get(pos)?.fromTime != null && !upcomingAppointmentList.get(pos)?.fromTime.equals("")) {
+                startTime = upcomingAppointmentList.get(pos)?.fromTime!!
+            } else {
+                startTime = ""
             }
 
-            if(upcomingAppointmentList?.get(pos)?.toTime!=null && !upcomingAppointmentList.get(pos)?.toTime.equals("")){
-                endTime= upcomingAppointmentList.get(pos)?.toTime!!
-            }else{
-                endTime=""
+            if (upcomingAppointmentList?.get(pos)?.toTime != null && !upcomingAppointmentList.get(pos)?.toTime.equals("")) {
+                endTime = upcomingAppointmentList.get(pos)?.toTime!!
+            } else {
+                endTime = ""
             }
 
-            itemView.rootView?.txt_upcoming_time?.text = startTime+"-"+endTime
-            if(upcomingAppointmentList?.get(pos)?.fromDate!=null && !upcomingAppointmentList.get(pos)?.fromDate.equals("")){
+            itemView.rootView?.txt_upcoming_time?.text = startTime + "-" + endTime
+            if (upcomingAppointmentList?.get(pos)?.fromDate != null && !upcomingAppointmentList.get(pos)?.fromDate.equals("")) {
                 itemView.rootView?.txt_upcoming_appointment_date?.text =
-                    formateDateFromstring("yyyy-MM-dd","dd MMM yyyy", upcomingAppointmentList.get(pos)?.fromDate)
-            }else{
+                    formateDateFromstring("yyyy-MM-dd", "dd MMM yyyy", upcomingAppointmentList.get(pos)?.fromDate)
+            } else {
                 itemView.rootView?.txt_upcoming_appointment_date?.text = ""
             }
 
-            if (upcomingAppointmentList?.get(pos)?.acceptanceStatus!=null && !TextUtils.isEmpty(upcomingAppointmentList.get(pos)?.acceptanceStatus?.trim()) &&
-                upcomingAppointmentList.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
+            if (upcomingAppointmentList?.get(pos)?.acceptanceStatus != null && !TextUtils.isEmpty(upcomingAppointmentList.get(pos)?.acceptanceStatus?.trim()) &&
+                upcomingAppointmentList.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!
+            ) {
                 itemView.rootView?.btn_rejectt?.visibility = View.GONE
-            }else{
+            } else {
                 itemView.rootView?.btn_rejectt?.visibility = View.VISIBLE
             }
 
@@ -147,6 +148,33 @@ class AdapterNurseUpcommingAppointment (val upcomingAppointmentList: ArrayList<R
 //            (contactListItem?.get(pos)?.contactRating)?.toFloat()?.let { itemView?.rootView?.ratingBar?.setRating(it) }
 ////            itemView?.rootView?.ratingBar?.rating=1.5f
 
+            if (upcomingAppointmentList?.get(local_position)?.appointmentStatus != null) {
+                if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("complete")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Completed")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                } else if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Rejected")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                } else if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("cancel")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Cancelled")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                } else if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("book")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Booked")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.orange))
+                } else {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+                }
+            } else {
+                itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+            }
 
         }
 

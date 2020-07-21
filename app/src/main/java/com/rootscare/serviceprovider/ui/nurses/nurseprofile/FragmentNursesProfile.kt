@@ -116,7 +116,8 @@ class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, Fragment
         val recyclerView = fragmentNursesProfileBinding!!.recyclerViewRootscareDoctorimportentDocument
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.isNestedScrollingEnabled = false
+        recyclerView.setHasFixedSize(false)
         val contactListAdapter = AdapterDoctorImportantDocumentrecyclerview(qualificationDataList,activity!!)
         recyclerView.adapter = contactListAdapter
 
@@ -135,7 +136,8 @@ class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, Fragment
         val recyclerView = fragmentNursesProfileBinding!!.recyclerViewRootscareDoctorReview
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.isNestedScrollingEnabled = false
+        recyclerView.setHasFixedSize(false)
         val contactListAdapter = AdapterDoctordetailsReviewListRecyclerview(reviewRatingList,context!!)
         recyclerView.adapter = contactListAdapter
     }
@@ -146,7 +148,8 @@ class FragmentNursesProfile: BaseFragment<FragmentNursesProfileBinding, Fragment
         val recyclerView = fragmentNursesProfileBinding!!.recyclerViewRootscareDoctorSpecility
         val gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        recyclerView.setHasFixedSize(true)
+        recyclerView.isNestedScrollingEnabled = false
+        recyclerView.setHasFixedSize(false)
         val contactListAdapter = AdapterDoctordetailsSpecilityListRecyclerview(departmentList,context!!)
         recyclerView.adapter = contactListAdapter
 

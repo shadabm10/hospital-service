@@ -75,7 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/recyclerView_hospital_past_order"/>
-                    <TextView
+                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textSize="@dimen/_16ssp"

@@ -19,7 +19,7 @@
             android:background="@color/background_white"
             android:orientation="vertical">
 
-            <TextView
+            <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:id="@+id/txt_header_title"

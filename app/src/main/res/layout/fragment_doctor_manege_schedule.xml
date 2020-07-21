@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <TextView
+            <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                 android:id="@+id/tv_no_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

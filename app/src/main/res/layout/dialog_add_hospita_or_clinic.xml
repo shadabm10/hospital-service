@@ -19,7 +19,7 @@
             android:background="@color/background_white"
             android:orientation="vertical">
 
-            <TextView
+            <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                 android:id="@+id/txt_exam_student_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
@@ -55,7 +55,7 @@
                     android:textColor="@color/txt_color"
                     android:textSize="@dimen/_10sdp" />
 
-                <EditText
+                <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -83,7 +83,7 @@
                     android:textColor="@color/txt_color"
                     android:textSize="@dimen/_10sdp" />
 
-                <EditText
+                <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

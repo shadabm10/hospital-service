@@ -1,21 +1,32 @@
 package com.rootscare.dialog.timepicker
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TimePicker
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import com.latikaseafood.utils.DateTimeUtils
 import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.DateTimePickerLayoutBinding
 import com.rootscare.serviceprovider.ui.base.BaseDialog
+import com.rootscare.utils.AppConstants
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSelect: CallbackAfterDateTimeSelect) :
+class TimePickerDialog(internal var activity: Activity, callbackAfterDateTimeSelect: CallbackAfterDateTimeSelect) :
         BaseDialog(), TimeNavigator, View.OnClickListener {
 
 
@@ -23,12 +34,24 @@ class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSele
         fun selectDateTime(dateTime: String)
     }
 
+    constructor(activity: Activity, callbackAfterDateTimeSelect: CallbackAfterDateTimeSelect, timeValue: String? = null,
+                timeValueGivenPattern: String? = null, minTime: String? = null, maxTime: String? = null) :
+            this(activity, callbackAfterDateTimeSelect) {
+        this.minTime = minTime
+        this.maxTime = maxTime
+        this.strinDateToShowInitiLLY = timeValue
+        this.dateValueGivenPattern = timeValueGivenPattern
+    }
+
 
     companion object {
         private val TAG = TimePickerDialog::class.java.simpleName
     }
 
-    private var selectedDate: String? = null
+    private var dateValueGivenPattern: String? = null
+    private var strinDateToShowInitiLLY: String? = null
+    private var minTime: String? = null
+    private var maxTime: String? = null
     private var callbackAfterDateTimeSelect: CallbackAfterDateTimeSelect? = callbackAfterDateTimeSelect
     private var dateAndTime = ""
     private lateinit var layoutBinding: DateTimePickerLayoutBinding
@@ -38,7 +61,7 @@ class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSele
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         layoutBinding = DataBindingUtil.inflate(LayoutInflater.from(activity),
-                R.layout.date_time_picker_layout, null, false)
+            R.layout.date_time_picker_layout, null, false)
         // setting viewmodel to layout bind
         forgotPasswordViewModel = ViewModelProviders.of(this).get(TimePickerViewModel::class.java)
         layoutBinding.setVariable(BR.viewModel, forgotPasswordViewModel)
@@ -46,7 +69,7 @@ class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSele
         isCancelable = false
 
         with(layoutBinding) {
-            tvTitle.text = activity.resources?.getString(R.string.select_time)
+
             datePicker.visibility = View.VISIBLE
             tvSubmit.setOnClickListener(this@TimePickerDialog)
             tvCancel.setOnClickListener(this@TimePickerDialog)
@@ -54,6 +77,41 @@ class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSele
             datePicker.visibility = View.GONE
             timePicker.visibility = View.VISIBLE
 
+            if (strinDateToShowInitiLLY != null && !TextUtils.isEmpty(strinDateToShowInitiLLY?.trim()) && dateValueGivenPattern != null) {
+                if (dateValueGivenPattern.equals("hh:mm a")) {
+                    val sdf = SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT_FOR_TIME_PICKER_WILL_TAKE_FROM_OTHER_PAGE)
+                    var date: Date = sdf.parse(strinDateToShowInitiLLY!!)!!
+                    val c = Calendar.getInstance()
+                    c.time = date
+                    var hourFromGivenValue = c.get(Calendar.HOUR_OF_DAY)
+                    var minuteFromGivenValue = c.get(Calendar.MINUTE)
+                    timePicker.hour = hourFromGivenValue
+                    timePicker.minute = minuteFromGivenValue
+
+                    if (maxTime != null) {
+//                        tvSubmit.isEnabled = false
+//                        tvSubmit.foreground = ColorDrawable(ContextCompat.getColor(activity, R.color.transparent_white))
+                        timePicker.setOnTimeChangedListener(object : TimePicker.OnTimeChangedListener {
+                            override fun onTimeChanged(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                                Log.d(TAG, "--check_selected_hour-- $hourOfDay")
+                                Log.d(TAG, "--check_selected_minute-- $minute")
+                                Log.d(TAG, "--check_given_hour-- $hourFromGivenValue")
+                                Log.d(TAG, "--check_given_minute-- $minuteFromGivenValue")
+                                if (hourOfDay < hourFromGivenValue) {
+                                    tvSubmit.isEnabled = true
+                                    tvSubmit.foreground = ColorDrawable(ContextCompat.getColor(activity, R.color.transparent))
+                                } else if ((hourOfDay == hourFromGivenValue) && (minute <= minuteFromGivenValue)) {
+                                    tvSubmit.isEnabled = true
+                                    tvSubmit.foreground = ColorDrawable(ContextCompat.getColor(activity, R.color.transparent))
+                                } else {
+                                    tvSubmit.isEnabled = false
+                                    tvSubmit.foreground = ColorDrawable(ContextCompat.getColor(activity, R.color.transparent_white))
+                                }
+                            }
+                        })
+                    }
+                }
+            }
 
         }
 
@@ -82,8 +140,8 @@ class TimePickerDialog(internal var activity: Context, callbackAfterDateTimeSele
 
 
     private fun getTimeFromTimePicker(): String {
-        var hour: Int = layoutBinding.timePicker.currentHour
-        val min: Int = layoutBinding.timePicker.currentMinute
+        var hour: Int = layoutBinding.timePicker.hour
+        val min: Int = layoutBinding.timePicker.minute
         val format: String
         when {
             hour == 0 -> {

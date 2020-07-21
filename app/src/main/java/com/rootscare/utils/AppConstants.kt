@@ -10,6 +10,9 @@ object AppConstants {
 
     val NULL_INDEX = -1L
 
+    const val TIMESTAMP_FORMAT_FOR_DATE_PICKER_WILL_TAKE_FROM_OTHER_PAGE = "dd MMM yyyy" // example:
+    const val TIMESTAMP_FORMAT_FOR_TIME_PICKER_WILL_TAKE_FROM_OTHER_PAGE = "hh:mm a" // example:
+
     val PREF_NAME = "shared_pref_name"
 
     val SEED_DATABASE_OPTIONS = "seed/options.json"

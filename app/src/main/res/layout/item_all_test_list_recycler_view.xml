@@ -25,7 +25,7 @@
                 android:layout_toEndOf="@+id/img_review_profile_photo"
                 android:layout_alignParentEnd="true"
                 android:orientation="vertical">
-                <TextView
+                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_10ssp"

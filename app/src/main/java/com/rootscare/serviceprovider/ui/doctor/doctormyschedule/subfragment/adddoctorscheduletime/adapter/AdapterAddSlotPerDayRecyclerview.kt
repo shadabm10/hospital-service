@@ -1,5 +1,6 @@
 package com.rootscare.serviceprovider.ui.doctor.doctormyschedule.subfragment.adddoctorscheduletime.adapter
 
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -89,21 +90,33 @@ class AdapterAddSlotPerDayRecyclerview(internal var context: FragmentActivity) :
             })*/
 
             itemView.rootView?.edt_add_schedule_starttime?.setOnClickListener {
+                var tempTime:String? = null
+                if (!TextUtils.isEmpty(itemView.rootView?.edt_add_schedule_starttime?.text.toString().trim())){
+                    tempTime = itemView.rootView?.edt_add_schedule_starttime?.text.toString().trim()
+                }
                 TimePickerDialog(context, object : TimePickerDialog.CallbackAfterDateTimeSelect {
                     override fun selectDateTime(dateTime: String) {
                         productlistItem!![local_position]?.stat_time = dateTime
                         notifyItemChanged(local_position)
                     }
-                }).show(context.supportFragmentManager)
+                }, timeValue = tempTime, timeValueGivenPattern = "hh:mm a").show(context.supportFragmentManager)
             }
 
             itemView.rootView?.edt_add_schedule_endtime?.setOnClickListener {
+                var tempTime:String? = null
+                var tempMaxTime:String? = null
+                if (!TextUtils.isEmpty(itemView.rootView?.edt_add_schedule_endtime?.text.toString().trim())){
+                    tempTime = itemView.rootView?.edt_add_schedule_endtime?.text.toString().trim()
+                }
+                if (!TextUtils.isEmpty(itemView.rootView?.edt_add_schedule_starttime?.text.toString().trim())){
+                    tempMaxTime = itemView.rootView?.edt_add_schedule_starttime?.text.toString().trim()
+                }
                 TimePickerDialog(context, object : TimePickerDialog.CallbackAfterDateTimeSelect {
                     override fun selectDateTime(dateTime: String) {
                         productlistItem!![local_position]?.end_time = dateTime
                         notifyItemChanged(local_position)
                     }
-                }).show(context.supportFragmentManager)
+                }, timeValue = tempTime, timeValueGivenPattern = "hh:mm a", maxTime=tempMaxTime).show(context.supportFragmentManager)
             }
 
             /*itemView?.rootView?.edt_add_schedule_starttime?.addTextChangedListener(

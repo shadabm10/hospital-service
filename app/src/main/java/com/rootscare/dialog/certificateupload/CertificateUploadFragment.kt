@@ -117,6 +117,9 @@ class CertificateUploadFragment :
                     choosenYear,
                     0
                 )
+                if (!TextUtils.isEmpty(textViewPassingYear.text.toString().trim())){
+                    builder.setActivatedYear(textViewPassingYear.text.toString().trim().toInt())
+                }
                 builder.showYearOnly()
                     .setYearRange(1980, 2090)
                     .build()

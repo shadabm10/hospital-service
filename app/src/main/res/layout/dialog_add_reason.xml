@@ -48,7 +48,7 @@
                 android:layout_margin="@dimen/_5sdp"
                 >
 
-                <EditText
+                <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
                     android:inputType="text"

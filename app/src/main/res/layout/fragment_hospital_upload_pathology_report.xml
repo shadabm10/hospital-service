@@ -30,7 +30,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:elevation="@dimen/_10sdp"
                     >
-                    <EditText
+                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/_10sdp"

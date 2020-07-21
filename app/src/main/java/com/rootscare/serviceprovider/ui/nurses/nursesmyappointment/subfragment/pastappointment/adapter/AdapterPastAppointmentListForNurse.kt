@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResultItem
@@ -142,6 +145,34 @@ class AdapterPastAppointmentListForNurse(
                 itemView?.rootView?.txt_upcoming_appointment_date?.setText("")
             }
 
+            if (upcomingAppointmentList?.get(local_position)?.appointmentStatus != null) {
+                if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("complete")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Completed")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                }else if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Rejected")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                }else if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("cancel")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Cancelled")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                }else if (upcomingAppointmentList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("book")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Booked")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.orange))
+                }else{
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+                }
+            }else{
+                itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+            }
+            
 
         }
 

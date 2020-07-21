@@ -36,6 +36,7 @@ import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivityNursrsHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
+import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification.FragmentHospitalManageNotification
 import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.serviceprovider.ui.nurses.home.subfragment.FragmentNurseHome
@@ -538,7 +539,7 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
         } else if (fragment is FragmentNursesProfile) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = resources.getString(R.string.roots_care)
-            tootbar_profile.visibility = View.VISIBLE
+            tootbar_profile.visibility = View.GONE
             tootbar_notification.visibility = View.VISIBLE
             tootbar_logout.visibility = View.GONE
             toolbar_back.visibility = View.VISIBLE
@@ -593,6 +594,28 @@ class NursrsHomeActivity : BaseActivity<ActivityNursrsHomeBinding, NursrsHomeAct
             tootbar_profile.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
             })
+            tootbar_notification.setOnClickListener(View.OnClickListener {
+                checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
+            })
+            tootbar_logout.setOnClickListener(View.OnClickListener {
+                logout()
+            })
+            tootbar_text.setTextColor(ContextCompat.getColor(this@NursrsHomeActivity, android.R.color.white))
+        }
+        else if (fragment is FragmentEditDoctorProfile) {
+            //   drawerAdapter!!.selectItem(0)
+            tootbar_text.text = resources.getString(R.string.roots_care)
+            tootbar_profile.visibility = View.GONE
+            tootbar_notification.visibility = View.VISIBLE
+            tootbar_logout.visibility = View.GONE
+            toolbar_back.visibility = View.VISIBLE
+            toolbar_menu.visibility = View.GONE
+            toolbar_back.setOnClickListener(View.OnClickListener {
+                onBackPressed()
+            })
+//            tootbar_profile?.setOnClickListener(View.OnClickListener {
+//                checkFragmentInBackstackAndOpen(FragmentNursesProfile.newInstance())
+//            })
             tootbar_notification.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
             })

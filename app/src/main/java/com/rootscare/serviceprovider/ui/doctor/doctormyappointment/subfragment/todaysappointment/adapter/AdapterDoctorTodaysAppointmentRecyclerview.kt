@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.ResultItem
@@ -56,19 +59,19 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
     }
 
 
-    inner class ViewHolder(itemView: ItemDoctorTodaysAppointmentrecyclerviewBinding) :
-        RecyclerView.ViewHolder(itemView.root) {
+    inner class ViewHolder(internal var itemVie: ItemDoctorTodaysAppointmentrecyclerviewBinding) :
+        RecyclerView.ViewHolder(itemVie.root) {
 
         private var local_position: Int = 0
 
         init {
-            itemView.btnViewDetails.setOnClickListener(View.OnClickListener {
+            itemVie.btnViewDetails.setOnClickListener(View.OnClickListener {
                 recyclerViewItemClickWithView2.onItemClick(local_position)
             })
-            itemView.btnCompleted.setOnClickListener {
+            itemVie.btnCompleted.setOnClickListener {
                 recyclerViewItemClickWithView2.onAcceptBtnClick(local_position.toString(), "")
             }
-            itemView.btnReject.setOnClickListener(View.OnClickListener {
+            itemVie.btnReject.setOnClickListener(View.OnClickListener {
                 recyclerViewItemClickWithView2.onRejectBtnBtnClick(local_position.toString(),"Reject")
             })
 //            itemView?.root?.btn_view_trainner_profile?.setOnClickListener(View.OnClickListener {
@@ -140,13 +143,15 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
                     if (todaysAppointList?.get(pos)?.appointmentStatus != null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
                         todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!
                     ) {
+                        itemVie.llMainlayout.background = ContextCompat.getDrawable(context, R.drawable.background_green_stroke_box)
                         itemView.btnCompleted.visibility = View.VISIBLE
                         itemView.btn_reject.visibility = View.GONE
-                        itemView.btnCompleted.setText("Upload\nPrescription")
+                        itemView.btnCompleted.setText("Upload Prescription")
                         itemView.btnCompleted.setOnClickListener {
                             recyclerViewItemClickWithView2.onUploadBtnClick(local_position.toString(), "")
                         }
                     } else {
+                        itemVie.llMainlayout.background = null
                         itemView.btnCompleted.visibility = View.VISIBLE
                         itemView.btnCompleted.setText("Complete")
                         itemView.btnCompleted.setOnClickListener {
@@ -162,6 +167,35 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
                 }
             }else{
                 itemView.btnCompleted.visibility = View.GONE
+            }
+
+
+            if (todaysAppointList?.get(local_position)?.appointmentStatus != null) {
+                if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("complete")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Completed")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                }else if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Rejected")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                }else if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("cancel")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Cancelled")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                }else if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("book")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Booked")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.orange))
+                }else{
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+                }
+            }else{
+                itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
             }
 
         }

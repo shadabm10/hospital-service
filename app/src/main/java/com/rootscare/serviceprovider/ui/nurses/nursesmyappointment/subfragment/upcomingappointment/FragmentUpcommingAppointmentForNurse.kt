@@ -87,7 +87,7 @@ class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingA
             val day = c.get(Calendar.DAY_OF_MONTH)
 
 
-            val dpd = DatePickerDialog(this!!.activity!!, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(this!!.activity!!, DatePickerDialog.OnDateSetListener { view, yearInScope, monthOfYear, dayOfMonth ->
 
                 // Display Selected date in textbox
                 // fragmentAdmissionFormBinding?.txtDob?.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
@@ -103,7 +103,7 @@ class FragmentUpcommingAppointmentForNurse: BaseFragment<FragmentDoctorUpcomingA
                 }else{
                     dayOfDob=dayOfMonth.toString()
                 }
-                fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.setText("" + year + "-" + monthOfDob+ "-" + dayOfDob)
+                fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.setText("" + yearInScope + "-" + monthOfDob+ "-" + dayOfDob)
                 if(fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString()!=null && !fragmentDoctorUpcomingAppointmentBinding?.txtUpcomingDate?.text?.toString().equals("")){
                     if(isNetworkConnected){
                         baseActivity?.showLoading()

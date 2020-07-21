@@ -2,9 +2,14 @@ package com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.
 
 import android.util.Log
 import com.google.gson.Gson
+import com.latikaseafood.utils.DateTimeUtils
 import com.rootscare.data.model.api.request.doctor.appointment.upcomingappointment.getuppcomingappoint.GetDoctorUpcommingAppointmentRequest
 import com.rootscare.data.model.api.request.doctor.appointment.updateappointmentrequest.UpdateAppointmentRequest
+import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResponsePastAppointment
+import com.rootscare.data.model.api.response.doctor.appointment.pastappointment.ResultItem
 import com.rootscare.serviceprovider.ui.base.BaseViewModel
+import java.util.*
+import kotlin.Comparator
 
 class FragmentPastAppointmentViewModel : BaseViewModel<FragmentPastAppointmentNavigator>() {
     fun apidoctorappointmentPastList(getDoctorUpcommingAppointmentRequest: GetDoctorUpcommingAppointmentRequest) {
@@ -16,6 +21,7 @@ class FragmentPastAppointmentViewModel : BaseViewModel<FragmentPastAppointmentNa
                     // Store last login time
                     Log.d("check_response", ": " + Gson().toJson(response))
                     navigator.responseListPastAppointment(response)
+//                    navigator.responseListPastAppointment(sortListByDate(response))
                     /* Saving access token after singup or login */
 
                 } else {
@@ -31,4 +37,19 @@ class FragmentPastAppointmentViewModel : BaseViewModel<FragmentPastAppointmentNa
         compositeDisposable.add(disposable)
     }
 
+//    private fun sortListByDate(response: ResponsePastAppointment): ResponsePastAppointment {
+//        if (response.result != null && response.result?.size!! > 0) {
+//            val tempData = response.result
+//            val tempList = LinkedList<ResultItem>()
+//            for (item in tempData!!) {
+//                item.date = DateTimeUtils.getDateByGivenString("${item.appointmentDate} ${item.fromDate}", "yyyy-MM-dd hh:mm a")
+//                tempList.add(item)
+//            }
+//            tempList.sortWith(Comparator { o1, o2 ->
+//                (if (o1.date == null || o2.date == null) 0 else o2.date?.compareTo(o1.date))!!
+//            })
+//            response.result = tempList
+//        }
+//        return response
+//    }
 }

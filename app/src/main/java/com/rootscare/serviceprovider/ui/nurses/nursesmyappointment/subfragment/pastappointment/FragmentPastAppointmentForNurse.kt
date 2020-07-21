@@ -94,7 +94,7 @@ class FragmentPastAppointmentForNurse :
     override fun responseListPastAppointment(getDoctorRequestAppointmentResponse: ResponsePastAppointment) {
         baseActivity?.hideLoading()
         if (getDoctorRequestAppointmentResponse.code.equals("200")) {
-            if (getDoctorRequestAppointmentResponse.result != null && getDoctorRequestAppointmentResponse.result.size > 0) {
+            if (getDoctorRequestAppointmentResponse.result != null && getDoctorRequestAppointmentResponse.result?.size!! > 0) {
                 fragmentDoctorRequestedAppointmentBinding?.recyclerViewDoctorPastAppointment?.visibility =
                     View.VISIBLE
                 fragmentDoctorRequestedAppointmentBinding?.tvNoDate?.visibility = View.GONE

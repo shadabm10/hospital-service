@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rootscare.data.model.api.response.doctor.appointment.todaysappointment.ResultItem
@@ -128,7 +131,7 @@ class AdapterNurseTodaysAppointmentRecyclerview (internal var todaysAppointList:
                     endTime = ""
                 }
 
-                txtTodaysTime?.text = startTime + "-" + endTime
+                txtTodaysTime.text = startTime + "-" + endTime
                 if (todaysAppointList?.get(pos)?.fromDate != null && !todaysAppointList?.get(pos)?.fromDate.equals("")) {
                     txtTodaysAppointmentDate?.text =
                         formateDateFromstring("yyyy-MM-dd", "dd MMM yyyy", todaysAppointList?.get(pos)?.fromDate)
@@ -142,9 +145,11 @@ class AdapterNurseTodaysAppointmentRecyclerview (internal var todaysAppointList:
                     if (todaysAppointList?.get(pos)?.appointmentStatus != null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
                         todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!
                     ) {
+                        itemVie.llMainlayout.background = ContextCompat.getDrawable(context, R.drawable.background_green_stroke_box)
                         btnCompleted.visibility = View.GONE
                         btnReject.visibility = View.GONE
                     } else {
+                        itemVie.llMainlayout.background = null
                         btnCompleted.visibility = View.VISIBLE
                         btnCompleted.setText("Complete")
                         btnCompleted.setOnClickListener {
@@ -159,8 +164,38 @@ class AdapterNurseTodaysAppointmentRecyclerview (internal var todaysAppointList:
                         }
                     }
                 }
-
             }
+
+
+            if (todaysAppointList?.get(local_position)?.appointmentStatus != null) {
+                if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("complete")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Completed")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                }else if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Rejected")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                }else if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("cancel")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Cancelled")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.red))
+                }else if (todaysAppointList?.get(local_position)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("book")!!) {
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.VISIBLE
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus).setText("Booked")
+                    itemView.rootView.findViewById<TextView>(R.id.txtAppointmnetStatus)
+                        .setTextColor(ContextCompat.getColor(context, R.color.orange))
+                }else{
+                    itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+                }
+            }else{
+                itemView.rootView.findViewById<LinearLayout>(R.id.llAppointmentStatus).visibility = View.GONE
+            }
+            
+            
         }
 
         fun formateDateFromstring(inputFormat: String?, outputFormat: String?, inputDate: String?): String? {

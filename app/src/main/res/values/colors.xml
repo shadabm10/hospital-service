@@ -10,6 +10,7 @@
     <color name="colorAccent">#70BE58</color>
 
 
+    <color name="red">#F34F87</color>
 
 
     <!-- Toggle Switch colors-->
@@ -59,6 +60,7 @@
     <color name="common_bg">#EBF8F5</color>
     <color name="rootscare_text_and_view_color">#EAEDEF</color>
     <color name="review_star">#ffa800</color>
+    <color name="orange">#B87F12</color>
 
     <color name="home_page_view_color">#CCE3E0</color>
     <color name="transparentBlack">#66000000</color>

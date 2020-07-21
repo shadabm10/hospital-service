@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
-    <TextView
+    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
         android:id="@+id/lblListHeader"
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeightSmall"

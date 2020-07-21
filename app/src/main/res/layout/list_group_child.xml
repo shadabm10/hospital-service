@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimaryDark"
     android:padding="8dp">
-    <TextView
+    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
         android:id="@+id/lblListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

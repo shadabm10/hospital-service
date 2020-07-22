@@ -21,4 +21,21 @@
     <string name="choose_name_for_this_file">Choose name for the file</string>
     <string name="create_prescription_name">Enter prescription number</string>
     <string name="transition_string">transition_name</string>
+    <string name="my_profile">My profile</string>
+    <string name="review_and_rating">Review and rating</string>
+    <string name="my_appointment">My Appointment</string>
+    <string name="upcoming_appointment">Upcoming Appointment</string>
+    <string name="today_appointment">Today\'s Appointment</string>
+    <string name="new_appointment">New Appointment</string>
+    <string name="appointment_history">Appointment History</string>
+    <string name="my_schedule">My Schedule</string>
+    <string name="manage_schedule">Manage Schedule</string>
+    <string name="add_schedule">Add Your Schedule</string>
+    <string name="payment_history">Payment History</string>
+    <string name="edit_your_profile">Edit Your Profile</string>
+    <string name="price_list">Price List</string>
+    <string name="upload_prescription">Upload Prescription</string>
+    <string name="complete">Complete</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
 </resources>

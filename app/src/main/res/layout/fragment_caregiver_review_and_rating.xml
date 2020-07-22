@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_3sdp"
             android:id="@+id/recyclerView_caregiver_reviewandrating"/>
-        <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+        <com.rootscare.customview.MyTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/_16ssp"

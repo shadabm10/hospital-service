@@ -38,7 +38,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:src="@drawable/manage_profile_bg"/>
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Manage Profile"
@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:src="@drawable/my_appointment_bg"/>
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="My Appointment"
@@ -96,7 +96,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:src="@drawable/my_schedule"/>
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="My Schedule"
@@ -126,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:src="@drawable/rate_and_review"/>
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Rate &amp; Review"

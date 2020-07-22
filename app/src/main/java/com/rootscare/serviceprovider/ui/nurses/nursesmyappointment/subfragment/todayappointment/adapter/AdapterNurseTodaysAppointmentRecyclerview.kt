@@ -160,7 +160,7 @@ class AdapterNurseTodaysAppointmentRecyclerview (internal var todaysAppointList:
                         ) {
                             btnReject.visibility = View.GONE
                         } else {
-                            btnReject.visibility = View.VISIBLE
+//                            btnReject.visibility = View.VISIBLE
                         }
                     }
                 }

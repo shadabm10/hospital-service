@@ -67,7 +67,7 @@
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                    <com.rootscare.customview.MyTextView
                         android:id="@+id/txt_rootscare_registration_userType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_firstname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_lastname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_emailaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_phonenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                    <com.rootscare.customview.MyTextView
                         android:id="@+id/txt_reg_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                         </RadioGroup>
                     </LinearLayout>
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusabutton.MyNeusaBoldButton
+                    <com.rootscare.customview.MyCustomButton
                         android:id="@+id/btn_rooscare_serviceprovider_registration_stepone_continue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

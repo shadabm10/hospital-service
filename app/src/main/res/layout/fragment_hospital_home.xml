@@ -44,7 +44,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_manage_department"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Manage Departments/Specility"
@@ -80,7 +80,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_manage_doctor"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Manage Doctor"
@@ -121,7 +121,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_manage_appointment"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Manage Appointments"
@@ -157,7 +157,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_manage_notification"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Manage Notification"
@@ -199,7 +199,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_order_management"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Order Management"
@@ -235,7 +235,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_sample_collection"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Sample Collection Of Patient"
@@ -276,7 +276,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_upload_reports"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Upload Pathology Reports"
@@ -311,7 +311,7 @@
                                     android:layout_height="wrap_content"
                                     android:scaleType="fitXY"
                                     android:src="@drawable/hospital_payment_transaction"/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Payment transaction"
@@ -343,7 +343,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
                             android:src="@drawable/hospital_all_booking"/>
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="All Bookings"

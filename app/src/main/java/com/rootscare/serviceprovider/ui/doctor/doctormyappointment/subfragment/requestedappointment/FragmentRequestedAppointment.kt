@@ -87,7 +87,7 @@ class FragmentRequestedAppointment: BaseFragment<FragmentDoctorRequestedAppointm
             override fun onItemClick(position: Int) {
                 lastPosition = position
                 (activity as HomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.requestedappointmentList!![position]!!.id!!, "doctor"))
+                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.requestedappointmentList!![position]!!.id!!, "doctor", "pending"))
             }
 
             override fun onAcceptBtnClick(position: String, text: String) {

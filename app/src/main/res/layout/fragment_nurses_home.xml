@@ -43,7 +43,7 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/manage_profile_bg" />
 
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/home_btn_bg"
@@ -75,7 +75,7 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/my_appointment_bg" />
 
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/home_btn_bg"
@@ -107,7 +107,7 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/my_schedule" />
 
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/home_btn_bg"
@@ -139,7 +139,7 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/rate_and_review" />
 
-                        <com.rootscare.customviews.neusatextview.MyNeusaBoldTextview
+                        <com.rootscare.customview.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/home_btn_bg"

@@ -67,7 +67,7 @@
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_description"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_90sdp"
@@ -83,7 +83,7 @@
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_experience"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                         android:textSize="@dimen/_12sdp" />
                     <!--                    android:drawableEnd="@drawable/down_arrow_white"-->
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_rootscare_registration_availableTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:id="@+id/edt_reg_fees"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                    <com.rootscare.customview.MyTextView
                         android:id="@+id/txt_reg_department"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                         android:textColorHint="@color/text_hint_color"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.rootscare.customviews.neusabutton.MyNeusaBoldButton
+                    <com.rootscare.customview.MyCustomButton
                         android:id="@+id/btn_rooscare_serviceprovider_registration_submit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

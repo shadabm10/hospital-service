@@ -143,7 +143,7 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
                     if (todaysAppointList?.get(pos)?.appointmentStatus != null && !TextUtils.isEmpty(todaysAppointList?.get(pos)?.appointmentStatus?.trim()) &&
                         todaysAppointList?.get(pos)?.appointmentStatus?.toLowerCase(Locale.ROOT)?.contains("completed")!!
                     ) {
-                        itemVie.llMainlayout.background = ContextCompat.getDrawable(context, R.drawable.background_green_stroke_box)
+//                        itemVie.llMainlayout.background = ContextCompat.getDrawable(context, R.drawable.background_green_stroke_box)
                         itemView.btnCompleted.visibility = View.VISIBLE
                         itemView.btn_reject.visibility = View.GONE
                         itemView.btnCompleted.setText("Upload Prescription")
@@ -151,7 +151,7 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
                             recyclerViewItemClickWithView2.onUploadBtnClick(local_position.toString(), "")
                         }
                     } else {
-                        itemVie.llMainlayout.background = null
+//                        itemVie.llMainlayout.background = null
                         itemView.btnCompleted.visibility = View.VISIBLE
                         itemView.btnCompleted.setText("Complete")
                         itemView.btnCompleted.setOnClickListener {
@@ -161,7 +161,7 @@ class AdapterDoctorTodaysAppointmentRecyclerview (internal var todaysAppointList
                             todaysAppointList?.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
                             itemView.btn_reject.visibility = View.GONE
                         }else{
-                            itemView.btn_reject.visibility = View.VISIBLE
+//                            itemView.btn_reject.visibility = View.VISIBLE
                         }
                     }
                 }

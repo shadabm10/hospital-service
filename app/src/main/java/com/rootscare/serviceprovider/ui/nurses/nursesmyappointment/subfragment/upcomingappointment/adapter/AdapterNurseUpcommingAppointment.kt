@@ -133,7 +133,7 @@ class AdapterNurseUpcommingAppointment(val upcomingAppointmentList: ArrayList<Re
             ) {
                 itemView.rootView?.btn_rejectt?.visibility = View.GONE
             } else {
-                itemView.rootView?.btn_rejectt?.visibility = View.VISIBLE
+//                itemView.rootView?.btn_rejectt?.visibility = View.VISIBLE
             }
 
 

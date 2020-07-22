@@ -24,7 +24,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                    <com.rootscare.customview.MyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_14ssp"
@@ -55,14 +55,14 @@
                                 android:layout_height="wrap_content"
                                 android:weightSum="2"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Order Id: "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -77,14 +77,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Patient Name: "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -99,14 +99,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Age: "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -121,14 +121,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Contact Number : "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -143,14 +143,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Address : "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -165,14 +165,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Appointment date : "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -187,14 +187,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Appointment Time : "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -211,7 +211,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/txt_color"
@@ -231,14 +231,14 @@
                                 android:weightSum="2"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:orientation="horizontal">
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:textColor="@color/txt_color"
                                     android:textSize="@dimen/_10ssp"
                                     android:text="Amount : "/>
-                                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                                <com.rootscare.customview.MyTextView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"

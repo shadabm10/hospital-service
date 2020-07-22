@@ -148,32 +148,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         //checkFragmentInBackstackAndOpen(AdmissionFragmentPageOne.newInstance(), activityHomeBinding!!.appBarHomepage.layoutContainer.id)
         checkFragmentInBackstackAndOpen(FragmentHome.newInstance())
 
-//
-//        activityHomeBinding!!.appBarHomepage.toolbarLayout.toolbarProfile.setOnClickListener {
-//            //a checkFragmentInBackstackAndOpen(ProfileFragment.newInstance())
-//            CommonDialog.showDialog(this, object : DialogClickCallback {
-//                override fun onDismiss() {
-//                }
-//
-//                override fun onConfirm() {
-//                    homeViewModel?.appSharedPref?.deleteUserId()
-//                    homeViewModel?.appSharedPref?.deleteUserName()
-//                    homeViewModel?.appSharedPref?.deleteUserEmail()
-//                    homeViewModel?.appSharedPref?.deleteUserImage()
-//                    homeViewModel?.appSharedPref?.deleteUserType()
-//                    homeViewModel?.appSharedPref?.deleteStudentLogInPassword()
-//                    startActivity(ActivityLogInOption.newIntent(this@HomeActivity))
-//                    finishAffinity()
-//
-//                }
-//
-//            }, "Logout", "Are you sure you want to logout?")
-//
-//        }
-
-//        activityHomeBinding!!.drawerLayout.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-
     }
 
     /*private void checkFragmentInBackstackAndOpen(FragmentStudentAttendanceRecord fragment) {
@@ -250,31 +224,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
                     .apply(options)
                     .into(activityHomeBinding?.profileImage!!)
 
-//                if (homeViewModel?.appSharedPref?.studentEmail != null && !homeViewModel?.appSharedPref?.studentEmail.equals("")) {
-//                    studentEmail = homeViewModel?.appSharedPref?.studentEmail!!
-//                } else {
-//                    studentEmail = ""
-//                }
-//
-//                if (homeViewModel?.appSharedPref?.studentProfileImage != null && !homeViewModel?.appSharedPref?.studentProfileImage.equals("")) {
-//                    studentPrifileImage = homeViewModel?.appSharedPref?.studentProfileImage!!
-//                } else {
-//                    studentPrifileImage = ""
-//                }
-//
-//
-//                if (studentName != null && !studentName.equals("")) {
-//                    activityHomeBinding?.txtSidemenuName?.setText(studentName)
-//                }
-//
-//                if (studentEmail != null && !studentEmail.equals("")) {
-//                    activityHomeBinding?.txtSidemenueEmail?.setText(studentEmail)
-//                }
-//                if (studentPrifileImage != null && !studentPrifileImage.equals("")) {
-//                    Glide.with(this@HomeActivity)
-//                        .load(getString(R.string.api_base) + "admin/uploads/" + (studentPrifileImage))
-//                        .into(activityHomeBinding?.profileImage!!)
-//                }
                 hideKeyboard()
             }
 
@@ -391,59 +340,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
     }
 
 
-//    private fun showSelectionOfBottomNavigationItem() {
-//        val fragment = supportFragmentManager.findFragmentById(R.id.layout_container)
-//        // Uncheck all menu item
-//        val menu = activityHomeBinding!!.navigation.menu
-//        for (i in 0 until menu.size()) {
-//            val menuItem = menu.getItem(i)
-//            /*boolean isChecked = menuItem.getItemId() == item.getItemId();*/
-//                        menuItem.setCheckable(false);
-//            menuItem.isChecked = false
-//        }
-//        // Check only desired item and select the item and unselect other items
-//        if (fragment is HomeFragment) {
-//            menu.findItem(R.id.navigation_home).isChecked = true
-//            /*menu.findItem(R.id.navigation_home).setIcon(R.drawable.specials_icon_selected);
-//            menu.findItem(R.id.navigation_collection).setIcon(R.drawable.collections_icon);
-//            menu.findItem(R.id.navigation_search).setIcon(R.drawable.search_icon);
-//            menu.findItem(R.id.navigation_events).setIcon(R.drawable.event_icon);
-//            menu.findItem(R.id.navigation_favourites).setIcon(R.drawable.favourites_icon);*/
-//        }
-//
-////        else if (fragment is FragmentMedia) {
-////            menu.findItem(R.id.navigation_media).isChecked = true
-////
-////        }
-//        else if (fragment is FragmentProfile) {
-//            menu.findItem(R.id.navigation_profile).isChecked = true
-//
-//        }
-//
-////        else if (fragment is FragmentAppointment) {
-////
-//////            menu.findItem(R.id.navigation_home).setIcon(R.drawable.home_deselect)
-//////            menu.findItem(R.id.navigation_booking).setIcon(R.drawable.booking_deselect)
-//////            menu.findItem(R.id.navigation_cart).setIcon(R.drawable.cart_deselect)
-//////            menu.findItem(R.id.navigation_profile).setIcon(R.drawable.profile_deselect)
-////        }
-////        else if (fragment is FragmentChatContact) {
-////            menu.findItem(R.id.navigation_message).isChecked = true
-////        } else if (fragment is FragmentContact) {
-////            menu.findItem(R.id.navigation_contact).isChecked = true
-////        }
-//        // For select or unselect the item in drawer navigation menu
-//        /*if (fragment instanceof MyAccountFragment) {
-//            drawerAdapter.setDraweritemPositionTobeActivated(0);
-//        } else if (fragment instanceof NotificationFragment) {
-//            drawerAdapter.setDraweritemPositionTobeActivated(3);
-//        } else {
-//            drawerAdapter.setDraweritemPositionTobeActivated(-1);
-//        }*/
-//        showTextInToolbarRelativeToFragment(fragment!!)
-//    }
-
-
     private fun showSelectionOfBottomNavigationItem() {
         val fragment = supportFragmentManager.findFragmentById(R.id.layout_container)
         // Uncheck all menu item
@@ -454,44 +350,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             //            menuItem.setCheckable(false);
             menuItem.isChecked = false
         }
-        // Check only desired item and select the item and unselect other items
-//        if (fragment is HomeFragment) {
-//            menu.findItem(R.id.navigation_home).isChecked = true
-//            /*menu.findItem(R.id.navigation_home).setIcon(R.drawable.specials_icon_selected);
-//            menu.findItem(R.id.navigation_collection).setIcon(R.drawable.collections_icon);
-//            menu.findItem(R.id.navigation_search).setIcon(R.drawable.search_icon);
-//            menu.findItem(R.id.navigation_events).setIcon(R.drawable.event_icon);
-//            menu.findItem(R.id.navigation_favourites).setIcon(R.drawable.favourites_icon);*/
-//        } else if (fragment is FragmentProfile) {
-//            menu.findItem(R.id.navigation_profile).isChecked = true
-////            menu.findItem(R.id.navigation_home).setIcon(R.drawable.home_deselect);
-////            menu.findItem(R.id.navigation_booking).setIcon(R.drawable.booking_deselect);
-////            menu.findItem(R.id.navigation_cart).setIcon(R.drawable.cart_deselect);
-////            menu.findItem(R.id.navigation_profile).setIcon(R.drawable.profile_select);
-//        }else if (fragment is FragmentBookingAppointment) {
-//            menu.findItem(R.id.navigation_booking).isChecked = true
-//        }
-//        else if (fragment is FragmentPatientbookPayNow) {
-//            menu.findItem(R.id.navigation_booking).isChecked = true
-//        }
-
-
-
-//        else if (fragment is ProfileFragment) {
-//            menu.findItem(R.id.navigation_profile).isChecked = true
-//        } else if (fragment is FragmentChatContact) {
-//            menu.findItem(R.id.navigation_message).isChecked = true
-//        } else if (fragment is FragmentContact) {
-//            menu.findItem(R.id.navigation_contact).isChecked = true
-//        }
-        // For select or unselect the item in drawer navigation menu
-        /*if (fragment instanceof MyAccountFragment) {
-            drawerAdapter.setDraweritemPositionTobeActivated(0);
-        } else if (fragment instanceof NotificationFragment) {
-            drawerAdapter.setDraweritemPositionTobeActivated(3);
-        } else {
-            drawerAdapter.setDraweritemPositionTobeActivated(-1);
-        }*/
         showTextInToolbarRelativeToFragment(fragment!!)
     }
 
@@ -526,11 +384,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             tootbar_logout?.setOnClickListener(View.OnClickListener {
                 logout()
             })
+            drawerAdapter?.setSelection(-1)
         }
 
         else if (fragment is FragmentDoctorProfile) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = resources.getString(R.string.roots_care)
+            tootbar_text.text = resources.getString(R.string.my_profile)
             tootbar_profile?.visibility=View.GONE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -559,7 +418,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         }
         else if (fragment is FragmentEditDoctorProfile) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = resources.getString(R.string.roots_care)
+            tootbar_text.text = resources.getString(R.string.edit_your_profile)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -582,7 +441,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentReviewAndRating) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Review and Rating"
+            tootbar_text.text = resources.getString(R.string.review_and_rating)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -605,7 +464,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentMyAppointment) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "My Appointment"
+            tootbar_text.text = resources.getString(R.string.my_appointment)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -628,7 +487,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentUpcommingAppointment) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Upcoming Appointment"
+            tootbar_text.text = resources.getString(R.string.upcoming_appointment)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -651,7 +510,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentTodaysAppointment) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Todays Appointment"
+            tootbar_text.text = resources.getString(R.string.today_appointment)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -673,7 +532,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
         }
         else if (fragment is FragmentRequestedAppointment) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "New Appointment"
+            tootbar_text.text = resources.getString(R.string.new_appointment)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -694,7 +553,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
         }
         else if(fragment is FragmentPastAppointment){
-            tootbar_text.text = "Past Appointment"
+            tootbar_text.text = resources.getString(R.string.appointment_history)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -717,7 +576,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentDoctorMyschedule) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "My Schedule"
+            tootbar_text.text = resources.getString(R.string.my_schedule)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -745,7 +604,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentdoctorManageSchedule) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Manage Schedule"
+            tootbar_text.text = resources.getString(R.string.manage_schedule)
             tootbar_profile?.visibility=View.VISIBLE
                     tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -768,7 +627,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentAddDoctorScheduleTime) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Manage Schedule"
+            tootbar_text.text = resources.getString(R.string.add_schedule)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -791,7 +650,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         else if (fragment is FragmentDoctorPaymentHistory) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "Payment History"
+            tootbar_text.text = resources.getString(R.string.payment_history)
             tootbar_profile?.visibility=View.VISIBLE
             tootbar_notification?.visibility=View.VISIBLE
             tootbar_logout?.visibility=View.GONE
@@ -812,67 +671,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
             tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
         }
 
-//
-//        else if (fragment is FragmentBookingAppointment) {
-//            // drawerAdapter!!.selectItem(0)
-//            tootbar_text.text = resources.getString(R.string.roots_care)
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//        }
-//        else if (fragment is FragmentAppointment) {
-//            //    drawerAdapter!!.selectItem(2)
-//            tootbar_text.text ="Appointment History"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//
-//        else if (fragment is FragmentCancellMyUcomingAppointment) {
-//            ///drawerAdapter!!.selectItem(1)
-//            tootbar_text.text ="Cancel Appointment"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//
-//        else if (fragment is FragmentPatientbookPayNow) {
-//            //drawerAdapter!!.selectItem(1)
-//            tootbar_text.text ="Roots Care"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//
-//        else if (fragment is FragmentMyUpCommingAppointment) {
-//            // drawerAdapter!!.selectItem(3)
-//            tootbar_text.text ="Roots Care"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//
-//
-//        else if (fragment is FragmnetViewPrespriction) {
-//            //   drawerAdapter!!.selectItem(3)
-//            tootbar_text.text ="View Prescription"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//
-//        else if (fragment is FragmentPaymentHistory) {
-//            //   drawerAdapter!!.selectItem(3)
-//            tootbar_text.text ="Payment History"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//        else if (fragment is FragmentPatientProfileSetting) {
-//            //   drawerAdapter!!.selectItem(3)
-//            tootbar_text.text ="Profile Setting"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
-//
-//        else if (fragment is FragmentReviewAndRating) {
-//            //   drawerAdapter!!.selectItem(3)
-//            tootbar_text.text ="Review and Rating"
-//            tootbar_text.setTextColor(ContextCompat.getColor(this@HomeActivity, android.R.color.white))
-//
-//        }
     }
 
     fun checkFragmentInBackstackAndOpen(fragment: Fragment) {
@@ -962,4 +760,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityViewModel>(),
 
         }, "Logout", "Are you sure you want to logout?")
     }
+
+
 }

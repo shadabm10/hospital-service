@@ -100,7 +100,7 @@ class FragmentTodaysAppointmentForNurse : BaseFragment<FragmentDoctorTodaysAppoi
             override fun onItemClick(position: Int) {
                 lastPosition = position
                 (activity as NursrsHomeActivity).checkFragmentInBackstackAndOpen(
-                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.todaysAppointList!![position]!!.id!!, "nurse")
+                    FragmentAppointmentDetailsForAll.newInstance(contactListAdapter?.todaysAppointList!![position]!!.id!!, "nurse","today")
                 )
             }
 

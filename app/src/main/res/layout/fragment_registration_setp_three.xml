@@ -35,7 +35,7 @@
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_20sdp">
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_90sdp"
                         android:hint="Description"
@@ -48,7 +48,7 @@
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
                         android:background="@drawable/login_edit_bg"/>
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Experience"
@@ -60,7 +60,7 @@
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
                         android:background="@drawable/login_edit_bg"/>
-                    <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                    <com.rootscare.customview.MyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/txt_rootscare_registration_availableTime"
@@ -73,7 +73,7 @@
                         android:padding="@dimen/_12sdp"
                         android:background="@drawable/login_edit_bg"
                         />
-                    <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                    <com.rootscare.customview.MyEditTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Fees"
@@ -85,7 +85,7 @@
                         android:textColor="@color/text_hint_color"
                         android:textColorHint="@color/text_hint_color"
                         android:background="@drawable/login_edit_bg"/>
-                    <com.rootscare.customviews.neusabutton.MyNeusaBoldButton
+                    <com.rootscare.customview.MyCustomButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_rooscare_serviceprovider_registration_submit"

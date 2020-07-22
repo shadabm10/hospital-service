@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/recyclerView_rootscare_doctor_myappointment"/>
-        <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+        <com.rootscare.customview.MyTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/_12ssp"

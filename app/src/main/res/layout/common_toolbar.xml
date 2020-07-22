@@ -74,7 +74,7 @@
 
                 </LinearLayout>
 
-                <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+                <com.rootscare.customview.MyTextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

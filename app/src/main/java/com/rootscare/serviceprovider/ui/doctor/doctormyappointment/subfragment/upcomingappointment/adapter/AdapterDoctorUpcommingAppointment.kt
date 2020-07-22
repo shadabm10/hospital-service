@@ -133,7 +133,7 @@ class AdapterDoctorUpcommingAppointment (val upcomingAppointmentList: ArrayList<
                 upcomingAppointmentList?.get(pos)?.acceptanceStatus?.toLowerCase(Locale.ROOT)?.contains("reject")!!){
                 itemView?.rootView?.btn_rejectt?.visibility = View.GONE
             }else{
-                itemView?.rootView?.btn_rejectt?.visibility = View.VISIBLE
+//                itemView?.rootView?.btn_rejectt?.visibility = View.VISIBLE
             }
 
 

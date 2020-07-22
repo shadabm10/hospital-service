@@ -82,7 +82,7 @@
                     android:textSize="@dimen/_10sdp"
                     />
 
-                <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+                <com.rootscare.customview.MyEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"

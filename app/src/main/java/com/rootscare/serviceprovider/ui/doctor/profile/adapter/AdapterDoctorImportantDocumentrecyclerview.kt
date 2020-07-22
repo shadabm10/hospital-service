@@ -82,6 +82,8 @@ class AdapterDoctorImportantDocumentrecyclerview   (val qualificationDataList: A
                 Glide.with(context).load(imageUrl).
                 apply(RequestOptions().placeholder(circularProgressDrawable)).timeout(1000*60).
                 apply(requestOptions).into(itemVie.imgContentimage)
+            }else{
+                Glide.with(context).load(R.drawable.pdf_file_logo).into(itemVie.imgContentimage)
             }
 
         }

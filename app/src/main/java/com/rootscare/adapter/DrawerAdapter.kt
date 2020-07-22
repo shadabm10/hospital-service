@@ -77,21 +77,9 @@ class DrawerAdapter(private val context: Context, drawerDatatypes: LinkedList<Dr
         holder.item_tv.setText(spannableString);*/
         if (position == expandedPosition) {
             holder.item_tv.setTypeface(null, Typeface.BOLD)
-            //            holder.item_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.more,
-            //                    0);
-            // holder.view1.setVisibility(View.VISIBLE);
         } else {
             holder.item_tv.setTypeface(null, Typeface.NORMAL)
-            //            holder.item_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0,0);
-            //  holder.view1.setVisibility(View.INVISIBLE);
         }
-
-        //        if (position==3 && drawerDatatypes.get(position).getNotification_badge_count()!=0){
-        //            holder.rl_noti_count.setVisibility(View.VISIBLE);
-        //            holder.tv_noti_count.setText(""+drawerDatatypes.get(position).getNotification_badge_count());
-        //        }else {
-        //            holder.rl_noti_count.setVisibility(View.GONE);
-        //        }
 
     }
 
@@ -147,4 +135,8 @@ class DrawerAdapter(private val context: Context, drawerDatatypes: LinkedList<Dr
     }
 
 
+    fun setSelection(positin:Int){
+        this.expandedPosition = positin
+        notifyDataSetChanged()
+    }
 }

@@ -20,7 +20,7 @@
             android:background="@color/background_white"
             android:orientation="vertical">
 
-            <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+            <com.rootscare.customview.MyTextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_30sdp"
                 android:id="@+id/txt_exam_student_name"
@@ -47,14 +47,14 @@
                android:orientation="horizontal"
                android:layout_margin="@dimen/_5sdp"
                android:weightSum="2">
-               <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+               <com.rootscare.customview.MyTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:textSize="@dimen/_10sdp"
                    android:textColor="@color/txt_color"
                    android:text="Patient First Name : "/>
-               <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+               <com.rootscare.customview.MyEditTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:inputType="text"
@@ -72,14 +72,14 @@
                android:orientation="horizontal"
                android:layout_margin="@dimen/_5sdp"
                android:weightSum="2">
-               <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+               <com.rootscare.customview.MyTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:textSize="@dimen/_10sdp"
                    android:textColor="@color/txt_color"
                    android:text="Patient Last Name : "/>
-               <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+               <com.rootscare.customview.MyEditTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
@@ -98,14 +98,14 @@
                android:orientation="horizontal"
                android:layout_margin="@dimen/_5sdp"
                android:weightSum="2">
-               <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+               <com.rootscare.customview.MyTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:textSize="@dimen/_10sdp"
                    android:textColor="@color/txt_color"
                    android:text="Patient Email : "/>
-               <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+               <com.rootscare.customview.MyEditTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
@@ -123,14 +123,14 @@
                android:orientation="horizontal"
                android:layout_margin="@dimen/_5sdp"
                android:weightSum="2">
-               <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+               <com.rootscare.customview.MyTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:textSize="@dimen/_10sdp"
                    android:textColor="@color/txt_color"
                    android:text="Patient Age : "/>
-               <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+               <com.rootscare.customview.MyEditTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
@@ -148,14 +148,14 @@
                android:orientation="horizontal"
                android:layout_margin="@dimen/_5sdp"
                android:weightSum="2">
-               <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+               <com.rootscare.customview.MyTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:textSize="@dimen/_10sdp"
                    android:textColor="@color/txt_color"
                    android:text="Patient Gender : "/>
-               <com.rootscare.customviews.neusaedittext.MyNeusaMediumEditTextview
+               <com.rootscare.customview.MyEditTextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
@@ -178,7 +178,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp">
 
-            <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+            <com.rootscare.customview.MyTextView
                 android:id="@+id/btn_negative"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
@@ -194,7 +194,7 @@
                 android:textStyle="bold" />
 
 
-            <com.rootscare.customviews.neusatextview.MyNeusaMediumTextview
+            <com.rootscare.customview.MyTextView
                 android:id="@+id/btn_positive"
                 android:layout_width="0dp"
                 android:layout_height="45dp"

@@ -1,5 +1,6 @@
 package com.rootscare.data.model.api.response.doctor.appointment.appointmentdetails
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -34,6 +35,9 @@ data class Result(
 
 	@field:SerializedName("clinic_name")
 	val clinicName: String? = null,
+
+	@field:SerializedName("patient_id")
+	var patient_id: String? = null,
 
 	@field:SerializedName("symptom_text")
 	val symptomText: String? = null,

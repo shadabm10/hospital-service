@@ -33,7 +33,6 @@ import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.FragmentDoctorAppointmentDetailsBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.doctor.doctorconsulting.FragmentDoctorConsulting
-import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.FragmentTodaysAppointment
 import com.rootscare.serviceprovider.ui.doctor.doctormyappointment.subfragment.todaysappointment.tempModel.AddlabTestImageSelectionModel
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.showimagelarger.TransaprentPopUpActivityForImageShow
@@ -123,7 +122,7 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
         super.onViewCreated(view, savedInstanceState)
         fragmentDoctorAppointmentDetailsBinding = viewDataBinding
 
-        patientIdForPrescriptionUpload = arguments?.getString("statusOfAppointmentForFlowChange")
+        patientIdForPrescriptionUpload = arguments?.getString("patientIdForPrescriptionUploadFromTodayAppointment")
         statusOfAppointmentForFlowChange = arguments?.getString("statusOfAppointmentForFlowChange")
         appointmentId = arguments?.getString("appointmentId")
         service_type = arguments?.getString("service_type")
@@ -223,9 +222,6 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
 
                     if (response.result.appointmentStatus != null && !TextUtils.isEmpty(response.result.appointmentStatus.trim())) {
                         tvAppointmentStatus.text = response.result.appointmentStatus
-                        if(appointmentId!=null) {
-                            setUpAcceptRejectSection(response.result.appointmentStatus.toLowerCase(), appointmentId?.toInt()!!)
-                        }
                     }
                     if (response.result.acceptanceStatus != null && !TextUtils.isEmpty(response.result.acceptanceStatus.trim())) {
                         tvAcceptanceStatus.text = response.result.acceptanceStatus
@@ -296,6 +292,13 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
                         llPrescription.visibility = View.GONE
                     }
 
+                    if (response.result.appointmentStatus != null && !TextUtils.isEmpty(response.result.appointmentStatus.trim()) &&
+                        response.result.acceptanceStatus != null && !TextUtils.isEmpty(response.result.acceptanceStatus.trim())) {
+                        if(appointmentId!=null) {
+                            setUpAcceptRejectSection(response.result.appointmentStatus.toLowerCase(Locale.ROOT),
+                                response.result.acceptanceStatus.toLowerCase(Locale.ROOT), appointmentId?.toInt()!!)
+                        }
+                    }
                 }
             }
         }
@@ -395,9 +398,11 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
         runnable = object : Runnable {
             override fun run() {
                 try {
-                    seekposition = medicaPlayer?.currentPosition!!
-                    fragmentDoctorAppointmentDetailsBinding!!.seekBar.progress = seekposition
-                    handler?.postDelayed(this, 1000)
+                    if (medicaPlayer?.currentPosition!=null) {
+                        seekposition = medicaPlayer?.currentPosition!!
+                        fragmentDoctorAppointmentDetailsBinding!!.seekBar.progress = seekposition
+                        handler?.postDelayed(this, 1000)
+                    }
                 } catch (ed: IllegalStateException) {
                     ed.printStackTrace()
                 }
@@ -447,6 +452,16 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
         super.onStop()
     }
 
+    override fun onDestroy() {
+        if (medicaPlayer!=null){
+            medicaPlayer?.release()
+            medicaPlayer = null
+            if (runnable!=null && handler!=null) {
+                handler?.removeCallbacks(runnable!!)
+            }
+        }
+        super.onDestroy()
+    }
 
 
 
@@ -456,20 +471,13 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
 
 
 
-    private fun setUpAcceptRejectSection(status: String, id: Int) {
+
+    private fun setUpAcceptRejectSection(appointmentStatus: String,acceptanceStatus:String, id: Int) {
         with(fragmentDoctorAppointmentDetailsBinding!!) {
             if (service_type?.toLowerCase().equals("doctor")) {
                 if (statusOfAppointmentForFlowChange != null && statusOfAppointmentForFlowChange?.equals("pending")!!) {
                     llBottomUploadPrescription.visibility = View.GONE
-                    if (status.contains("accepted")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    }else if (status.contains("complete")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    } else if (status.contains("reject")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    } else if (status.contains("cancel")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    } else if (status.contains("book")) {
+                    if (acceptanceStatus.contains("pending")){
                         llBottomAcceptReject.visibility = View.VISIBLE
                         btnAccept.setOnClickListener {
                             acceptRejectAppointment(id, "Accept")
@@ -477,11 +485,31 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
                         btnRejectt.setOnClickListener {
                             acceptRejectAppointment(id, "Reject")
                         }
+                    }else{
+                        llBottomAcceptReject.visibility = View.GONE
                     }
+
+                    /*if (appointmentStatus.contains("accepted")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    }else if (appointmentStatus.contains("complete")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    } else if (appointmentStatus.contains("reject")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    } else if (appointmentStatus.contains("cancel")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    } else if (appointmentStatus.contains("book")) {
+                        llBottomAcceptReject.visibility = View.VISIBLE
+                        btnAccept.setOnClickListener {
+                            acceptRejectAppointment(id, "Accept")
+                        }
+                        btnRejectt.setOnClickListener {
+                            acceptRejectAppointment(id, "Reject")
+                        }
+                    }*/
                 } else if (statusOfAppointmentForFlowChange != null && statusOfAppointmentForFlowChange?.equals("today")!!) {
                     llBottomUploadPrescription.visibility = View.VISIBLE
                     llBottomAcceptReject.visibility = View.GONE
-                    if (status.contains("complete")) {
+                    if (appointmentStatus.contains("complete")) {
                         btnCompleted.visibility = View.GONE
                         btnUploadPrescription.visibility = View.VISIBLE
                         btnUploadPrescription.setOnClickListener {
@@ -501,13 +529,7 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
             }else if (service_type?.toLowerCase().equals("nurse")) {
                 if (statusOfAppointmentForFlowChange != null && statusOfAppointmentForFlowChange?.equals("pending")!!) {
                     llBottomUploadPrescription.visibility = View.GONE
-                    if (status.contains("complete")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    } else if (status.contains("reject")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    } else if (status.contains("cancel")) {
-                        llBottomAcceptReject.visibility = View.GONE
-                    } else if (status.contains("book")) {
+                    if (acceptanceStatus.contains("pending")){
                         llBottomAcceptReject.visibility = View.VISIBLE
                         btnAccept.setOnClickListener {
                             acceptRejectAppointment(id, "Accept")
@@ -515,7 +537,27 @@ class FragmentAppointmentDetailsForAll : BaseFragment<FragmentDoctorAppointmentD
                         btnRejectt.setOnClickListener {
                             acceptRejectAppointment(id, "Reject")
                         }
+                    }else{
+                        llBottomAcceptReject.visibility = View.GONE
                     }
+
+
+
+                    /*if (appointmentStatus.contains("complete")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    } else if (appointmentStatus.contains("reject")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    } else if (appointmentStatus.contains("cancel")) {
+                        llBottomAcceptReject.visibility = View.GONE
+                    } else if (appointmentStatus.contains("book")) {
+                        llBottomAcceptReject.visibility = View.VISIBLE
+                        btnAccept.setOnClickListener {
+                            acceptRejectAppointment(id, "Accept")
+                        }
+                        btnRejectt.setOnClickListener {
+                            acceptRejectAppointment(id, "Reject")
+                        }
+                    }*/
                 }else {
                     llBottomAcceptReject.visibility = View.GONE
                     llBottomUploadPrescription.visibility = View.GONE

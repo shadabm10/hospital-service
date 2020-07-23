@@ -68,7 +68,7 @@ class CertificateUploadFragment :
         val dialog: Dialog? = dialog
         if (dialog != null) {
             val width: Int = ViewGroup.LayoutParams.MATCH_PARENT
-            val height: Int = ViewGroup.LayoutParams.MATCH_PARENT
+            val height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
             dialog.window?.setLayout(width, height)
         }
     }

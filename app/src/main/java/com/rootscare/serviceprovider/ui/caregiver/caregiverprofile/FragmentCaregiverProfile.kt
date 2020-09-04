@@ -16,6 +16,7 @@ import com.rootscare.serviceprovider.ui.caregiver.home.CaregiverHomeActivity
 import com.rootscare.serviceprovider.ui.caregiver.home.subfragment.FragmentCaregiverHome
 import com.rootscare.serviceprovider.ui.caregiver.home.subfragment.FragmentCaregiverHomeNavigator
 import com.rootscare.serviceprovider.ui.caregiver.home.subfragment.FragmentCaregiverHomeViewModel
+import com.rootscare.serviceprovider.ui.doctor.profile.editdoctoreprofile.FragmentEditDoctorProfile
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.adapter.AdapterNursesUploadDocument
 import com.rootscare.serviceprovider.ui.nurses.nurseprofile.subfragment.nursesprofileedit.FragmentNursesEditProfile
@@ -56,7 +57,8 @@ class FragmentCaregiverProfile: BaseFragment<FragmentCaregiverProfileBinding, Fr
         setUpViewPrescriptionlistingRecyclerview()
         fragmentCaregiverProfileBinding?.btnCaregiverEditProfile?.setOnClickListener(View.OnClickListener {
             (activity as CaregiverHomeActivity).checkFragmentInBackstackAndOpen(
-                FragmentCaregiverProfileEdit.newInstance())
+               // FragmentCaregiverProfileEdit.newInstance())
+            FragmentEditDoctorProfile.newInstance("caregiver"))
         })
 
 

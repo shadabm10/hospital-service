@@ -1,4 +1,4 @@
-package com.rootscare.data.model.api.response.doctor.profileresponse
+package com.rootscare.data.model.api.response.caregiver.profileresponse
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -43,8 +43,8 @@ data class Result(
 	val uDetailsId: String? = null,
 	@field:JsonProperty("department")
 	@field:SerializedName("department")
-
-	val department: ArrayList<DepartmentItem?>? = null,
+	val department: String? = null,
+	//val department: ArrayList<DepartmentItem?>? = null,
 	@field:JsonProperty("first_name")
 	@field:SerializedName("first_name")
 	val firstName: String? = null,

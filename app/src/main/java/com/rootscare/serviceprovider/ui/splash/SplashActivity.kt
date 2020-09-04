@@ -13,6 +13,7 @@ import com.rootscare.serviceprovider.BR
 import com.rootscare.serviceprovider.R
 import com.rootscare.serviceprovider.databinding.ActivitySplashBinding
 import com.rootscare.serviceprovider.ui.base.BaseActivity
+import com.rootscare.serviceprovider.ui.caregiver.home.CaregiverHomeActivity
 import com.rootscare.serviceprovider.ui.home.HomeActivity
 import com.rootscare.serviceprovider.ui.login.LoginActivity
 import com.rootscare.serviceprovider.ui.nurses.home.NursrsHomeActivity
@@ -83,7 +84,15 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashActivityViewMod
                             }else if(!TextUtils.isEmpty(splashViewModel?.appSharedPref?.loginUserType?.trim()) && splashViewModel?.appSharedPref?.loginUserType?.contains("nurse")!!){
                                 startActivity(NursrsHomeActivity.newIntent(this@SplashActivity))
                                 finish()
+                            }else if(!TextUtils.isEmpty(splashViewModel?.appSharedPref?.loginUserType?.trim()) && splashViewModel?.appSharedPref?.loginUserType?.contains("caregiver")!!){
+                                startActivity(CaregiverHomeActivity.newIntent(this@SplashActivity))
+                                finish()
                             }
+                            else{
+                                startActivity(LoginActivity.newIntent(this@SplashActivity))
+                                finish()
+                            }
+
 
                         }else{
                             startActivity(LoginActivity.newIntent(this@SplashActivity))

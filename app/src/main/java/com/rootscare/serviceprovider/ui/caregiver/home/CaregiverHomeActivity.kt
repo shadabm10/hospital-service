@@ -20,9 +20,14 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
 import com.dialog.CommonDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import com.rootscare.adapter.DrawerAdapter
+import com.rootscare.data.model.api.response.loginresponse.LoginResponse
 import com.rootscare.interfaces.DialogClickCallback
 import com.rootscare.interfaces.OnItemClickListener
 import com.rootscare.model.DrawerDatatype
@@ -33,10 +38,16 @@ import com.rootscare.serviceprovider.ui.base.BaseActivity
 import com.rootscare.serviceprovider.ui.caregiver.caregigerreviewandrating.FragmenntCaregiverReviewAndRating
 import com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.FragmentCaregiverMyAppointment
 import com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.caregiverappointmentdetails.FragmentCaregiverAppointmentDetails
+import com.rootscare.serviceprovider.ui.caregiver.caregivermyappointment.FragmentCaregiverUpdateMyAppointment
+import com.rootscare.serviceprovider.ui.caregiver.caregivermyschedule.FragmentCaregiverUpdateMySchedule
+import com.rootscare.serviceprovider.ui.caregiver.caregivermyschedule.subfragment.manageschedule.FragmentCaregiverUpdateManageRate
 import com.rootscare.serviceprovider.ui.caregiver.caregiverpaymenthistory.FragmentCaregiverPaymentHistory
 import com.rootscare.serviceprovider.ui.caregiver.caregiverprofile.FragmentCaregiverProfile
+import com.rootscare.serviceprovider.ui.caregiver.caregiverprofile.FragmentCaregiverUpdateProfile
 import com.rootscare.serviceprovider.ui.caregiver.caregiverprofile.profileedit.FragmentCaregiverProfileEdit
 import com.rootscare.serviceprovider.ui.caregiver.caregiverschedule.FragmentCaregiverSchedule
+import com.rootscare.serviceprovider.ui.caregiver.caregiverupdatepaymenthistory.FragmentCaregiverUpdatePaymentHistory
+import com.rootscare.serviceprovider.ui.caregiver.caregiverupdatereviewandrating.FragmentCaregiverUpdateReviewAndRating
 import com.rootscare.serviceprovider.ui.caregiver.home.subfragment.FragmentCaregiverHome
 import com.rootscare.serviceprovider.ui.hospital.hospitalmanagenotification.FragmentHospitalManageNotification
 import com.rootscare.serviceprovider.ui.login.LoginActivity
@@ -55,7 +66,11 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
     private var studentEmail: String = ""
     private var studentPrifileImage: String = ""
 
-
+    var userFirstName=""
+    var userLastName=""
+    var userEmail=""
+    var userImage=""
+    var loginresponse: LoginResponse? =null
     companion object {
 
         fun newIntent(activity: Activity): Intent {
@@ -197,36 +212,45 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-//                if (homeViewModel?.appSharedPref?.studentName != null && !homeViewModel?.appSharedPref?.studentName.equals("")) {
-//                    studentName = homeViewModel?.appSharedPref?.studentName!!
-//                } else {
-//                    studentName = ""
-//                }
-//                if (homeViewModel?.appSharedPref?.studentEmail != null && !homeViewModel?.appSharedPref?.studentEmail.equals("")) {
-//                    studentEmail = homeViewModel?.appSharedPref?.studentEmail!!
-//                } else {
-//                    studentEmail = ""
-//                }
-//
-//                if (homeViewModel?.appSharedPref?.studentProfileImage != null && !homeViewModel?.appSharedPref?.studentProfileImage.equals("")) {
-//                    studentPrifileImage = homeViewModel?.appSharedPref?.studentProfileImage!!
-//                } else {
-//                    studentPrifileImage = ""
-//                }
-//
-//
-//                if (studentName != null && !studentName.equals("")) {
-//                    activityHomeBinding?.txtSidemenuName?.setText(studentName)
-//                }
-//
-//                if (studentEmail != null && !studentEmail.equals("")) {
-//                    activityHomeBinding?.txtSidemenueEmail?.setText(studentEmail)
-//                }
-//                if (studentPrifileImage != null && !studentPrifileImage.equals("")) {
-//                    Glide.with(this@HomeActivity)
-//                        .load(getString(R.string.api_base) + "admin/uploads/" + (studentPrifileImage))
-//                        .into(activityHomeBinding?.profileImage!!)
-//                }
+
+                loginresponse= Gson().fromJson(caregiverHomeActivityViewModel?.appSharedPref?.loginmodeldata!!, LoginResponse::class.java)
+
+                if (loginresponse?.result?.firstName!= null && !loginresponse?.result?.firstName.equals("")) {
+                    userFirstName= loginresponse?.result?.firstName!!
+                } else {
+                    userFirstName = ""
+                }
+
+                if (loginresponse?.result?.lastName!= null && !loginresponse?.result?.lastName.equals("")) {
+                    userLastName= loginresponse?.result?.lastName!!
+                } else {
+                    userLastName = ""
+                }
+
+                if (loginresponse?.result?.email!= null && !loginresponse?.result?.email.equals("")) {
+                    userEmail= loginresponse?.result?.email!!
+                } else {
+                    userEmail = ""
+                }
+
+                if (loginresponse?.result?.image!= null && !loginresponse?.result?.image.equals("")) {
+                    userImage= loginresponse?.result?.image!!
+                } else {
+                    userImage = ""
+                }
+                activityCaregiverHomeBinding?.txtSidemenuName?.text = userFirstName+" "+userLastName
+                activityCaregiverHomeBinding?.txtSidemenueEmail?.text = (userEmail)
+
+                val options: RequestOptions =
+                    RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.profile_no_image)
+                        .priority(Priority.HIGH)
+                Glide
+                    .with(this@CaregiverHomeActivity)
+                    .load(getString(R.string.api_base) + "uploads/images/" + userImage)
+                    .apply(options)
+                    .into(activityCaregiverHomeBinding?.profileImage!!)
                 hideKeyboard()
             }
 
@@ -275,7 +299,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
         val strings = LinkedList<DrawerDatatype>()
 
         strings.add(DrawerDatatype("My Appointment", 0, R.drawable.my_appointment_side))
-        strings.add(DrawerDatatype("My Schedule", 1, R.drawable.appointment_history))
+        strings.add(DrawerDatatype("My Price List", 1, R.drawable.appointment_history))
         strings.add(DrawerDatatype("Profile", 2, R.drawable.cancel_appointment))
         strings.add(DrawerDatatype("Payment History", 3, R.drawable.payment_history))
 //        strings.add(DrawerDatatype("Student LIVE Status", 6, 0))
@@ -305,11 +329,11 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
                 }
                 when (position) {
 
-                    0 -> checkFragmentInBackstackAndOpen(FragmentCaregiverMyAppointment.newInstance())
-                    1 -> checkFragmentInBackstackAndOpen(FragmentCaregiverSchedule.newInstance())
-                    2 -> checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
-                    3 -> checkFragmentInBackstackAndOpen(FragmentCaregiverPaymentHistory.newInstance())
-                    4 -> checkFragmentInBackstackAndOpen(FragmenntCaregiverReviewAndRating.newInstance())
+                    0 -> checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateMyAppointment.newInstance())
+                    1 -> checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateManageRate.newInstance())
+                    2 -> checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
+                    3 -> checkFragmentInBackstackAndOpen(FragmentCaregiverUpdatePaymentHistory.newInstance())
+                    4 -> checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateReviewAndRating.newInstance())
                     5 -> logout()
 
 
@@ -464,7 +488,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
             toolbar_back?.visibility = View.GONE
             toolbar_menu?.visibility = View.VISIBLE
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
@@ -472,7 +496,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
             tootbar_logout?.setOnClickListener(View.OnClickListener {
                 logout()
             })
-        } else if (fragment is FragmentCaregiverProfile) {
+        } else if (fragment is FragmentCaregiverUpdateProfile) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = resources.getString(R.string.roots_care)
             tootbar_profile?.visibility = View.GONE
@@ -510,7 +534,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
@@ -519,7 +543,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
                 logout()
             })
             tootbar_text.setTextColor(ContextCompat.getColor(this@CaregiverHomeActivity, android.R.color.white))
-        } else if (fragment is FragmenntCaregiverReviewAndRating) {
+        } else if (fragment is FragmentCaregiverUpdateReviewAndRating) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Review and Rating"
             tootbar_profile?.visibility = View.VISIBLE
@@ -534,7 +558,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
@@ -545,7 +569,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
             tootbar_text.setTextColor(ContextCompat.getColor(this@CaregiverHomeActivity, android.R.color.white))
         }
 ////
-        else if (fragment is FragmentCaregiverMyAppointment) {
+        else if (fragment is FragmentCaregiverUpdateMyAppointment) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "My Appointment"
             tootbar_profile?.visibility = View.VISIBLE
@@ -560,7 +584,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
@@ -585,7 +609,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
@@ -596,9 +620,9 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
             tootbar_text.setTextColor(ContextCompat.getColor(this@CaregiverHomeActivity, android.R.color.white))
         }
 ////
-        else if (fragment is FragmentCaregiverSchedule) {
+        else if (fragment is FragmentCaregiverUpdateManageRate) {
             //   drawerAdapter!!.selectItem(0)
-            tootbar_text.text = "My Schedule"
+            tootbar_text.text = "My Price List"
             tootbar_profile?.visibility = View.VISIBLE
             tootbar_notification?.visibility = View.VISIBLE
             tootbar_logout?.visibility = View.GONE
@@ -611,7 +635,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())
@@ -628,7 +652,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 //            tootbar_text.setTextColor(ContextCompat.getColor(this@CaregiverHomeActivity, android.R.color.white))
 //        }
 //
-        else if (fragment is FragmentCaregiverPaymentHistory) {
+        else if (fragment is FragmentCaregiverUpdatePaymentHistory) {
             //   drawerAdapter!!.selectItem(0)
             tootbar_text.text = "Payment History"
             tootbar_profile?.visibility = View.VISIBLE
@@ -643,7 +667,7 @@ class CaregiverHomeActivity : BaseActivity<ActivityCaregiverHomeBinding, Caregiv
 
 
             tootbar_profile?.setOnClickListener(View.OnClickListener {
-                checkFragmentInBackstackAndOpen(FragmentCaregiverProfile.newInstance())
+                checkFragmentInBackstackAndOpen(FragmentCaregiverUpdateProfile.newInstance())
             })
             tootbar_notification?.setOnClickListener(View.OnClickListener {
                 checkFragmentInBackstackAndOpen(FragmentHospitalManageNotification.newInstance())

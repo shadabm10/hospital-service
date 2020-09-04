@@ -58,6 +58,10 @@ interface ApiService {
     @POST("api-nurse-profile")
     fun apinurseprofile(@Body commonUserIdRequestBody: CommonUserIdRequest): Single<GetDoctorProfileResponse>
 
+
+    @POST("api-caregiver-profile")
+    fun apicaregivereprofile(@Body commonUserIdRequestBody: CommonUserIdRequest): Single<com.rootscare.data.model.api.response.caregiver.profileresponse.GetDoctorProfileResponse>
+
     @Multipart
     @POST("api-service-provider-registration")
     fun apiserviceproviderregistration(
@@ -97,6 +101,10 @@ interface ApiService {
     @POST("api-nurse-upcoming-appointment-list")
     fun apiNurseUpComingAppointmentList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
 
+
+    @POST("api-caregiver-upcoming-appointment-list")
+    fun apiCaregiverUpComingAppointmentList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
+
     @POST("api-filter-doctor-upcoming-appointment-list")
     fun apifilterdoctorupcomingappointmentlist(@Body filterAppointmentRequestBody: FilterAppointmentRequest): Single<DoctorUpcomingAppointmentResponse>
 
@@ -109,17 +117,29 @@ interface ApiService {
     @POST("api-nurse-today-appointment-list")
     fun apiNurseTodayAppointmentList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorTodaysAppointmentResponse>
 
+
+    @POST("api-caregiver-today-appointment-list")
+    fun apiCaregiverTodayAppointmentList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorTodaysAppointmentResponse>
+
     @POST("api-doctor-appointment-request-list")
     fun apidoctorappointmentrequestlist(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
 
     @POST("api-nurse-appointment-request-list")
     fun apiNurseAppointmentRequestList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
 
+
+    @POST("api-caregiver-appointment-request-list")
+    fun apiCaregiverAppointmentRequestList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
+
     @POST("api-update-doctor-appointment-request")
     fun apiupdatedoctorappointmentrequest(@Body updateAppointmentRequestBody: UpdateAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
 
     @POST("api-update-nurse-appointment-request")
     fun apiUpdateNurseAppointmentRequest(@Body updateAppointmentRequestBody: UpdateAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
+
+
+    @POST("api-update-caregiver-appointment-request")
+    fun apiUpdateCaregiverAppointmentRequest(@Body updateAppointmentRequestBody: UpdateAppointmentRequest): Single<GetDoctorRequestAppointmentResponse>
 
     @POST("api-department-list")
     fun apidepartmentlist(): Single<DepartmentListResponse>
@@ -130,6 +150,10 @@ interface ApiService {
 
     @POST("api-nurse-past-appointment-list")
     fun apiNurseAppointmentPastList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ResponsePastAppointment>
+
+
+    @POST("api-caregiver-past-appointment-list")
+    fun apiCaregiverAppointmentPastList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ResponsePastAppointment>
 
 
     @Multipart
@@ -179,11 +203,18 @@ interface ApiService {
     @POST("api-nurse-review")
     fun getNurseReview(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ReviewResponse>
 
+
+    @POST("api-caregiver-review")
+    fun getCaregiverReview(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<ReviewResponse>
+
     @POST("api-doctor-payment-history")
     fun getPaymentHistory(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
 
     @POST("api-nurse-payment-history")
     fun getPaymentHistoryForNurse(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
+
+    @POST("api-caregiver-payment-history")
+    fun getPaymentHistoryForCaregiver(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<PaymentResponse>
 
     @POST("api-doctor-hospital-clinic")
     fun getMyScheduleHospitalList(@Body getDoctorUpcommingAppointmentRequestBody: GetDoctorUpcommingAppointmentRequest): Single<MyScheduleHospitalResponse>

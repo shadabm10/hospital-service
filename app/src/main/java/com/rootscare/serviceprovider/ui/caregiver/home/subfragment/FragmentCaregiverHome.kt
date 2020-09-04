@@ -9,8 +9,12 @@ import com.rootscare.serviceprovider.databinding.FragmentCaregiverHomeBinding
 import com.rootscare.serviceprovider.ui.base.BaseFragment
 import com.rootscare.serviceprovider.ui.caregiver.caregigerreviewandrating.FragmenntCaregiverReviewAndRating
 import com.rootscare.serviceprovider.ui.caregiver.caregiverappointment.FragmentCaregiverMyAppointment
+import com.rootscare.serviceprovider.ui.caregiver.caregivermyappointment.FragmentCaregiverUpdateMyAppointment
+import com.rootscare.serviceprovider.ui.caregiver.caregivermyschedule.FragmentCaregiverUpdateMySchedule
 import com.rootscare.serviceprovider.ui.caregiver.caregiverprofile.FragmentCaregiverProfile
+import com.rootscare.serviceprovider.ui.caregiver.caregiverprofile.FragmentCaregiverUpdateProfile
 import com.rootscare.serviceprovider.ui.caregiver.caregiverschedule.FragmentCaregiverSchedule
+import com.rootscare.serviceprovider.ui.caregiver.caregiverupdatereviewandrating.FragmentCaregiverUpdateReviewAndRating
 import com.rootscare.serviceprovider.ui.caregiver.home.CaregiverHomeActivity
 
 class FragmentCaregiverHome: BaseFragment<FragmentCaregiverHomeBinding, FragmentCaregiverHomeViewModel>(),
@@ -48,22 +52,22 @@ class FragmentCaregiverHome: BaseFragment<FragmentCaregiverHomeBinding, Fragment
         fragmentCaregiverHomeBinding = viewDataBinding
         fragmentCaregiverHomeBinding?.cardViewCaregiverhomeManageProfile?.setOnClickListener(View.OnClickListener {
             (activity as CaregiverHomeActivity).checkFragmentInBackstackAndOpen(
-                FragmentCaregiverProfile.newInstance())
+                FragmentCaregiverUpdateProfile.newInstance())
         })
 
         fragmentCaregiverHomeBinding?.cardViewCaregiverhomeReviewAndRating?.setOnClickListener(View.OnClickListener {
             (activity as CaregiverHomeActivity).checkFragmentInBackstackAndOpen(
-                FragmenntCaregiverReviewAndRating.newInstance())
+                FragmentCaregiverUpdateReviewAndRating.newInstance())
         })
 
         fragmentCaregiverHomeBinding?.cardViewCaregiverhomeMyAppointment?.setOnClickListener(View.OnClickListener {
             (activity as CaregiverHomeActivity).checkFragmentInBackstackAndOpen(
-                FragmentCaregiverMyAppointment.newInstance())
+                FragmentCaregiverUpdateMyAppointment.newInstance())
         })
 
         fragmentCaregiverHomeBinding?.cardViewCaregiverhomeMySchedule?.setOnClickListener(View.OnClickListener {
             (activity as CaregiverHomeActivity).checkFragmentInBackstackAndOpen(
-                FragmentCaregiverSchedule.newInstance())
+                FragmentCaregiverUpdateMySchedule.newInstance())
         })
     }
 
